@@ -1,0 +1,100 @@
+
+$editable: palegreen;
+$editable-bg: palegreen;
+$editable-action: green;
+
+.row {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.restaurant {
+  @extend .row;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: .75rem;
+}
+
+.section {
+  position: relative;
+  border: black 2px solid;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 25px 5px;
+  margin-bottom: 0;
+  max-width: 500px;
+}
+
+.restaurant_title {
+  @extend .editable;
+}
+
+.section_title {
+  @extend .editable;
+  position: absolute;
+  top: -.9rem;
+  background-color: white;
+  padding: 0 10px;
+  font-weight: 900;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+}
+
+.editable {
+  display: block;
+  width: 100%;
+  border:none;
+  &:focus {
+    // outline: none;
+    background-color: $editable;
+  }
+}
+
+
+.add_button {
+  font-weight: bold;
+  background-color: $editable;
+  border: 2px black solid;
+  border-radius: 25px;
+}
+
+.button_wrapper {
+  justify-content: right;
+  margin: 5px;
+}
+
+.item {
+  @extend .row;
+  margin: 5px 0;
+}
+
+.title {
+  @extend .item;
+  @extend .editable;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.desc {
+  @extend .item;
+  @extend .editable;
+  font-size: .8em;
+  font-style: italic;
+}
+
+.price {
+  @extend .item;
+  @extend .editable;
+  font-size: .8em;
+  text-align: right;
+  max-width: 50px;
+}
+
+.qr>svg {
+  margin-top: 1rem;
+  width: 200px;
+}
+
+.cooked {
+  margin: 1rem 0;
+}
