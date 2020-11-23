@@ -2,12 +2,10 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import styles from '../styles/builder.module.scss'
 import { getSortedPostsData } from '../lib/posts'
-import Link from 'next/link'
-import Date from '../components/date'
 import { GetStaticProps } from 'next'
 import { useState } from 'react'
 import { v4 as uuid4 } from 'uuid';
-
+import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp, FaRegPlusSquare } from 'react-icons/fa';
 
 const createItem = () => ({
   id: uuid4(),
@@ -34,12 +32,19 @@ const DEFAULT_SECTIONS = [{
     },
     {
       id: uuid4(),
-      title: "Chorizo fries",
+      title: "Chorizo fries 2",
       desc: "French fries with melted cheese and chorizo",
       price: 9
     }
   ]
 }]
+
+const swapElements = (arr, from, to) => {
+  const tmp = arr[from];
+  arr[from] = arr[to];
+  arr[to] = tmp;
+  return [...arr];
+}
 
 export default function Home({
   allPostsData
@@ -53,6 +58,10 @@ export default function Home({
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
   const [title, setTitle] = useState("~ Three Amigos Restaurante ~")
   const [editing, setEditing] = useState(false);
+  const adjustItems = (index, items) => setSections([
+    ...sections.slice(0, index),
+    { ...sections[index], items },
+    ...sections.slice(index + 1)])
   return (
     <Layout home>
       <Head>
@@ -70,12 +79,15 @@ export default function Home({
             <div className="col-md-6">
               {sections.map((section, index) => (
                 <div key={section.id} className={styles.section}>
-                  {/* <div className={styles.section_title}>{section.title}</div> */}
+                  <div className={`row ${styles.button_wrapper}`}>
+                    {index > 0 && <FaRegArrowAltCircleUp className={styles.clickable} onClick={() => setSections(swapElements(sections, index, index - 1))} />}
+                    {index < sections.length - 1 && <FaRegArrowAltCircleDown className={styles.clickable} onClick={() => setSections(swapElements(sections, index, index + 1))} />}
+                  </div>
                   <input className={styles.section_title}
                     value={section.title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
-                  {section.items.map(item => (
+                  {section.items.map((item, i) => (
                     <div key={item.id} className={`row ${styles.row}`}>
                       <div className="col">
                         <input className={styles.title}
@@ -88,6 +100,10 @@ export default function Home({
                           onChange={(e) => setTitle(e.target.value)}
                         />
                       </div>
+                      <div className={`row ${styles.button_wrapper}`}>
+                        {i > 0 && <FaRegArrowAltCircleUp className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, i, i - 1))} />}
+                        {i < section.items.length - 1 && <FaRegArrowAltCircleDown className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, i, i - 1))} />}
+                      </div>
                       <div className="col-auto">
                         <input className={styles.price}
                           value={item.price}
@@ -97,15 +113,14 @@ export default function Home({
                     </div>
                   ))}
                   <div className={`row ${styles.button_wrapper}`}>
-                    <button className={styles.add_button} onClick={() => setSections([
-                      ...sections.slice(0, index),
-                      { ...sections[index], items: [...sections[index].items, createItem()] },
-                      ...sections.slice(index + 1)])}>Add item</button>
+                    <FaRegPlusSquare title="Create new item" className={styles.clickable}
+                      onClick={() => adjustItems(index, [...sections[index].items, createItem()])} />
                   </div>
                 </div>
               ))}
               <div className={`row ${styles.button_wrapper}`}>
-                <button className={styles.add_button} onClick={() => setSections([...sections, createSection()])}>Add section</button>
+                <FaRegPlusSquare title="Create new section" className={styles.clickable}
+                  onClick={() => setSections([...sections, createSection()])} />
               </div>
             </div>
           </div>

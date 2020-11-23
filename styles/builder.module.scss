@@ -44,12 +44,19 @@ $editable-action: green;
   display: block;
   width: 100%;
   border:none;
-  &:focus {
-    // outline: none;
+  &:focus, &:hover {
     background-color: $editable;
   }
 }
 
+.clickable {
+  margin-left: auto;
+  margin-bottom: 5px;
+  cursor: pointer;
+  &:hover {
+    fill: $editable;
+  }
+}
 
 .add_button {
   font-weight: bold;
@@ -59,8 +66,9 @@ $editable-action: green;
 }
 
 .button_wrapper {
-  justify-content: right;
   margin: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .item {
