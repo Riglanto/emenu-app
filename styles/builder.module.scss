@@ -27,6 +27,7 @@ $editable-action: green;
 
 .restaurant_title {
   @extend .editable;
+  text-align: center;
 }
 
 .section_title {
@@ -38,19 +39,22 @@ $editable-action: green;
   font-weight: 900;
   font-size: 1.1rem;
   text-transform: uppercase;
+  width: auto !important;
 }
 
 .editable {
   display: block;
   width: 100%;
   border:none;
+  resize: none;
   &:focus, &:hover {
     background-color: $editable;
   }
 }
 
 .clickable {
-  margin-left: auto;
+  margin-left: 3px;
+  margin-right: 3px;
   margin-bottom: 5px;
   cursor: pointer;
   &:hover {
@@ -66,9 +70,10 @@ $editable-action: green;
 }
 
 .button_wrapper {
-  margin: 5px;
+  // margin: 5px;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
+  justify-content: end;
 }
 
 .item {
@@ -95,7 +100,8 @@ $editable-action: green;
   @extend .editable;
   font-size: .8em;
   text-align: right;
-  max-width: 50px;
+  max-width: 25px;
+  margin-left: 5px;
 }
 
 .qr>svg {
