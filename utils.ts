@@ -5,6 +5,7 @@ export const DEFAULT_MENU = [
     {
         id: uuid4(),
         title: "Appetizers",
+        loc: "left",
         items: [
             {
                 id: uuid4(),
@@ -29,6 +30,7 @@ export const DEFAULT_MENU = [
     {
         id: uuid4(),
         title: "Mains",
+        loc: "left",
         items: [
             {
                 id: uuid4(),
@@ -75,6 +77,7 @@ export const DEFAULT_MENU = [
     {
         id: uuid4(),
         title: "Special",
+        loc: "right",
         items: [
             {
                 id: uuid4(),
@@ -87,6 +90,7 @@ export const DEFAULT_MENU = [
     {
         id: uuid4(),
         title: "Deserts",
+        loc: "right",
         items: [
             {
                 id: uuid4(),
@@ -111,6 +115,7 @@ export const DEFAULT_MENU = [
     {
         id: uuid4(),
         title: "Drinks",
+        loc: "right",
         items: [
             {
                 id: uuid4(),
@@ -134,6 +139,7 @@ export const DEFAULT_MENU = [
     },
     {
         id: uuid4(),
+        loc: "right",
         items: [
             {
                 id: uuid4(),

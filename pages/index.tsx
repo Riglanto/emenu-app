@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { GetStaticProps } from 'next'
 import { useState } from 'react'
 import { v4 as uuid4 } from 'uuid';
-import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp, FaRegPlusSquare } from 'react-icons/fa';
+import { FaRegArrowAltCircleDown, FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight, FaRegArrowAltCircleUp, FaRegPlusSquare, FaTrash, FaTrashAlt } from 'react-icons/fa';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import Layout, { siteTitle } from '../components/layout'
@@ -43,12 +43,88 @@ export default function Home({
   const updateSection = (section, index) => setSections([
     ...sections.slice(0, index),
     section,
-    ...sections.slice(index + 1)])
+    ...sections.slice(index + 1)].filter(s => s))
   const adjustItems = (index, items) => updateSection({ ...sections[index], items }, index);
+  const swapSectionLoc = (index) => updateSection({ ...sections[index], loc: sections[index].loc === 'right' ? 'left' : 'right' }, index);
+  const deleteSection = index => updateSection(null, index);
+  // 
+  // 
+  // CANT SWAP INDEX WITH 2 LISTS LOL 
+  // 
+  // 
+  // 
 
   const updateItem = (items, index, props) => [...items.slice(0, index), { ...items[index], ...props }, ...items.slice(index + 1)]
   const updateTitle = (index, title) => updateSection({ ...sections[index], title }, index);
   const updateItemProps = (index, subindex, props) => updateSection({ ...sections[index], items: updateItem(sections[index].items, subindex, props) }, index);
+
+  const leftSections = sections.filter(s => s.loc == "left")
+  const rightSections = sections.filter(s => s.loc == "right")
+
+  const SwapIcon = props => {
+    console.log(props)
+    const isRight = props.loc === 'right';
+    const SwapIcon = isRight ? FaRegArrowAltCircleLeft : FaRegArrowAltCircleRight;
+    return (<SwapIcon className={styles.clickable} onClick={() => swapSectionLoc(props.index)} />)
+  }
+  console.log(sections)
+  const SECTIONS = props => (
+    <div className="col-md-6">
+      {props.sections.map((section, index) => (
+        <div key={section.id} className={styles.section}>
+          <div className={`${styles.button_wrapper}`}>
+            <FaTrashAlt className={styles.clickable} onClick={() => deleteSection(index)} />
+            {index > 0 && <FaRegArrowAltCircleUp className={styles.clickable} onClick={() => setSections(swapElements(props.section, index - 1, index))} />}
+            {index < props.sections.length - 1 && <FaRegArrowAltCircleDown className={styles.clickable} onClick={() => setSections(swapElements(props.section, index, index + 1))} />}
+            <SwapIcon index={index} loc={section.loc} />
+          </div>
+          <input className={styles.section_title}
+            value={section.title}
+            onChange={(e) => updateTitle(index, e.target.value)}
+          />
+          {section.items.map((item, subindex) => (
+            <div key={item.id} className={`row ${styles.row}`}>
+              <div className="col">
+                <input className={styles.title}
+                  style={isCollapsed(item.title)}
+                  value={item.title}
+                  onChange={(e) => updateItemProps(index, subindex, { title: e.target.value })}
+                />
+
+                <TextareaAutosize className={styles.desc}
+                  value={item.desc}
+                  onChange={(e) => updateItemProps(index, subindex, { desc: e.target.value })}
+                />
+              </div>
+              <div className={`row ${styles.button_wrapper}`}>
+                <FaRegArrowAltCircleUp style={isVisible(subindex > 0)} className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, subindex - 1, subindex))} />
+                <FaRegArrowAltCircleDown style={isVisible(subindex < section.items.length - 1)} className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, subindex, subindex + 1))} />
+              </div>
+              <div className="col-auto">
+                <input className={styles.price}
+                  value={item.price}
+                  onChange={(e) => updateItemProps(index, subindex, { price: e.target.value })}
+                  type="number"
+                  min="0" step="0.01"
+                />
+              </div>
+            </div>
+          ))}
+          <div className={`${styles.button_wrapper}`}>
+            <FaRegPlusSquare title="Create new item" className={styles.clickable}
+              onClick={() => adjustItems(index, [...props.sections[index].items, createItem()])} />
+          </div>
+        </div>
+      ))}
+      <br />
+      <div className={`${styles.button_wrapper}`}>
+        <FaRegPlusSquare title="Create new section" className={styles.clickable}
+          onClick={() => setSections([...props.sections, createSection()])} />
+      </div>
+    </div>
+  )
+
+  console.log(rightSections, leftSections)
 
   return (
     <Layout home>
@@ -64,57 +140,8 @@ export default function Home({
             />
           </div>
           <div className={`row ${styles.row}`}>
-            <div className="col-md-6">
-              {sections.map((section, index) => (
-                <div key={section.id} className={styles.section}>
-                  <div className={`${styles.button_wrapper}`}>
-                    {index > 0 && <FaRegArrowAltCircleUp className={styles.clickable} onClick={() => setSections(swapElements(sections, index - 1, index))} />}
-                    {index < sections.length - 1 && <FaRegArrowAltCircleDown className={styles.clickable} onClick={() => setSections(swapElements(sections, index, index + 1))} />}
-                  </div>
-                  <input className={styles.section_title}
-                    value={section.title}
-                    onChange={(e) => updateTitle(index, e.target.value)}
-                  />
-                  {section.items.map((item, subindex) => (
-                    <div key={item.id} className={`row ${styles.row}`}>
-                      <div className="col">
-                        <input className={styles.title}
-                          style={isCollapsed(item.title)}
-                          value={item.title}
-                          onChange={(e) => updateItemProps(index, subindex, { title: e.target.value })}
-                        />
-
-                        <TextareaAutosize className={styles.desc}
-                          value={item.desc}
-                          onChange={(e) => updateItemProps(index, subindex, { desc: e.target.value })}
-                        />
-                      </div>
-                      <div className={`row ${styles.button_wrapper}`}>
-                        <FaRegArrowAltCircleUp style={isVisible(subindex > 0)} className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, subindex - 1, subindex))} />
-                        <FaRegArrowAltCircleDown style={isVisible(subindex < section.items.length - 1)} className={styles.clickable} onClick={() => adjustItems(index, swapElements(section.items, subindex, subindex + 1))} />
-                      </div>
-                      <div className="col-auto">
-                        <input className={styles.price}
-                          value={item.price}
-                          onChange={(e) => updateItemProps(index, subindex, { price: e.target.value })}
-                          type="number"
-                          min="0" step="0.01"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <div className={`${styles.button_wrapper}`}>
-                    <FaRegPlusSquare title="Create new item" className={styles.clickable}
-                      onClick={() => adjustItems(index, [...sections[index].items, createItem()])} />
-                  </div>
-                </div>
-              ))}
-              <br />
-              <div className={`${styles.button_wrapper}`}>
-                <FaRegPlusSquare title="Create new section" className={styles.clickable}
-                  onClick={() => setSections([...sections, createSection()])} />
-              </div>
-            </div>
+            <SECTIONS sections={leftSections} />
+            <SECTIONS sections={rightSections} />
           </div>
         </div>
 

@@ -70,10 +70,11 @@ $editable-action: green;
 }
 
 .button_wrapper {
-  // margin: 5px;
+  margin-top: 5px;
   display: flex;
   // flex-direction: column;
   justify-content: end;
+  align-content: center;
 }
 
 .item {
