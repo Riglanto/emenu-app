@@ -48,7 +48,7 @@ $editable-action: green;
   border:none;
   resize: none;
   &:focus, &:hover {
-    background-color: $editable;
+    background-color: $editable !important;
   }
 }
 
@@ -57,7 +57,7 @@ $editable-action: green;
   margin-right: 3px;
   margin-bottom: 5px;
   cursor: pointer;
-  &:hover {
+  svg:hover {
     fill: $editable;
   }
 }
