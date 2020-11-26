@@ -1,4 +1,3 @@
-
 $editable: palegreen;
 $editable-bg: palegreen;
 $editable-action: green;
@@ -12,7 +11,7 @@ $editable-action: green;
   @extend .row;
   font-size: 1.2rem;
   font-weight: bold;
-  padding: .75rem;
+  padding: 0.75rem;
 }
 
 .section {
@@ -33,7 +32,7 @@ $editable-action: green;
 .section_title {
   @extend .editable;
   position: absolute;
-  top: -.9rem;
+  top: -0.9rem;
   background-color: white;
   padding: 0 10px;
   font-weight: 900;
@@ -45,9 +44,10 @@ $editable-action: green;
 .editable {
   display: block;
   width: 100%;
-  border:none;
+  border: none;
   resize: none;
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     background-color: $editable !important;
   }
 }
@@ -92,20 +92,20 @@ $editable-action: green;
 .desc {
   @extend .item;
   @extend .editable;
-  font-size: .8em;
+  font-size: 0.8em;
   font-style: italic;
 }
 
 .price {
   @extend .item;
   @extend .editable;
-  font-size: .8em;
+  font-size: 0.8em;
   text-align: right;
   max-width: 25px;
   margin-left: 5px;
 }
 
-.qr>svg {
+.qr > svg {
   margin-top: 1rem;
   width: 200px;
 }
