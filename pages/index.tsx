@@ -66,21 +66,20 @@ export default function Home({
   const rightSections = sections.filter(s => s.loc == "right")
 
   const SwapIcon = props => {
-    console.log(props)
     const isRight = props.loc === 'right';
     const SwapIcon = isRight ? FaRegArrowAltCircleLeft : FaRegArrowAltCircleRight;
     return (<div className={styles.clickable} onClick={() => swapSectionLoc(props.index)}><SwapIcon /></div>)
   }
-  console.log(sections)
+
   const SECTIONS = props => (
     <div className="col-md-6">
       {props.sections.map((section, index) => (
         <div key={section.id} className={styles.section}>
           <div className={`${styles.button_wrapper}`}>
             <div className={styles.clickable} onClick={() => deleteSection(index)}><FaTrashAlt /></div>
-            {index > 0 && <div className={styles.clickable} onClick={() => setSections(swapElements(props.section, index - 1, index))}><FaRegArrowAltCircleUp /></div>}
-            {index < props.sections.length - 1 && <div className={styles.clickable} onClick={() => setSections(swapElements(props.section, index, index + 1))} ><FaRegArrowAltCircleDown /></div>}
-            <SwapIcon index={index} loc={section.loc} />
+            {index > 0 && <div className={styles.clickable} onClick={() => setSections(swapElements(sections, index - 1 + props.modifier, index + props.modifier))}><FaRegArrowAltCircleUp /></div>}
+            {index < props.sections.length - 1 && <div className={styles.clickable} onClick={() => setSections(swapElements(sections, index + props.modifier, index + 1 + props.modifier))} ><FaRegArrowAltCircleDown /></div>}
+            <SwapIcon index={index + props.modifier} loc={section.loc} />
           </div>
           <input className={styles.section_title}
             value={section.title}
@@ -133,13 +132,13 @@ export default function Home({
       <br />
       <div className={`${styles.button_wrapper}`}>
         <div title="Create new section" className={styles.clickable}
-          onClick={() => setSections([...props.sections, createSection(props.loc)])} >
+          onClick={() => setSections([...sections.slice(0, props.sections.length + props.modifier),
+          createSection(props.loc),
+          ...sections.slice(props.sections.length + props.modifier)])} >
           <FaRegPlusSquare /></div>
       </div>
     </div >
   )
-
-  console.log(rightSections, leftSections)
 
   return (
     <Layout home>
@@ -155,7 +154,7 @@ export default function Home({
             />
           </div>
           <div className={`row ${styles.row}`}>
-            <SECTIONS loc="left" sections={leftSections} />
+            <SECTIONS loc="left" modifier={0} sections={leftSections} />
             <SECTIONS loc="right" modifier={leftSections.length} sections={rightSections} />
           </div>
         </div>
