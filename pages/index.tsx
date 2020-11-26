@@ -8,7 +8,6 @@ import {
   FaRegArrowAltCircleRight,
   FaRegArrowAltCircleUp,
   FaRegPlusSquare,
-  FaTrash,
   FaTrashAlt,
 } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
@@ -16,6 +15,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import Layout, { siteTitle } from "../components/layout";
 import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
 
+import { animateScroll } from "react-scroll";
 import styles from "../styles/builder.module.scss";
 
 const createItem = () => ({
@@ -59,6 +59,7 @@ export default function Home({
   const [sections, setSections] = useState(DEFAULT_MENU);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [editing, setEditing] = useState(false);
+  const [highlightedId, setHighlightedId] = useState(null);
 
   const leftSections = sections.filter((s) => s.loc == "left");
   const rightSections = sections.filter((s) => s.loc == "right");
@@ -73,7 +74,7 @@ export default function Home({
     );
   const adjustItems = (index, items) =>
     updateSection({ ...sections[index], items }, index);
-  const swapSectionLoc = (index) => {
+  const swapSectionLoc = (index, id) => {
     const isRight = sections[index].loc === "right";
     const x = {
       ...sections.splice(index, 1)[0],
@@ -81,6 +82,9 @@ export default function Home({
     };
     const newPosition = isRight ? leftSections.length : sections.length;
     setSections(insertSectionAt(x, newPosition));
+    animateScroll.scrollToBottom();
+    setHighlightedId(id);
+    setTimeout(() => setHighlightedId(null), 1500);
   };
   const insertSectionAt = (element, index) => [
     ...sections.slice(0, index),
@@ -111,19 +115,28 @@ export default function Home({
       ? FaRegArrowAltCircleLeft
       : FaRegArrowAltCircleRight;
     return (
-      <div
+      <a
         className={styles.clickable}
-        onClick={() => swapSectionLoc(props.index)}
+        onClick={() => swapSectionLoc(props.index, props.id)}
       >
         <SwapIcon />
-      </div>
+      </a>
     );
   };
+
+  const isHighlighted = (id) => ({
+    // borderColor: highlightedId === id ? "palegreen" : "initial",
+    boxShadow: highlightedId === id ? "8px 8px palegreen" : "none",
+  });
 
   const SECTIONS = (props) => (
     <div className="col-md-6">
       {props.sections.map((section, index) => (
-        <div key={section.id} className={styles.section}>
+        <div
+          key={section.id}
+          className={styles.section}
+          style={isHighlighted(section.id)}
+        >
           <div className={`${styles.button_wrapper}`}>
             <div
               className={styles.clickable}
@@ -163,7 +176,11 @@ export default function Home({
                 <FaRegArrowAltCircleDown />
               </div>
             )}
-            <SwapIcon index={index + props.modifier} loc={section.loc} />
+            <SwapIcon
+              id={section.id}
+              index={index + props.modifier}
+              loc={section.loc}
+            />
           </div>
           <input
             className={styles.section_title}
@@ -272,7 +289,7 @@ export default function Home({
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={""}>
+      <section className={""} id="ContainerElementID">
         <div className="container-fluid">
           <div
             onClick={() => setEditing(!editing)}
