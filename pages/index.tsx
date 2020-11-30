@@ -28,7 +28,7 @@ const createItem = () => ({
 const createSection = (loc) => ({
   id: uuid4(),
   loc,
-  title: "Name",
+  title: "Section",
   items: [],
 });
 
@@ -109,6 +109,12 @@ export default function Home({
       index
     );
 
+  const deleteItem = (index, subindex) =>
+    adjustItems(index, [
+      ...sections[index].items.slice(0, subindex),
+      ...sections[index].items.slice(subindex + 1),
+    ]);
+
   const SwapIcon = (props) => {
     const isRight = props.loc === "right";
     const SwapIcon = isRight
@@ -138,12 +144,6 @@ export default function Home({
           style={isHighlighted(section.id)}
         >
           <div className={`${styles.button_wrapper}`}>
-            <div
-              className={styles.clickable}
-              onClick={() => deleteSection(index + props.modifier)}
-            >
-              <FaTrashAlt />
-            </div>
             {index > 0 && (
               <div
                 className={styles.clickable}
@@ -181,6 +181,12 @@ export default function Home({
               index={index + props.modifier}
               loc={section.loc}
             />
+            <div
+              className={styles.clickable}
+              onClick={() => deleteSection(index + props.modifier)}
+            >
+              <FaTrashAlt />
+            </div>
           </div>
           <input
             className={styles.section_title}
@@ -232,6 +238,12 @@ export default function Home({
                 >
                   <FaRegArrowAltCircleDown />
                 </div>
+                <div
+                  className={styles.clickable}
+                  onClick={() => deleteItem(index + props.modifier, subindex)}
+                >
+                  <FaTrashAlt />
+                </div>
               </div>
               <div className="col-auto">
                 <input
@@ -253,18 +265,22 @@ export default function Home({
               title="Create new item"
               className={styles.clickable}
               onClick={() =>
-                adjustItems(index, [
+                adjustItems(index + props.modifier, [
                   ...props.sections[index].items,
                   createItem(),
                 ])
               }
             >
+              {!props.sections[index].items.length && (
+                <span className={styles.tooltip_info}>Click to add item</span>
+              )}
               <FaRegPlusSquare />
             </div>
           </div>
         </div>
       ))}
       <br />
+
       <div className={`${styles.button_wrapper}`}>
         <div
           title="Create new section"
@@ -278,6 +294,9 @@ export default function Home({
             )
           }
         >
+          {props.info && !props.sections.length && (
+            <span className={styles.tooltip_info}>{props.info}</span>
+          )}
           <FaRegPlusSquare />
         </div>
       </div>
@@ -291,6 +310,20 @@ export default function Home({
       </Head>
       <section className={""} id="ContainerElementID">
         <div className="container-fluid">
+          <div className={`row ${styles.row}`}>
+            <button
+              className={styles.action_button}
+              onClick={() => setSections(DEFAULT_MENU)}
+            >
+              Load example
+            </button>
+            <button
+              className={styles.action_button}
+              onClick={() => setSections([])}
+            >
+              Start from scratch
+            </button>
+          </div>
           <div
             onClick={() => setEditing(!editing)}
             className={`row ${styles.row}`}
@@ -303,7 +336,12 @@ export default function Home({
             />
           </div>
           <div className={`row ${styles.row}`}>
-            <SECTIONS loc="left" modifier={0} sections={leftSections} />
+            <SECTIONS
+              info="Click to add section..."
+              loc="left"
+              modifier={0}
+              sections={leftSections}
+            />
             <SECTIONS
               loc="right"
               modifier={leftSections.length}

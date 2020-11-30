@@ -3,6 +3,7 @@ $editable-bg: palegreen;
 $editable-action: green;
 
 .row {
+  justify-content: center;
   max-width: 1000px;
   margin: auto;
 }
@@ -73,7 +74,7 @@ $editable-action: green;
   margin-top: 5px;
   display: flex;
   // flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
   align-content: center;
 }
 
@@ -112,4 +113,41 @@ $editable-action: green;
 
 .cooked {
   margin: 1rem 0;
+}
+
+.tooltip_info {
+  margin-right: 15px;
+  background-color: $editable;
+  padding: 5px;
+  border: 1px black solid;
+  position: relative;
+  &:hover {
+    box-shadow: 1px 1px gray;
+  }
+  &:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid black;
+    right: -8px;
+
+    top: 7px;
+  }
+}
+
+.action_button {
+  color: black;
+  border: 2px black solid;
+  border-radius: 5px;
+  background-color: $editable;
+  margin: 20px;
+
+  &:hover {
+    box-shadow: 2px 2px gray;
+  }
 }
