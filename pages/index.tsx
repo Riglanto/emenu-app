@@ -115,12 +115,12 @@ export default function Home({
       ? FaRegArrowAltCircleLeft
       : FaRegArrowAltCircleRight;
     return (
-      <a
+      <div
         className={styles.clickable}
         onClick={() => swapSectionLoc(props.index, props.id)}
       >
         <SwapIcon />
-      </a>
+      </div>
     );
   };
 
