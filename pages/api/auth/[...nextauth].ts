@@ -16,7 +16,7 @@ const options = {
         Providers.Email({
             server: {
                 host: process.env.EMAIL_SERVER_HOST,
-                port: process.env.EMAIL_SERVER_PORT,
+                port: Number(process.env.EMAIL_SERVER_PORT),
                 auth: {
                     user: process.env.EMAIL_SERVER_USER,
                     pass: process.env.EMAIL_SERVER_PASSWORD
@@ -24,16 +24,26 @@ const options = {
             },
             from: process.env.EMAIL_FROM
         }),
+        Providers.Credentials({
+            name: 'credentials',
+            credentials: {
+                username: {label: "Username", type: "text", placeholder: "John Smith"},
+                password: {label: "Password", type: "password"},
+            }
+            authorize: async (credentails) => {
+                
+                return null
+            }
+        })
+
     ],
-    // SQL or MongoDB database (or leave empty)
-    // database: process.env.DATABASE_URL
     database: {
         type: 'postgres',
-        host: 'emenudb.ccmqyjkj1lkp.us-east-1.rds.amazonaws.com',
-        port: 5432,
-        username: 'postgres',
-        password: 'sO$036am&W^9Nkjn',
-        database: 'emenu',
+        host: process.env.DATABASE_HOST,
+        port: process.env.DATABASE_PORT,
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASS,
+        database: process.env.DATABASE_NAME,
         synchronize: true
     }
 }
