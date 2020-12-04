@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid4 } from "uuid";
 import {
   FaRegArrowAltCircleDown,
@@ -11,6 +11,11 @@ import {
   FaTrashAlt,
 } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
+import {
+  useSession,
+  signin,
+  signout
+} from 'next-auth/client'
 
 import Layout, { siteTitle } from "../components/layout";
 import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
@@ -47,6 +52,11 @@ const isCollapsed = (text) => {
   };
 };
 
+async function hello() {
+  const x = await fetch(`/api/hello`)
+  console.log(x.text())
+}
+
 export default function Home({
   allPostsData,
 }: {
@@ -56,6 +66,7 @@ export default function Home({
     id: string;
   }[];
 }) {
+  useEffect(() => { hello(); }, []);
   const [sections, setSections] = useState(DEFAULT_MENU);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [editing, setEditing] = useState(false);
@@ -303,11 +314,21 @@ export default function Home({
     </div>
   );
 
+  const [session, loading] = useSession()
+
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      {!session && <>
+        Not signed in <br />
+        <button onClick={signin}>Sign in</button>
+      </>}
+      {session && <>
+        Signed in as {session.user.email} <br />
+        <button onClick={signout}>Sign out</button>
+      </>}
       <section className={""} id="ContainerElementID">
         <div className="container-fluid">
           <div className={`row ${styles.row}`}>

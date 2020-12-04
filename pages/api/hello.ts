@@ -1,5 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getSession } from "next-auth/client";
 
-export default (_: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({ text: 'Hello' })
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+  if (session) {
+    res.end(
+      `Welcome to the VIP club, ${session.user.name || session.user.email}!`
+    );
+  } else {
+    res.statusCode = 403;
+    res.end("Hold on, you're not allowed in here!");
+  }
 }
