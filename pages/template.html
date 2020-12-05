@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>{XYZ} restaurant</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+    <style>
+        .restaurant {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: .75rem;
+
+        }
+
+        .section {
+            position: relative;
+            border: black 2px solid;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 25px 5px;
+            margin-bottom: 0;
+            max-width: 500px;
+        }
+
+        .row {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section>.title {
+            position: absolute;
+            top: -.9rem;
+            background-color: white;
+            padding: 0 10px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .item {
+            margin: 5px 0;
+        }
+
+        .item .title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .item .desc {
+            font-size: .8em;
+            font-style: italic;
+        }
+
+        .item .price {
+            font-size: .8em;
+        }
+
+        .qr>svg {
+            margin-top: 1rem;
+            width: 200px;
+        }
+
+        .cooked {
+            margin: 1rem 0;
+            font-size: .7rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="alert alert-primary" role="alert">
+        {XYZ}.emenu.today does not exist! This could be your menu!
+    </div>
+    <div class="container-fluid">
+
+        <div class="row restaurant">
+            <div class="col text-center">
+                ~ {XYZ} restaurant ~
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="section">
+                    <div class="title">{XYZ} appetizers</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="title">{XYZ} salads</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="title">{XYZ} mains</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="section">
+                    <div class="title">{XYZ} Specials</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="title">{XYZ} Deserts</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="title">{XYZ} Drinks</div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="col">
+                            <div class="title">
+                                ...
+                            </div>
+                            <div class="desc">
+                                ...
+                            </div>
+                        </div>
+                        <div class="price col-auto">
+                            ...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col qr text-center">
+                <svg version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                    <rect shape-rendering="optimizeSpeed" x="0" y="0" width="200" height="200" fill="white" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="12" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="19" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="26" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="33" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="40" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="47" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="54" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="61" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="68" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="75" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="61" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="82" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="61" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="89" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="96" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="103" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="61" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="110" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="117" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="124" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="131" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="138" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="103" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="145" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="110" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="152" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="117" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="159" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="89" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="166" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="75" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="82" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="131" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="145" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="152" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="166" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="173" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="173" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="12" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="19" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="26" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="33" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="40" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="47" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="54" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="68" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="96" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="124" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="138" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="159" y="180" width="7" height="7" fill="black" />
+                    <rect shape-rendering="optimizeSpeed" x="180" y="180" width="7" height="7" fill="black" /></svg>
+                <div>
+                    Share the menu!
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center cooked">
+                ~ Cooked with love by
+                <a href="https://www.emenu.today">emenu.today</a>
+                ~
+            </div>
+        </div>
+</body>
+
+</html>

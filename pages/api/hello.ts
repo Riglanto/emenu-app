@@ -1,7 +1,39 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/client";
+import faunadb from "faunadb";
+
+import { getSections } from "../sections"
+
+
+const q = faunadb.query;
+const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
+
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const id = '2841004626285696072';
+  if (req.method === "GET") {
+    const result = await client.query(
+      q.Get(q.Ref(q.Collection('sections'), id))
+    )
+    res.status(200).json(result.data);
+  } else if (req.method === "POST") {
+    const { sections } = req.body;
+    const result = await client.query(q.Let({
+      match: q.Ref(q.Collection('sections'), id),
+      data: { data: { sections } }
+    },
+      q.If(
+        q.Exists(q.Var('match')),
+        q.Update(q.Var('match'), q.Var('data')),
+        q.Create(q.Var('match'), q.Var('data'))
+      )
+    ))
+    res.status(201).end();
+  }
+  return;
+
+
+  console.log(getSections(456))
   const session = await getSession({ req });
   if (session) {
     res.end(

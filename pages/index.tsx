@@ -22,6 +22,7 @@ import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
 
 import { animateScroll } from "react-scroll";
 import styles from "../styles/builder.module.scss";
+import Axios from "axios";
 
 const createItem = () => ({
   id: uuid4(),
@@ -52,9 +53,18 @@ const isCollapsed = (text) => {
   };
 };
 
-async function hello() {
-  const x = await fetch(`/api/hello`)
-  console.log(x.text())
+
+async function fetchSections() {
+  const res = await Axios.get(`/api/hello`)
+  return res.data.sections;
+}
+
+async function putSections(sections) {
+  await fetch(`/api/hello`, {
+    method: "POST", headers: {
+      'Content-Type': 'application/json'
+    }, body: JSON.stringify({ sections })
+  })
 }
 
 export default function Home({
@@ -66,7 +76,7 @@ export default function Home({
     id: string;
   }[];
 }) {
-  useEffect(() => { hello(); }, []);
+  // useEffect(() => { get(); }, []);
   const [sections, setSections] = useState(DEFAULT_MENU);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [editing, setEditing] = useState(false);
@@ -314,6 +324,15 @@ export default function Home({
     </div>
   );
 
+  const loadSections = async () => {
+    const data = await fetchSections();
+    setSections(data);
+  }
+
+  const saveSections = async () => {
+    await putSections(sections);
+  }
+
   const [session, loading] = useSession()
 
   return (
@@ -343,6 +362,18 @@ export default function Home({
               onClick={() => setSections([])}
             >
               Start from scratch
+            </button>
+            <button
+              className={styles.action_button}
+              onClick={() => loadSections()}
+            >
+              Load
+            </button>
+            <button
+              className={styles.action_button}
+              onClick={() => saveSections()}
+            >
+              Save
             </button>
           </div>
           <div

@@ -12,6 +12,7 @@ EMAIL_SERVER_HOST=<value>
 EMAIL_SERVER_PORT=<value>
 EMAIL_FROM=<value>
 DATABASE_URL=<value>
+FAUNADB_SECRET_KEY=<value>
 ```
 
 2. Install the dependenciees:
