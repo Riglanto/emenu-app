@@ -1,3 +1,5 @@
+import "reflect-metadata"
+
 import { AppProps } from "next/app";
 import { Provider } from 'next-auth/client'
 

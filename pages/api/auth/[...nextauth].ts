@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
+import authorize from '../../../modules/auth/authorize'
 
 const options = {
     providers: [
@@ -27,24 +28,21 @@ const options = {
         Providers.Credentials({
             name: 'credentials',
             credentials: {
-                username: {label: "Username", type: "text", placeholder: "John Smith"},
+                username: {label: "Email", type: "text", placeholder: "user@example.com"},
                 password: {label: "Password", type: "password"},
-            }
-            authorize: async (credentails) => {
-                
-                return null
-            }
+            },
+            authorize
         })
 
     ],
     database: {
         type: 'postgres',
-        host: process.env.DATABASE_HOST,
-        port: process.env.DATABASE_PORT,
-        username: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASS,
-        database: process.env.DATABASE_NAME,
-        synchronize: true
+        host: process.env.PGHOST,
+        port: Number(process.env.PGPORT),
+        username: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
+        database: process.env.PGDATABASE,
+        synchronize: false
     }
 }
 
