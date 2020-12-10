@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import { v4 as uuid4 } from "uuid";
 import {
@@ -12,9 +12,10 @@ import {
 } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
 import {
-  useSession,
+  getSession,
   signin,
-  signout
+  signout,
+  useSession
 } from 'next-auth/client'
 
 import Layout, { siteTitle } from "../components/layout";
@@ -23,6 +24,24 @@ import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
 import { animateScroll } from "react-scroll";
 import styles from "../styles/builder.module.scss";
 import Axios from "axios";
+
+interface ServerProps {
+  hasSetPassword: boolean
+}
+
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const session = await getSession(context)
+  if (session?.['setPassword'])
+  return {
+    props: {
+    },
+    redirect: {destination: '/set-password'}
+  }
+  else
+  return {
+    props: {}
+  }
+}
 
 const createItem = () => ({
   id: uuid4(),
@@ -406,8 +425,3 @@ export default function Home({
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {},
-  };
-};

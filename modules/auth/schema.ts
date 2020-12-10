@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 
-export const SIGNUP_SCHEMA = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
+export const SET_PASSWORD_SCHEMA = yup.object().shape({
+    password: yup.string().required('Password is required'),
+    password1: yup.string().oneOf([yup.ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
 })
 
-export type Signup = yup.InferType<typeof SIGNUP_SCHEMA>
+export type SetPasswordForm = yup.InferType<typeof SET_PASSWORD_SCHEMA>
 
-export async function validateSignup(form: unknown) {
-    return SIGNUP_SCHEMA.validate(form)
+export async function validateSetPassword(form: unknown) {
+    return await SET_PASSWORD_SCHEMA.validate(form)
 }
