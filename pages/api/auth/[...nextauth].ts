@@ -2,7 +2,6 @@ import NextAuth, { InitOptions } from 'next-auth'
 import Adapter from '~/modules/auth/adapter'
 import Providers from 'next-auth/providers'
 import authorize from '../../../modules/auth/authorize'
-import { EntitySchema } from 'typeorm'
 import { getUserByEmail } from '~/modules/auth/user'
 
 const options: InitOptions = {
