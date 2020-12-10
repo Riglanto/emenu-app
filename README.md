@@ -1,6 +1,9 @@
 # Setting up the project
+1. Create a [FaunaDB](https://dashboard.fauna.com/accounts/register) database for local developement.
 
-1. Create a `.env.local` file with the following structure:
+Create a database and generate API key for it.
+
+2. Create a `.env.local` file with the following structure:
 
 ```sh
 NEXTAUTH_URL=<value>
@@ -15,11 +18,15 @@ FAUNADB_SECRET_KEY=<value>
 APP_SECRET=<value>  ## defaults to test value
 ```
 
-2. Install the dependenciees:
+3. Install the dependenciees:
 ```sh
 yarn install
 ```
-3. Start a dev server:
+4. Apply db schema:
+```sh
+yarn setupSchema
+```
+5. Start a dev server:
 ```sh
 yarn dev
 ```
