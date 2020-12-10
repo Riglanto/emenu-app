@@ -2,37 +2,9 @@ $editable: palegreen;
 $editable-bg: palegreen;
 $editable-action: green;
 
-.row {
-  justify-content: center;
-  max-width: 1000px;
-  margin: auto ;
-}
-
-.section {
-  position: relative;
-  border: black 2px solid;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 25px 5px;
-  margin-bottom: 0;
-  max-width: 500px;
-}
-
 .restaurant_title {
   @extend .editable;
   text-align: center;
-}
-
-.section_title {
-  @extend .editable;
-  position: absolute;
-  top: -0.9rem;
-  background-color: white;
-  padding: 0 10px;
-  font-weight: 900;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  width: auto !important;
 }
 
 .editable {

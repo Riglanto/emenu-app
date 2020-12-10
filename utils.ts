@@ -1,5 +1,40 @@
 import { v4 as uuid4 } from 'uuid';
 
+export const createItem = () => ({
+    id: uuid4(),
+    title: "Name",
+    desc: "Desc",
+    price: 10,
+});
+
+export const createSection = (loc) => ({
+    id: uuid4(),
+    loc,
+    title: "Section",
+    items: [],
+});
+
+export const swapElements = (arr, from, to) => [
+    ...arr.slice(0, from),
+    ...[arr[to], arr[from]],
+    ...arr.slice(to + 1),
+];
+
+export const splitSectons = sections => {
+    const leftSections = sections.filter((s) => s.loc == "left");
+    const rightSections = sections.filter((s) => s.loc == "right");
+    return { leftSections, rightSections }
+}
+
+export const isVisible = (condition) => ({ display: condition ? "block" : "none" });
+export const isCollapsed = (text) => {
+    const isDefined = text && text.toString().length > 0;
+    return {
+        height: isDefined ? "auto" : "5px",
+        backgroundColor: isDefined ? "" : "lightgray",
+    };
+};
+
 export const DEFAULT_TITLE = "~ Three Amigos Restaurante ~"
 export const DEFAULT_MENU = [
     {

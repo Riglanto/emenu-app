@@ -5,73 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <title>{TITLE} restaurant</title>
+    <title>{TITLE}</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-
-    <style>
-        .restaurant {
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: .75rem;
-
-        }
-
-        .section {
-            position: relative;
-            border: black 2px solid;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 25px 5px;
-            margin-bottom: 0;
-            max-width: 500px;
-        }
-
-        .row {
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .section>.title {
-            position: absolute;
-            top: -.9rem;
-            background-color: white;
-            padding: 0 10px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-
-        .item {
-            margin: 5px 0;
-        }
-
-        .item .title {
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .item .desc {
-            font-size: .8em;
-            font-style: italic;
-        }
-
-        .item .price {
-            font-size: .8em;
-        }
-
-        .qr>svg {
-            margin-top: 1rem;
-            width: 200px;
-        }
-
-        .cooked {
-            margin: 1rem 0;
-            font-size: .7rem;
-        }
-    </style>
+    {STYLES}
 </head>
 
 <body>
@@ -82,9 +21,7 @@
                 {TITLE}
             </div>
         </div>
-        <div class="row">
-            {SECTIONS}
-        </div>
+        {SECTIONS}
 
         <div class="row">
             <div class="col qr text-center">

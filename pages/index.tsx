@@ -3,15 +3,6 @@ import { GetStaticProps } from "next";
 import { useEffect, useState } from "react";
 import { v4 as uuid4 } from "uuid";
 import {
-  FaRegArrowAltCircleDown,
-  FaRegArrowAltCircleLeft,
-  FaRegArrowAltCircleRight,
-  FaRegArrowAltCircleUp,
-  FaRegPlusSquare,
-  FaTrashAlt,
-} from "react-icons/fa";
-import TextareaAutosize from "react-textarea-autosize";
-import {
   useSession,
   signin,
   signout
@@ -20,41 +11,10 @@ import Axios from "axios";
 import { animateScroll } from "react-scroll";
 
 import Layout, { siteTitle } from "../components/layout";
-import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
-import { Content } from "./sections";
+import { DEFAULT_MENU, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 
 import styles from "../styles/builder.module.scss";
-
-
-const createItem = () => ({
-  id: uuid4(),
-  title: "Name",
-  desc: "Desc",
-  price: 10,
-});
-
-const createSection = (loc) => ({
-  id: uuid4(),
-  loc,
-  title: "Section",
-  items: [],
-});
-
-const swapElements = (arr, from, to) => [
-  ...arr.slice(0, from),
-  ...[arr[to], arr[from]],
-  ...arr.slice(to + 1),
-];
-
-const isVisible = (condition) => ({ display: condition ? "block" : "none" });
-const isCollapsed = (text) => {
-  const isDefined = text && text.toString().length > 0;
-  return {
-    height: isDefined ? "auto" : "5px",
-    backgroundColor: isDefined ? "" : "lightgray",
-  };
-};
-
+import { Sections } from "./sections";
 
 async function fetchSections() {
   const res = await Axios.get(`/api/hello`)
@@ -69,23 +29,13 @@ async function putSections(sections) {
   })
 }
 
-export default function Home({
-  allPostsData,
-}: {
-  allPostsData: {
-    date: string;
-    title: string;
-    id: string;
-  }[];
-}) {
+export default function Home() {
   // useEffect(() => { get(); }, []);
   const [sections, setSections] = useState(DEFAULT_MENU);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [highlightedId, setHighlightedId] = useState(null);
 
-  const leftSections = sections.filter((s) => s.loc == "left");
-  const rightSections = sections.filter((s) => s.loc == "right");
-
+  const { leftSections, rightSections } = splitSectons(sections)
   const updateSection = (section, index) =>
     setSections(
       [
@@ -137,193 +87,9 @@ export default function Home({
       ...sections[index].items.slice(subindex + 1),
     ]);
 
-  const SwapIcon = (props) => {
-    const isRight = props.loc === "right";
-    const SwapIcon = isRight
-      ? FaRegArrowAltCircleLeft
-      : FaRegArrowAltCircleRight;
-    return (
-      <div
-        className={styles.clickable}
-        onClick={() => swapSectionLoc(props.index, props.id)}
-      >
-        <SwapIcon />
-      </div>
-    );
-  };
+  const swapSections = (a, b) => setSections(swapElements(sections, a, b))
 
-  const isHighlighted = (id) => ({
-    // borderColor: highlightedId === id ? "palegreen" : "initial",
-    boxShadow: highlightedId === id ? "8px 8px palegreen" : "none",
-  });
 
-  const SECTIONS = (props) => (
-    <div className="col-md-6">
-      {props.sections.map((section, index) => (
-        <div
-          key={section.id}
-          className={styles.section}
-          style={isHighlighted(section.id)}
-        >
-          <div className={styles.button_wrapper}>
-            {index > 0 && (
-              <div
-                className={styles.clickable}
-                onClick={() =>
-                  setSections(
-                    swapElements(
-                      sections,
-                      index - 1 + props.modifier,
-                      index + props.modifier
-                    )
-                  )
-                }
-              >
-                <FaRegArrowAltCircleUp />
-              </div>
-            )}
-            {index < props.sections.length - 1 && (
-              <div
-                className={styles.clickable}
-                onClick={() =>
-                  setSections(
-                    swapElements(
-                      sections,
-                      index + props.modifier,
-                      index + 1 + props.modifier
-                    )
-                  )
-                }
-              >
-                <FaRegArrowAltCircleDown />
-              </div>
-            )}
-            <SwapIcon
-              id={section.id}
-              index={index + props.modifier}
-              loc={section.loc}
-            />
-            <div
-              className={styles.clickable}
-              onClick={() => deleteSection(index + props.modifier)}
-            >
-              <FaTrashAlt />
-            </div>
-          </div>
-          <input
-            className={styles.section_title}
-            value={section.title}
-            onChange={(e) => updateTitle(index, e.target.value)}
-          />
-          {section.items.map((item, subindex) => (
-            <div key={item.id} className="row xrow">
-              <div className="col">
-                <input
-                  className={`title ${styles.editable}`}
-                  style={isCollapsed(item.title)}
-                  value={item.title}
-                  onChange={(e) =>
-                    updateItemProps(index, subindex, { title: e.target.value })
-                  }
-                />
-
-                <TextareaAutosize
-                  className={`desc ${styles.editable}`}
-                  value={item.desc}
-                  onChange={(e) =>
-                    updateItemProps(index, subindex, { desc: e.target.value })
-                  }
-                />
-              </div>
-              <div className={styles.button_wrapper}>
-                <div
-                  style={isVisible(subindex > 0)}
-                  className={styles.clickable}
-                  onClick={() =>
-                    adjustItems(
-                      index,
-                      swapElements(section.items, subindex - 1, subindex)
-                    )
-                  }
-                >
-                  <FaRegArrowAltCircleUp />
-                </div>
-                <div
-                  style={isVisible(subindex < section.items.length - 1)}
-                  className={styles.clickable}
-                  onClick={() =>
-                    adjustItems(
-                      index,
-                      swapElements(section.items, subindex, subindex + 1)
-                    )
-                  }
-                >
-                  <FaRegArrowAltCircleDown />
-                </div>
-                <div
-                  className={styles.clickable}
-                  onClick={() => deleteItem(index + props.modifier, subindex)}
-                >
-                  <FaTrashAlt />
-                </div>
-              </div>
-              <div className="col-auto">
-                <input
-                  className={`price ${styles.editable}`}
-                  style={isCollapsed(item.price)}
-                  value={item.price}
-                  onChange={(e) =>
-                    updateItemProps(index, subindex, { price: e.target.value })
-                  }
-                  type="number"
-                  min="0"
-                  step="0.01"
-                />
-              </div>
-            </div>
-          ))}
-          <div className={styles.button_wrapper}>
-            <div
-              title="Create new item"
-              className={styles.clickable}
-              onClick={() =>
-                adjustItems(index + props.modifier, [
-                  ...props.sections[index].items,
-                  createItem(),
-                ])
-              }
-            >
-              {!props.sections[index].items.length && (
-                <span className={styles.tooltip_info}>Click to add item</span>
-              )}
-              <FaRegPlusSquare />
-            </div>
-          </div>
-        </div>
-      ))}
-      <br />
-
-      <div className={styles.button_wrapper}>
-        <div
-          title="Create new section"
-          className={styles.clickable}
-          onClick={() =>
-            setSections(
-              insertSectionAt(
-                createSection(props.loc),
-                props.sections.length + props.modifier
-              )
-            )
-          }
-        >
-          {props.info && !props.sections.length && (
-            <span className={styles.tooltip_info}>{props.info}</span>
-          )}
-          <FaRegPlusSquare />
-        </div>
-      </div>
-    </div>
-  );
 
   const loadSections = async () => {
     const data = await fetchSections();
@@ -377,29 +143,32 @@ export default function Home({
               Save
             </button>
           </div>
-          <div className="sections">
-            <div className="row">
-              <input
-                autoFocus
-                className={styles.restaurant_title}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="row">
-              <SECTIONS
-                info="Click to add section..."
-                loc="left"
-                modifier={0}
-                sections={leftSections}
-              />
-              <SECTIONS
-                loc="right"
-                modifier={leftSections.length}
-                sections={rightSections}
-              />
-            </div>
+          <div className="row">
+            <input
+              autoFocus
+              className={styles.restaurant_title}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
+          <Sections
+            editable={true}
+            leftSections={leftSections}
+            rightSections={rightSections}
+            highlightedId={highlightedId}
+            functions={[
+              swapSections,
+              deleteSection,
+              deleteItem,
+              updateTitle,
+              updateItemProps,
+              adjustItems,
+              swapElements,
+              insertSectionAt,
+              setSections
+            ]}
+          />
+
         </div>
       </section>
     </Layout>

@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 import faunadb from "faunadb";
 
 import { getSections } from "../sections"
+import { save } from './aptils';
 
 
 const q = faunadb.query;
@@ -12,6 +13,7 @@ const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const id = '2841004626285696072';
+  save();
   if (req.method === "GET") {
     const result: any = await client.query(
       q.Get(q.Ref(q.Collection('sections'), id))

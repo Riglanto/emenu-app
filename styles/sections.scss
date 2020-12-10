@@ -16,6 +16,27 @@ $editable: palegreen;
         padding: 0.75rem;
     }
 
+    .section {
+      position: relative;
+      border: black 2px solid;
+      border-radius: 5px;
+      padding: 5px;
+      margin: 25px 5px;
+      margin-bottom: 0;
+      max-width: 500px;
+    }
+
+    .section_title {
+      position: absolute;
+      top: -0.9rem;
+      background-color: white;
+      padding: 0 10px;
+      font-weight: 900;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      width: auto !important;
+    }
+
     .item {
         @extend .row;
         margin: 5px 0;
