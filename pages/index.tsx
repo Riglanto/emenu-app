@@ -16,13 +16,15 @@ import {
   signin,
   signout
 } from 'next-auth/client'
+import Axios from "axios";
+import { animateScroll } from "react-scroll";
 
 import Layout, { siteTitle } from "../components/layout";
 import { DEFAULT_MENU, DEFAULT_TITLE } from "../utils";
+import { Content } from "./sections";
 
-import { animateScroll } from "react-scroll";
 import styles from "../styles/builder.module.scss";
-import Axios from "axios";
+
 
 const createItem = () => ({
   id: uuid4(),
@@ -79,7 +81,6 @@ export default function Home({
   // useEffect(() => { get(); }, []);
   const [sections, setSections] = useState(DEFAULT_MENU);
   const [title, setTitle] = useState(DEFAULT_TITLE);
-  const [editing, setEditing] = useState(false);
   const [highlightedId, setHighlightedId] = useState(null);
 
   const leftSections = sections.filter((s) => s.loc == "left");
@@ -164,7 +165,7 @@ export default function Home({
           className={styles.section}
           style={isHighlighted(section.id)}
         >
-          <div className={`${styles.button_wrapper}`}>
+          <div className={styles.button_wrapper}>
             {index > 0 && (
               <div
                 className={styles.clickable}
@@ -215,10 +216,10 @@ export default function Home({
             onChange={(e) => updateTitle(index, e.target.value)}
           />
           {section.items.map((item, subindex) => (
-            <div key={item.id} className={`row ${styles.row}`}>
+            <div key={item.id} className="row xrow">
               <div className="col">
                 <input
-                  className={styles.title}
+                  className={`title ${styles.editable}`}
                   style={isCollapsed(item.title)}
                   value={item.title}
                   onChange={(e) =>
@@ -227,14 +228,14 @@ export default function Home({
                 />
 
                 <TextareaAutosize
-                  className={styles.desc}
+                  className={`desc ${styles.editable}`}
                   value={item.desc}
                   onChange={(e) =>
                     updateItemProps(index, subindex, { desc: e.target.value })
                   }
                 />
               </div>
-              <div className={`${styles.button_wrapper}`}>
+              <div className={styles.button_wrapper}>
                 <div
                   style={isVisible(subindex > 0)}
                   className={styles.clickable}
@@ -268,7 +269,7 @@ export default function Home({
               </div>
               <div className="col-auto">
                 <input
-                  className={styles.price}
+                  className={`price ${styles.editable}`}
                   style={isCollapsed(item.price)}
                   value={item.price}
                   onChange={(e) =>
@@ -281,7 +282,7 @@ export default function Home({
               </div>
             </div>
           ))}
-          <div className={`${styles.button_wrapper}`}>
+          <div className={styles.button_wrapper}>
             <div
               title="Create new item"
               className={styles.clickable}
@@ -302,7 +303,7 @@ export default function Home({
       ))}
       <br />
 
-      <div className={`${styles.button_wrapper}`}>
+      <div className={styles.button_wrapper}>
         <div
           title="Create new section"
           className={styles.clickable}
@@ -348,9 +349,9 @@ export default function Home({
         Signed in as {session.user.email} <br />
         <button onClick={signout}>Sign out</button>
       </>}
-      <section className={""} id="ContainerElementID">
+      <section>
         <div className="container-fluid">
-          <div className={`row ${styles.row}`}>
+          <div className="">
             <button
               className={styles.action_button}
               onClick={() => setSections(DEFAULT_MENU)}
@@ -376,29 +377,28 @@ export default function Home({
               Save
             </button>
           </div>
-          <div
-            onClick={() => setEditing(!editing)}
-            className={`row ${styles.row}`}
-          >
-            <input
-              autoFocus
-              className={styles.restaurant_title}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className={`row ${styles.row}`}>
-            <SECTIONS
-              info="Click to add section..."
-              loc="left"
-              modifier={0}
-              sections={leftSections}
-            />
-            <SECTIONS
-              loc="right"
-              modifier={leftSections.length}
-              sections={rightSections}
-            />
+          <div className="sections">
+            <div className="row">
+              <input
+                autoFocus
+                className={styles.restaurant_title}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="row">
+              <SECTIONS
+                info="Click to add section..."
+                loc="left"
+                modifier={0}
+                sections={leftSections}
+              />
+              <SECTIONS
+                loc="right"
+                modifier={leftSections.length}
+                sections={rightSections}
+              />
+            </div>
           </div>
         </div>
       </section>

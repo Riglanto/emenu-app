@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import { Provider } from 'next-auth/client'
 
 import "../styles/global.scss";
+import "../styles/sections.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App({ Component, pageProps }: AppProps) {

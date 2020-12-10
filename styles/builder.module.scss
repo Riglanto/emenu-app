@@ -5,14 +5,7 @@ $editable-action: green;
 .row {
   justify-content: center;
   max-width: 1000px;
-  margin: auto;
-}
-
-.restaurant {
-  @extend .row;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0.75rem;
+  margin: auto ;
 }
 
 .section {
@@ -78,38 +71,7 @@ $editable-action: green;
   align-content: center;
 }
 
-.item {
-  @extend .row;
-  margin: 5px 0;
-}
 
-.title {
-  @extend .item;
-  @extend .editable;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.desc {
-  @extend .item;
-  @extend .editable;
-  font-size: 0.8em;
-  font-style: italic;
-}
-
-.price {
-  @extend .item;
-  @extend .editable;
-  font-size: 0.8em;
-  text-align: right;
-  max-width: 25px;
-  margin-left: 5px;
-}
-
-.qr > svg {
-  margin-top: 1rem;
-  width: 200px;
-}
 
 .cooked {
   margin: 1rem 0;
