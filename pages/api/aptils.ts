@@ -1,10 +1,20 @@
-import { readFileSync, writeFileSync } from 'fs-extra';
+import { readFileSync } from 'fs-extra';
 import * as sass from 'sass';
 import QRCode from 'qrcode'
+import * as AWS from "aws-sdk";
 
 import { getSections } from '../../pages/sections';
 
-export const save = async (domain, title, sections) => {
+
+const BUCKET_NAME = 'emenu.today'
+const aws_config = {
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET
+}
+const s3 = new AWS.S3(aws_config);
+const cf = new AWS.CloudFront(aws_config);
+
+export const generateMenuHtml = async (domain, title, sections) => {
     const url = `https://${domain}.emenu.today`
     const content = getSections(sections);
     const css = sass.renderSync({ file: "./styles/sections.scss" }).css.toString();
@@ -15,6 +25,32 @@ export const save = async (domain, title, sections) => {
         .replace("{SECTIONS}", content)
         .replace("{STYLES}", `<style>${css}</style>`)
         .replace("{QR}", qr)
-    writeFileSync(`${domain}.html`, result)
     return result;
+}
+
+export const upload = async (domain, content) => {
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: `${domain}/index.html`,
+        Body: "content"
+    };
+    const result = await s3.upload(params).promise()
+    console.log(result)
+}
+
+export const invalidate = async (domain) => {
+    const params = {
+        DistributionId: process.env.AWS_CF_DISTRIBUTION_ID,
+        InvalidationBatch: {
+            CallerReference: new Date().getTime().toString(),
+            Paths: {
+                Quantity: 1,
+                Items: [
+                    `/${domain}/*`,
+                ]
+            }
+        }
+    }
+    const result = await cf.createInvalidation(params).promise()
+    console.log(result)
 }

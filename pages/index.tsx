@@ -1,36 +1,21 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
-import { useEffect, useState } from "react";
-import { v4 as uuid4 } from "uuid";
+import { useState } from "react";
 import {
   useSession,
   signin,
   signout
 } from 'next-auth/client'
-import Axios from "axios";
 import { animateScroll } from "react-scroll";
 
 import Layout, { siteTitle } from "../components/layout";
 import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 
-import styles from "../styles/builder.module.scss";
+import * as api from "./api"
 import { Sections } from "./sections";
-
-async function fetchSections() {
-  const res = await Axios.get(`/api/hello`)
-  return res.data.sections;
-}
-
-async function putSections(sections) {
-  await fetch(`/api/hello`, {
-    method: "POST", headers: {
-      'Content-Type': 'application/json'
-    }, body: JSON.stringify({ sections })
-  })
-}
+import styles from "../styles/builder.module.scss";
 
 export default function Home() {
-  // useEffect(() => { get(); }, []);
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [highlightedId, setHighlightedId] = useState(null);
@@ -92,12 +77,16 @@ export default function Home() {
 
 
   const loadSections = async () => {
-    const data = await fetchSections();
+    const data = await api.fetchSections();
     setSections(data);
   }
 
   const saveSections = async () => {
-    await putSections(sections);
+    await api.putSections(sections);
+  }
+
+  const publish = async () => {
+    await api.publishMenu(title, sections);
   }
 
   const [session, loading] = useSession()
@@ -141,6 +130,12 @@ export default function Home() {
               onClick={() => saveSections()}
             >
               Save
+            </button>
+            <button
+              className={styles.action_button}
+              onClick={() => publish()}
+            >
+              Publish
             </button>
           </div>
           <div className="row">

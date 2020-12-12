@@ -13,9 +13,12 @@ EMAIL_SERVER_PORT=<value>
 EMAIL_FROM=<value>
 DATABASE_URL=<value>
 FAUNADB_SECRET_KEY=<value>
+AWS_ID=<value>
+AWS_SECRET=<value>
+AWS_CF_DISTRIBUTION_ID=<value>
 ```
 
-2. Install the dependenciees:
+2. Install the dependencies:
 ```sh
 yarn install
 ```
