@@ -32,7 +32,7 @@ export const upload = async (domain, content) => {
     const params = {
         Bucket: BUCKET_NAME,
         Key: `${domain}/index.html`,
-        Body: "content"
+        Body: "content 555"
     };
     const result = await s3.upload(params).promise()
     console.log(result)
@@ -53,4 +53,15 @@ export const invalidate = async (domain) => {
     }
     const result = await cf.createInvalidation(params).promise()
     console.log(result)
+}
+
+export const getInvalidationStatus = async (id: string) => {
+    const params = {
+        DistributionId: process.env.AWS_CF_DISTRIBUTION_ID,
+        Id: id
+    };
+    const result = await cf.getInvalidation(params).promise()
+    console.log(result)
+    console.log(result.Invalidation.InvalidationBatch.Paths)
+
 }
