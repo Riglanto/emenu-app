@@ -156,7 +156,7 @@ const Section = (props) => (
                                 className={styles.clickable}
                                 onClick={() =>
                                     props.adjustItems(
-                                        index,
+                                        index + props.modifier,
                                         props.swapElements(section.items, subindex - 1, subindex)
                                     )
                                 }
@@ -168,7 +168,7 @@ const Section = (props) => (
                                 className={styles.clickable}
                                 onClick={() =>
                                     props.adjustItems(
-                                        index,
+                                        index + props.modifier,
                                         props.swapElements(section.items, subindex, subindex + 1)
                                     )
                                 }

@@ -116,8 +116,8 @@ export default function Home() {
         <button onClick={signout}>Sign out</button>
       </>}
       <section>
-        <div className="container-fluid">
-          <div className="">
+        <div className="sections container-fluid">
+          <div className="row">
             <button
               className={styles.action_button}
               onClick={() => setSections(DEFAULT_SECTIONS)}
@@ -165,7 +165,8 @@ export default function Home() {
               adjustItems,
               swapElements,
               insertSectionAt,
-              setSections
+              setSections,
+              swapSectionLoc
             }}
           />
 
