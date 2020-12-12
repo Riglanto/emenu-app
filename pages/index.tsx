@@ -11,7 +11,7 @@ import Axios from "axios";
 import { animateScroll } from "react-scroll";
 
 import Layout, { siteTitle } from "../components/layout";
-import { DEFAULT_MENU, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
+import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 
 import styles from "../styles/builder.module.scss";
 import { Sections } from "./sections";
@@ -31,7 +31,7 @@ async function putSections(sections) {
 
 export default function Home() {
   // useEffect(() => { get(); }, []);
-  const [sections, setSections] = useState(DEFAULT_MENU);
+  const [sections, setSections] = useState(DEFAULT_SECTIONS);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [highlightedId, setHighlightedId] = useState(null);
 
@@ -120,7 +120,7 @@ export default function Home() {
           <div className="">
             <button
               className={styles.action_button}
-              onClick={() => setSections(DEFAULT_MENU)}
+              onClick={() => setSections(DEFAULT_SECTIONS)}
             >
               Load example
             </button>
@@ -156,7 +156,7 @@ export default function Home() {
             leftSections={leftSections}
             rightSections={rightSections}
             highlightedId={highlightedId}
-            functions={[
+            functions={{
               swapSections,
               deleteSection,
               deleteItem,
@@ -166,7 +166,7 @@ export default function Home() {
               swapElements,
               insertSectionAt,
               setSections
-            ]}
+            }}
           />
 
         </div>

@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
 
-import { createItem, createSection, DEFAULT_MENU, isCollapsed, isVisible, splitSectons } from "../utils"
+import { createItem, createSection, isCollapsed, isVisible, splitSectons } from "../utils"
 import styles from "../styles/builder.module.scss";
 
 export const Content = (props) => <div className="test">
@@ -17,8 +17,8 @@ export const Content = (props) => <div className="test">
     {false && <div>{props.x}</div>}
 </div>
 
-export const getSections = () => {
-    const { leftSections, rightSections } = splitSectons(DEFAULT_MENU)
+export const getSections = (sections) => {
+    const { leftSections, rightSections } = splitSectons(sections)
     return ReactDOMServer.renderToStaticMarkup(
         <Sections
             leftSections={leftSections}

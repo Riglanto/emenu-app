@@ -36,7 +36,7 @@ export const isCollapsed = (text) => {
 };
 
 export const DEFAULT_TITLE = "~ Three Amigos Restaurante ~"
-export const DEFAULT_MENU = [
+export const DEFAULT_SECTIONS = [
     {
         id: uuid4(),
         title: "Appetizers",
