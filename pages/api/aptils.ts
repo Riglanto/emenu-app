@@ -4,7 +4,7 @@ import * as sass from 'sass';
 import { getSections } from '../../pages/sections';
 
 export const save = () => {
-    const content = getSections(12345);
+    const content = getSections();
     const css = sass.renderSync({ file: "./styles/sections.scss" }).css.toString();
     const template = readFileSync("./template.html", 'utf8')
     const result = template
