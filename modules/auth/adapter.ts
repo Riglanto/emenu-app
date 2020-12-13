@@ -1,3 +1,4 @@
+// SOURCE: https://gist.github.com/s-kris/fbb9e5d7ba5e9bb3a5f7bd11f3c42b96
 // followed from next-auth repo: https://github.com/nextauthjs/next-auth
 // create faunadb server key
 // create collections: users, accounts, sessions, verificationRequests
