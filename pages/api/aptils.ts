@@ -5,7 +5,6 @@ import * as AWS from "aws-sdk";
 
 import { getSections } from '../../pages/sections';
 
-
 const BUCKET_NAME = 'emenu.today'
 const aws_config = {
     accessKeyId: process.env.AWS_ID,
@@ -14,7 +13,7 @@ const aws_config = {
 const s3 = new AWS.S3(aws_config);
 const cf = new AWS.CloudFront(aws_config);
 
-export const generateMenuHtml = async (domain, title, sections) => {
+export const generateMenuHtml = async (domain: string, title: string, sections: string) => {
     const url = `https://${domain}.emenu.today`
     const content = getSections(sections);
     const css = sass.renderSync({ file: "./styles/sections.scss" }).css.toString();
@@ -28,17 +27,17 @@ export const generateMenuHtml = async (domain, title, sections) => {
     return result;
 }
 
-export const upload = async (domain, content) => {
+export const upload = async (domain: string, content: string) => {
     const params = {
         Bucket: BUCKET_NAME,
         Key: `${domain}/index.html`,
-        Body: "content 555"
+        Body: content
     };
     const result = await s3.upload(params).promise()
-    console.log(result)
+    // console.log(result)
 }
 
-export const invalidate = async (domain) => {
+export const invalidate = async (domain: string) => {
     const params = {
         DistributionId: process.env.AWS_CF_DISTRIBUTION_ID,
         InvalidationBatch: {
@@ -46,13 +45,13 @@ export const invalidate = async (domain) => {
             Paths: {
                 Quantity: 1,
                 Items: [
-                    `/${domain}/*`,
+                    `/*`,
                 ]
             }
         }
     }
     const result = await cf.createInvalidation(params).promise()
-    console.log(result)
+    // console.log(result)
 }
 
 export const getInvalidationStatus = async (id: string) => {
