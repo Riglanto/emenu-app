@@ -3,7 +3,7 @@ import * as sass from 'sass';
 import QRCode from 'qrcode'
 import * as AWS from "aws-sdk";
 
-import { getSections } from '../../pages/sections';
+import { getSections } from '../../components/sections';
 
 const BUCKET_NAME = 'emenu.today'
 const aws_config = {

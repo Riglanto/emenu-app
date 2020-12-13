@@ -5,12 +5,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "setupSchema": "ts-node -r ./modules/dotenv -e 'require(\"./modules\").setupSchema(); export {}'",
+    "setupSchema2": "ts-node -r ./modules/dotenv ./modules/setup.ts",
     "test": "jest"
   },
   "dependencies": {
     "aws-sdk": "^2.809.0",
     "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
     "date-fns": "^2.11.1",
     "faunadb": "^4.0.0",
@@ -28,9 +30,13 @@
     "remark": "^12.0.0",
     "remark-html": "^12.0.0",
     "sass": "^1.30.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "yup": "0.31.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@types/bcrypt": "^3.0.0",
     "@types/fs-extra": "^9.0.4",
     "@types/jest": "^26.0.18",
     "@types/next-auth": "^3.1.18",
@@ -40,11 +46,14 @@
     "@types/react-scroll": "^1.8.2",
     "@types/sass": "^1.16.0",
     "@types/uuid": "^8.3.0",
+    "@types/yup": "^0.29.10",
     "babel-jest": "^26.6.3",
+    "dotenv-expand": "^5.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.1.0",
     "jest-dom": "^4.0.0",
+    "ts-node": "^9.1.0",
     "typescript": "^4.1.2"
   }
 }

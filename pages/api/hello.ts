@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/client";
 import faunadb from "faunadb";
 
-import { getSections } from "../sections"
+import { getSections } from "../../components/sections"
 
 const q = faunadb.query;
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });

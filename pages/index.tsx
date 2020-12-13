@@ -1,10 +1,11 @@
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { useState } from "react";
 import {
-  useSession,
+  getSession,
   signin,
-  signout
+  signout,
+  useSession
 } from 'next-auth/client'
 import { animateScroll } from "react-scroll";
 
@@ -12,8 +13,26 @@ import Layout, { siteTitle } from "../components/layout";
 import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 
 import * as api from "./api"
-import { Sections } from "./sections";
+import { Sections } from "../components/sections";
 import styles from "../styles/builder.module.scss";
+
+interface ServerProps {
+  hasSetPassword: boolean
+}
+
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const session = await getSession(context)
+  if (session?.['setPassword'])
+    return {
+      props: {
+      },
+      redirect: { destination: '/set-password' }
+    }
+  else
+    return {
+      props: {}
+    }
+}
 
 export default function Home() {
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
@@ -98,11 +117,11 @@ export default function Home() {
       </Head>
       {!session && <>
         Not signed in <br />
-        <button onClick={signin}>Sign in</button>
+        <button onClick={() => signin()}>Sign in</button>
       </>}
       {session && <>
         Signed in as {session.user.email} <br />
-        <button onClick={signout}>Sign out</button>
+        <button onClick={() => signout()}>Sign out</button>
       </>}
       <section>
         <div className="sections container-fluid">
@@ -171,8 +190,3 @@ export default function Home() {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {},
-  };
-};

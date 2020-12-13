@@ -1,0 +1,3 @@
+import { setupSchema } from ".";
+
+setupSchema();
