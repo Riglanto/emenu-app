@@ -21,15 +21,18 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
 }
 
-export default function Home() {
-  const [session, loading] = useSession()
+type Props = {
+  notify: (text: string) => void
+}
 
+export default function Home({ notify }: Props) {
+  const [session, loading] = useSession()
   return (
     <Layout loggedIn={!!session}>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Builder />
+      <Builder notify={notify} />
     </Layout>
   );
 }

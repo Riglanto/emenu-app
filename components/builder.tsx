@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 
 
 
-export default function Builder() {
+export default function Builder({ notify }: { notify: (string) => void }) {
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [highlightedId, setHighlightedId] = useState(null);
@@ -76,9 +76,11 @@ export default function Builder() {
 
   const saveSections = async () => {
     await api.putSections(sections);
+    notify("Your menu has been saved.")
   }
 
   const publish = async () => {
+    notify("Your menu is being published...")
     await api.publishMenu(title, sections);
   }
 
