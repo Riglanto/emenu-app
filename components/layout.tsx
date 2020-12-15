@@ -1,20 +1,21 @@
 import Head from 'next/head'
-import styles from './layout.module.scss'
-import utilStyles from '../styles/utils.module.scss'
-import Link from 'next/link'
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { signin, signout, useSession } from 'next-auth/client';
 
-const name = '[EMENU Builder]'
-export const siteTitle = 'Emenu builder'
+export const siteTitle = 'EMenu'
 
 export default function Layout({
   children,
-  home
+  home,
+  loggedIn
 }: {
   children: React.ReactNode
   home?: boolean
+  loggedIn?: boolean
 }) {
+  const [session] = useSession()
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -30,43 +31,23 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
-        {home ? (
-          <>
-            <img
-              src="/images/profile.jpg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
-              alt={name}
-            />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
-          </>
-        ) : (
-            <>
-              <Link href="/">
-                <a>
-                  <img
-                    src="/images/profile.jpg"
-                    className={`${styles.headerImage} ${utilStyles.borderCircle}`}
-                    alt={name}
-                  />
-                </a>
-              </Link>
-              <h2 className={utilStyles.headingLg}>
-                <Link href="/">
-                  <a className={utilStyles.colorInherit}>{name}</a>
-                </Link>
-              </h2>
-            </>
-          )}
+      <header>
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand href="#home">{siteTitle}</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Nav className="mr-auto">
+            </Nav>
+            <Nav>
+              {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
+              {session ?
+                <Nav.Link onClick={() => signout()}>Logout</Nav.Link>
+                : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
+            </Nav>
+          </Container>
+        </Navbar>
       </header>
       <main>{children}</main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )}
     </div>
   )
 }
