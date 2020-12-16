@@ -1,16 +1,21 @@
 import Axios from "axios";
 
+export async function initialFetchSections() {
+    const res = await Axios.get(`${process.env.NEXTAUTH_URL}/api/hello`)
+    return res.data;
+}
 
 export async function fetchSections() {
     const res = await Axios.get(`/api/hello`)
-    return res.data.sections;
+    return res.data;
 }
 
-export async function putSections(sections) {
+export async function putSections(data) {
+    const { title, sections } = data
     await fetch(`/api/hello`, {
         method: "POST", headers: {
             'Content-Type': 'application/json'
-        }, body: JSON.stringify({ sections })
+        }, body: JSON.stringify({ title, sections })
     })
 }
 

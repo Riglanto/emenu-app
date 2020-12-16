@@ -15,10 +15,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     )
     res.status(200).json(result.data);
   } else if (req.method === "POST") {
-    const { sections } = req.body;
+    const { title, sections } = req.body;
     const result = await client.query(q.Let({
       match: q.Ref(q.Collection('sections'), id),
-      data: { data: { sections } }
+      data: { data: { title, sections, lastUpdated: Date.now() } }
     },
       q.If(
         q.Exists(q.Var('match')),

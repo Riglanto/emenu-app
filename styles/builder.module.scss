@@ -85,3 +85,14 @@ $editable-action: green;
   //   box-shadow: 2px 2px gray;
   // }
 }
+
+.starter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  div {
+    margin: 0 20px;
+    padding: 10px;
+  }
+}

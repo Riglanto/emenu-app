@@ -1,19 +1,57 @@
 import { useState } from "react";
 import { animateScroll } from "react-scroll";
-
-import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
+import { Button, Card, Modal } from "react-bootstrap";
 
 import * as api from "../pages/api"
 import { Sections } from "./sections";
+
+import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 import styles from "../styles/builder.module.scss";
-import { Button } from "react-bootstrap";
 
+const MButton = (props) => <Button size="sm"
+  className={styles.action_button}
+  onClick={props.onClick}
+>
+  {props.text}
+</Button>
 
+const MCard = (props) =>
+  <Card style={{ width: '18rem' }}>
+    <Card.Img variant="top" src={props.img} />
+    <Card.Body style={{ display: "flex", flexDirection: "column" }}>
+      <Card.Text>{props.text}</Card.Text>
+      {props.action}
+    </Card.Body>
+  </Card>
 
-export default function Builder({ notify }: { notify: (string, number?) => void }) {
-  const [sections, setSections] = useState(DEFAULT_SECTIONS);
-  const [title, setTitle] = useState(DEFAULT_TITLE);
+export default function Builder(props) {
+  const { notify } = props;
+  const [data, setData] = useState({
+    title: props.data?.title,
+    sections: props.data?.sections
+  });
+
+  const { title, sections } = data;
+  const setTitle = (x) => setData({ ...data, title: x })
+  const setSections = (x) => setData({ ...data, sections: x })
   const [highlightedId, setHighlightedId] = useState(null);
+
+  if (!data.sections) {
+    return (
+      <div className={styles.starter}>
+        <MCard
+          text={<span>Start with our example - Mexican Restaurant <b>3 amigos</b></span>}
+          img="images/example2.png"
+          action={<MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />}
+        />
+        <MCard
+          text={<span>Start with <b>empty canvas</b> - Build anything you want</span>}
+          img="images/example5.png"
+          action={<MButton text="Start from scratch" onClick={() => setData({ title: "Click to add title...", sections: [] })} />}
+        />
+      </div>
+    )
+  }
 
   const { leftSections, rightSections } = splitSectons(sections)
   const updateSection = (section, index) =>
@@ -71,11 +109,12 @@ export default function Builder({ notify }: { notify: (string, number?) => void 
 
   const loadSections = async () => {
     const data = await api.fetchSections();
-    setSections(data);
+    setData(data);
+    notify("Your menu has been loaded.")
   }
 
   const saveSections = async () => {
-    await api.putSections(sections);
+    await api.putSections(data);
     notify("Your menu has been saved.")
   }
 
@@ -99,24 +138,19 @@ export default function Builder({ notify }: { notify: (string, number?) => void 
     }
   }
 
-  const MButton = (props) => <Button size="sm"
-    className={styles.action_button}
-    onClick={props.onClick}
-  >
-    {props.text}
-  </Button>
-
   return (
     <section>
       <div className="sections container-fluid">
         <div className="row">
-          <div className="mr-auto">
-            <MButton text="Load example" onClick={() => setSections(DEFAULT_SECTIONS)} />
-            <MButton text="Start from scratch" onClick={() => setSections([])} />
+          {/* <div className="mr-auto">
+            <MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />
+            <MButton text="Start from scratch" onClick={() => setData({ title: "Click to add title...", sections: [] })} />
+          </div> */}
+          {/* <MButton text="Load" onClick={loadSections} /> */}
+          <div className="ml-auto">
+            <MButton text="Save" onClick={saveSections} />
+            <MButton text="Publish" onClick={publish} />
           </div>
-          <MButton text="Load" onClick={loadSections} />
-          <MButton text="Save" onClick={saveSections} />
-          <MButton text="Publish" onClick={publish} />
         </div>
         <div className="row">
           <input
@@ -144,8 +178,8 @@ export default function Builder({ notify }: { notify: (string, number?) => void 
             swapSectionLoc
           }}
         />
-
       </div>
+
     </section>
   );
 }
