@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
 }
 
 type Props = {
-  notify: (text: string) => void
+  notify: (text: string, delay?: number) => void
 }
 
 export default function Home({ notify }: Props) {

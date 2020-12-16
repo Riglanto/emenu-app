@@ -15,9 +15,11 @@ export async function putSections(sections) {
 }
 
 export async function publishMenu(title, sections) {
-    await fetch(`/api/publish`, {
-        method: "POST", headers: {
-            'Content-Type': 'application/json'
-        }, body: JSON.stringify({ title, sections })
-    })
+    const res = await Axios.post(`/api/publish`, { title, sections })
+    return res.data.invalidationId;
+}
+
+export async function checkStatus(id) {
+    const res = await Axios.get(`/api/publish/${id}`)
+    return res.data.status;
 }

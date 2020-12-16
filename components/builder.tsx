@@ -10,7 +10,7 @@ import { Button } from "react-bootstrap";
 
 
 
-export default function Builder({ notify }: { notify: (string) => void }) {
+export default function Builder({ notify }: { notify: (string, number?) => void }) {
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
   const [title, setTitle] = useState(DEFAULT_TITLE);
   const [highlightedId, setHighlightedId] = useState(null);
@@ -81,7 +81,22 @@ export default function Builder({ notify }: { notify: (string) => void }) {
 
   const publish = async () => {
     notify("Your menu is being published...")
-    await api.publishMenu(title, sections);
+    const invalidationId = await api.publishMenu(title, sections);
+    setTimeout(() => notifyOnPublish(invalidationId), 5000);
+  }
+
+  const notifyOnPublish = async (invalidationId) => {
+    const status = await api.checkStatus(invalidationId)
+    console.log(status)
+    if (status === 'Completed') {
+      const component = <>
+        <b>Your menu has been published!</b><br />Check it out:&nbsp;
+        <a href="https://test.emenu.today" target="_blank">www.test.emenu.today</a>
+      </>
+      notify(component, 10000)
+    } else {
+      setTimeout(() => notifyOnPublish(invalidationId), 5000);
+    }
   }
 
   const MButton = (props) => <Button size="sm"

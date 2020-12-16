@@ -9,10 +9,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [notif, setNotif] = useState(null);
+  const notify = (text, delay) => setNotif({ text, delay });
   return (
     <Provider session={pageProps.session}>
-      <Component {...pageProps} notify={setNotif} />
-      <Toast delay={3000} autohide
+      <Component {...pageProps} notify={notify} />
+      <Toast delay={notif?.delay || 3000} autohide
         show={!!notif}
         onClose={() => setNotif(null)}
         style={{
@@ -26,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <strong className="mr-auto">Emenu</strong>
           <small>just now</small>
         </Toast.Header>
-        <Toast.Body>{notif}</Toast.Body>
+        <Toast.Body>{notif?.text}</Toast.Body>
       </Toast>
     </Provider>
   );

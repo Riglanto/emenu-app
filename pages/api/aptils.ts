@@ -51,7 +51,7 @@ export const invalidate = async (domain: string) => {
         }
     }
     const result = await cf.createInvalidation(params).promise()
-    // console.log(result)
+    return result.Invalidation.Id
 }
 
 export const getInvalidationStatus = async (id: string) => {
@@ -60,7 +60,5 @@ export const getInvalidationStatus = async (id: string) => {
         Id: id
     };
     const result = await cf.getInvalidation(params).promise()
-    console.log(result)
-    console.log(result.Invalidation.InvalidationBatch.Paths)
-
+    return result.Invalidation.Status
 }

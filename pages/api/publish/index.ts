@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { generateMenuHtml, invalidate, upload } from './aptils';
+import { generateMenuHtml, invalidate, upload } from '../aptils';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const domain = "test";
     const menu = await generateMenuHtml(domain, title, sections);
     await upload(domain, menu)
-    await invalidate(domain)
-    res.status(201).end();
+    const invalidationId = await invalidate(domain)
+    res.status(201).json({ invalidationId });
   }
 }
