@@ -8,6 +8,14 @@ const q = faunadb.query;
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+  console.log(session)
+
+  if (!session) {
+    res.status(403).end();
+    return;
+  }
+
   const id = '2841004626285696072';
   if (req.method === "GET") {
     const result: any = await client.query(
@@ -30,13 +38,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
   return;
 
-  const session = await getSession({ req });
-  if (session) {
-    res.end(
-      `Welcome to the VIP club, ${session.user.name || session.user.email}!`
-    );
-  } else {
-    res.statusCode = 403;
-    res.end("Hold on, you're not allowed in here!");
-  }
+  // const session = await getSession({ req });
+  // if (session) {
+  //   res.end(
+  //     `Welcome to the VIP club, ${session.user.name || session.user.email}!`
+  //   );
+  // } else {
+  //   res.statusCode = 403;
+  //   res.end("Hold on, you're not allowed in here!");
+  // }
 }

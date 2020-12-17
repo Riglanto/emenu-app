@@ -11,7 +11,8 @@ import * as api from "../pages/api"
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
-  const data = null;//await api.initialFetchSections();
+  console.log("getServerSideProps", session)
+  const data = session ? await api.initialFetchSections() : null;
 
   if (session?.['setPassword'])
     return {
@@ -20,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     }
   else
     return {
-      props: { data }
+      props: { session, data }
     }
 }
 

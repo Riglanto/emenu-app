@@ -146,7 +146,7 @@ export default function Builder(props) {
             <MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />
             <MButton text="Start from scratch" onClick={() => setData({ title: "Click to add title...", sections: [] })} />
           </div> */}
-          {/* <MButton text="Load" onClick={loadSections} /> */}
+          <MButton text="Load" onClick={loadSections} />
           <div className="ml-auto">
             <MButton text="Save" onClick={saveSections} />
             <MButton text="Publish" onClick={publish} />
