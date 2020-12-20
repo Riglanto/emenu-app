@@ -1,16 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { animateScroll } from "react-scroll";
-import { Button, Card, Modal } from "react-bootstrap";
+import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import * as ls from "local-storage";
+import { confirmAlert } from 'react-confirm-alert';
+// import * as hash from 'object-hash';
+import hash from 'object-hash';
 
 import * as api from "../pages/api"
 import { Sections } from "./sections";
-
 import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
+
 import styles from "../styles/builder.module.scss";
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+const confirmOverwrite = action => confirmAlert({
+  title: 'Continue?',
+  message: 'All local changes will be lost.',
+  buttons: [
+    {
+      label: 'Yes',
+      onClick: () => action()
+    },
+    {
+      label: 'No',
+      onClick: null
+    }
+  ]
+})
+
+const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
+const ProtectedTooltipWrapper = (component) => <OverlayTrigger
+  placement="right"
+  overlay={signInTooltip}
+>
+  {component}
+</OverlayTrigger >
+
 
 const MButton = (props) => <Button size="sm"
   className={styles.action_button}
   onClick={props.onClick}
+  disabled={props.disabled}
 >
   {props.text}
 </Button>
@@ -25,11 +55,23 @@ const MCard = (props) =>
   </Card>
 
 export default function Builder(props) {
-  const { notify } = props;
-  const [data, setData] = useState({
+  const { notify, loggedIn } = props;
+  useEffect(() => {
+    const localData: any = ls.get("sections");
+    if (localData && hash(localData) !== hash(props.data)) {
+      setDataState(localData);
+      notify("Local draft restored.")
+    }
+  }, []);
+  const [data, setDataState] = useState({
     title: props.data?.title,
     sections: props.data?.sections
   });
+
+  const setData = x => {
+    ls.set("sections", x);
+    setDataState(x);
+  }
 
   const { title, sections } = data;
   const setTitle = (x) => setData({ ...data, title: x })
@@ -137,20 +179,20 @@ export default function Builder(props) {
       setTimeout(() => notifyOnPublish(invalidationId), 5000);
     }
   }
-
   return (
     <section>
       <div className="sections container-fluid">
         <div className="row">
-          {/* <div className="mr-auto">
-            <MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />
-            <MButton text="Start from scratch" onClick={() => setData({ title: "Click to add title...", sections: [] })} />
-          </div> */}
-          <MButton text="Load" onClick={loadSections} />
-          <div className="ml-auto">
-            <MButton text="Save" onClick={saveSections} />
-            <MButton text="Publish" onClick={publish} />
+          <div className="mr-auto">
+            <MButton text="Load example" onClick={() => confirmOverwrite(() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS }))} />
+            <MButton text="Start from scratch" onClick={() => confirmOverwrite(() => setData({ title: "Click to add title...", sections: [] }))} />
           </div>
+          {ProtectedTooltipWrapper(
+            <div className="ml-auto">
+              <MButton text="Load" disabled={!loggedIn} onClick={() => confirmOverwrite(loadSections)} />
+              <MButton text="Save" disabled={!loggedIn} onClick={saveSections} />
+              <MButton text="Publish" disabled={!loggedIn} onClick={publish} />
+            </div>)}
         </div>
         <div className="row">
           <input
