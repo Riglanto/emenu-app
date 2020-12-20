@@ -23,9 +23,3 @@ export async function putUser(u: User): Promise<User> {
 	const query = q.Replace(ref, {data: u})
 	return getFaunaClient().query<User>(query)
 }
-
-let i = 0
-
-setInterval(
-	() => console.log('Boop!', i++)
-, 2000)
