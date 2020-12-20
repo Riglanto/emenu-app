@@ -11,8 +11,7 @@ import * as api from "../pages/api"
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
-  console.log("getServerSideProps", session)
-  const data = session ? await api.initialFetchSections() : null;
+  const data = await api.initialFetchSections();
 
   if (session?.['setPassword'])
     return {
@@ -37,7 +36,7 @@ export default function Home({ notify, data }: Props) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Builder notify={notify} data={data} />
+      <Builder loggedIn={!!session} notify={notify} data={data} />
     </Layout>
   );
 }

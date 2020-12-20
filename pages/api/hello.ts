@@ -12,8 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   console.log(session)
 
   if (!session) {
-    res.status(403).end();
-    return;
+    return res.status(403).end();
   }
 
   const id = '2841004626285696072';

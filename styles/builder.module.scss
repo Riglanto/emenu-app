@@ -75,11 +75,11 @@ $editable-action: green;
 }
 
 .action_button {
-  color: black;
-  border: 2px black solid;
-  border-radius: 5px;
-  background-color: $editable;
-  margin: 20px 10px;
+  color: black !important;
+  border: 2px black solid !important;
+  border-radius: 5px !important;
+  background-color: $editable !important;
+  margin: 20px 10px !important;
 
   // &:hover {
   //   box-shadow: 2px 2px gray;
