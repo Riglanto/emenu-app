@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { signin, signout, useSession } from 'next-auth/client';
+import { useCallback } from 'react';
 
 export const siteTitle = 'EMenu'
 
@@ -14,6 +15,10 @@ export default function Layout({
   loggedIn?: boolean
 }) {
   const [session] = useSession()
+  const onLogout = useCallback(() => {
+    signout({callbackUrl: '/'})
+  }, [signout])
+
   return (
     <div>
       <Head>
@@ -41,8 +46,8 @@ export default function Layout({
             <Nav>
               {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
               {session ?
-                <Nav.Link onClick={() => signout()}>Logout</Nav.Link>
-                : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
+                <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+                : <Nav.Link onClick={() =>signin()}>Sign in</Nav.Link>}
             </Nav>
           </Container>
         </Navbar>

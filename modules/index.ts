@@ -4,7 +4,7 @@ import { Session } from './models/Session.entity';
 import { User } from './models/User.entity';
 import { VerificationRequest } from './models/VerificationRequest.entity';
 
-function getFaunaClient() {
+export function getFaunaClient() {
 	const secret = process.env.FAUNADB_SECRET_KEY
 	if (!secret) {
 		throw Error('fauna secret key is not provided. Set "FAUNADB_SECRET_KEY" env variable')
@@ -12,7 +12,6 @@ function getFaunaClient() {
 	return new faunadb.Client({ secret })
 }
 
-export const serverClient = getFaunaClient();
 export const q = query;
 
 export enum Idx {
@@ -26,7 +25,7 @@ export enum Idx {
 
 async function createCollection(name: string) {
 	const q = query.If(query.Exists(query.Collection(name)), null, query.CreateCollection({ name }))
-	return serverClient.query(q).then(() => console.log('created collection: ' + name))
+	return getFaunaClient().query(q).then(() => console.log('created collection: ' + name))
 }
 
 async function createIndex<T extends {}>(name: string, col: string, terms: Array<keyof T>) {
@@ -36,7 +35,7 @@ async function createIndex<T extends {}>(name: string, col: string, terms: Array
 		terms: terms.map((t) => ({ field: ['data', t] }))
 	})
 	const q = query.If(query.Exists(query.Index(name)), null, queryIndex)
-	return serverClient.query(q).then(() => console.log(`created index ${name} on collection ${col}`))
+	return getFaunaClient().query(q).then(() => console.log(`created index ${name} on collection ${col}`))
 }
 
 export async function setupSchema() {

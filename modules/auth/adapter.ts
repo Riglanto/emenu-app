@@ -12,13 +12,13 @@ import { User } from '~/modules/models/User.entity';
 import { Account } from '~/modules/models/Account.entity';
 import { Session } from '~/modules/models/Session.entity';
 import { VerificationRequest } from '~/modules/models/VerificationRequest.entity';
-import { serverClient, Idx } from '..';
+import { getFaunaClient, Idx } from '..';
 import { Adapter } from 'next-auth/adapters';
 
 
 function faunaWrapper<T>(faunaQ: Expr, errorTag) {
     try {
-        return serverClient.query<T>(faunaQ);
+        return getFaunaClient().query<T>(faunaQ);
     } catch (error) {
         console.error(errorTag, error);
         return Promise.reject(new Error(`${errorTag}, ${error}`));
@@ -203,7 +203,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
             console.log('-----------getSession------------');
             // console.log(sessionToken);
 
-            const session = await serverClient.query<Session | null>(
+            const session = await getFaunaClient().query<Session | null>(
                 q.Let(
                     {
                         ref: q.Match(q.Index(Idx.SESSIONS_SESSION_TOKEN), sessionToken),
@@ -213,7 +213,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
             );
             // Check session has not expired (do not return it if it has)
             if (session?.expires && new Date().toISOString() > session.expires) {
-                await serverClient.query(
+                await getFaunaClient().query(
                     q.Delete(
                         q.Select(
                             'ref',
@@ -316,7 +316,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
                     updatedAt: Date.now(),
                 }
                 // Save to database
-                const verificationRequest = await serverClient.query(
+                const verificationRequest = await getFaunaClient().query(
                     q.Create(q.Collection('verificationRequests'), {
                         data: request,
                     }),
@@ -339,7 +339,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
                 // @TODO Use bcrypt instead of salted SHA-256 hash for token
                 const hashedToken = createHash('sha256').update(`${token}${secret}`).digest('hex');
                 console.log('read token', hashedToken)
-                const verificationRequest = await serverClient.query<VerificationRequest>(
+                const verificationRequest = await getFaunaClient().query<VerificationRequest>(
                     q.Let(
                         {
                             ref: q.Match(q.Index(Idx.VERIFICATION_REQUESTS_TOKEN), hashedToken),
@@ -353,7 +353,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
                     Date.now() > verificationRequest.expires
                 ) {
                     // Delete verification entry so it cannot be used again
-                    await serverClient.query(
+                    await getFaunaClient().query(
                         q.Delete(
                             q.Select(
                                 'ref',
@@ -381,7 +381,7 @@ const FaunaAdapter = (config, options = {}): Adapter => {
             try {
                 // Delete verification entry so it cannot be used again
                 const hashedToken = createHash('sha256').update(`${token}${secret}`).digest('hex');
-                await serverClient.query(
+                await getFaunaClient().query(
                     q.Delete(
                         q.Select(
                             'ref',
