@@ -73,12 +73,11 @@ export default function Builder(props) {
     setDataState(x);
   }
 
-  const { title, sections } = data;
   const setTitle = (x) => setData({ ...data, title: x })
   const setSections = (x) => setData({ ...data, sections: x })
   const [highlightedId, setHighlightedId] = useState(null);
 
-  if (!data.sections) {
+  if (!data?.sections) {
     return (
       <div className={styles.starter}>
         <MCard
@@ -95,6 +94,7 @@ export default function Builder(props) {
     )
   }
 
+  const { title, sections } = data;
   const { leftSections, rightSections } = splitSectons(sections)
   const updateSection = (section, index) =>
     setSections(
@@ -184,8 +184,9 @@ export default function Builder(props) {
       <div className="sections container-fluid">
         <div className="row">
           <div className="mr-auto">
-            <MButton text="Load example" onClick={() => confirmOverwrite(() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS }))} />
-            <MButton text="Start from scratch" onClick={() => confirmOverwrite(() => setData({ title: "Click to add title...", sections: [] }))} />
+            {/* <MButton text="Load example" onClick={() => confirmOverwrite(() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS }))} />
+            <MButton text="Start from scratch" onClick={() => confirmOverwrite(() => setData({ title: "Click to add title...", sections: [] }))} /> */}
+            <MButton text="Start over" onClick={() => confirmOverwrite(() => setData(null))} />
           </div>
           {ProtectedTooltipWrapper(
             <div className="ml-auto">

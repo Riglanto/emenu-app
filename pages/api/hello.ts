@@ -9,7 +9,6 @@ const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
-  console.log(session)
 
   if (!session) {
     return res.status(403).end();
@@ -35,7 +34,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     ))
     res.status(201).end();
   }
-  return;
 
   // const session = await getSession({ req });
   // if (session) {

@@ -3,6 +3,9 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { signin, signout, useSession } from 'next-auth/client';
 import { useCallback } from 'react';
 
+import styles from "~/styles/layout.module.scss";
+
+
 export const siteTitle = 'EMenu'
 
 export default function Layout({
@@ -16,7 +19,7 @@ export default function Layout({
 }) {
   const [session] = useSession()
   const onLogout = useCallback(() => {
-    signout({callbackUrl: '/'})
+    signout({ callbackUrl: '/' })
   }, [signout])
 
   return (
@@ -44,10 +47,11 @@ export default function Layout({
             <Nav className="mr-auto">
             </Nav>
             <Nav>
+              {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
               {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
               {session ?
                 <Nav.Link onClick={onLogout}>Logout</Nav.Link>
-                : <Nav.Link onClick={() =>signin()}>Sign in</Nav.Link>}
+                : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
             </Nav>
           </Container>
         </Navbar>

@@ -29,8 +29,8 @@ const options: InitOptions = {
         Providers.Credentials({
             name: 'credentials',
             credentials: {
-                email: {label: "Email", type: "text", placeholder: "user@example.com"},
-                password: {label: "Password", type: "password"},
+                email: { label: "Email", type: "text", placeholder: "user@example.com" },
+                password: { label: "Password", type: "password" },
             },
             authorize
         })
@@ -61,8 +61,10 @@ const options: InitOptions = {
             return session
         },
     },
-    adapter: Adapter.Adapter({}),
-    secret: process.env.APP_SECRET || 'secret'
+    // adapter: Adapter.Adapter({}),
+    database: process.env.DATABASE_URL,
+    secret: process.env.APP_SECRET || 'secret',
+    debug: true
 }
 
 export default (req, res) => NextAuth(req, res, options)

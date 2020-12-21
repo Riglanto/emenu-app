@@ -5,7 +5,6 @@ export async function initialFetchSections() {
         const res = await Axios.get(`${process.env.NEXTAUTH_URL}/api/hello`)
         return res.data;
     } catch (e) {
-        console.log(e);
         return null;
     }
 }
