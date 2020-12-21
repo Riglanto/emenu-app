@@ -1,8 +1,8 @@
 import Axios from "axios";
 
-export async function initialFetchSections() {
+export async function initialFetchSections(options) {
     try {
-        const res = await Axios.get(`${process.env.NEXTAUTH_URL}/api/hello`)
+        const res = await Axios.get(`${process.env.NEXTAUTH_URL}/api/hello`, options)
         return res.data;
     } catch (e) {
         return null;
@@ -10,8 +10,12 @@ export async function initialFetchSections() {
 }
 
 export async function fetchSections() {
-    const res = await Axios.get(`/api/hello`)
-    return res.data;
+    try {
+        const res = await Axios.get(`/api/hello`)
+        return res.data;
+    } catch (e) {
+        return null;
+    }
 }
 
 export async function putSections(data) {

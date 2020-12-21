@@ -29,7 +29,7 @@ const confirmOverwrite = action => confirmAlert({
 })
 
 const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
-const ProtectedTooltipWrapper = (component) => <OverlayTrigger
+const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
   placement="right"
   overlay={signInTooltip}
 >
@@ -59,6 +59,7 @@ export default function Builder(props) {
   useEffect(() => {
     const localData: any = ls.get("sections");
     if (localData && hash(localData) !== hash(props.data)) {
+      console.log(localData, props.data)
       setDataState(localData);
       notify("Local draft restored.")
     }
@@ -151,8 +152,12 @@ export default function Builder(props) {
 
   const loadSections = async () => {
     const data = await api.fetchSections();
-    setData(data);
-    notify("Your menu has been loaded.")
+    if (data) {
+      setData(data);
+      notify("Your menu has been loaded.")
+    } else {
+      notify("No data found.")
+    }
   }
 
   const saveSections = async () => {
@@ -193,7 +198,7 @@ export default function Builder(props) {
               <MButton text="Load" disabled={!loggedIn} onClick={() => confirmOverwrite(loadSections)} />
               <MButton text="Save" disabled={!loggedIn} onClick={saveSections} />
               <MButton text="Publish" disabled={!loggedIn} onClick={publish} />
-            </div>)}
+            </div>, loggedIn)}
         </div>
         <div className="row">
           <input

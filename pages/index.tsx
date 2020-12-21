@@ -11,7 +11,7 @@ import * as api from "../pages/api"
 
 export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
-  const data = await api.initialFetchSections();
+  const data = session ? await api.initialFetchSections({ headers: { cookie: context.req.headers.cookie } }) : null;
 
   if (session?.['setPassword'])
     return {
