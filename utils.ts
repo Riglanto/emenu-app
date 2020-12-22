@@ -20,6 +20,13 @@ export const swapElements = (arr, from, to) => [
     ...arr.slice(to + 1),
 ];
 
+export const toDomain = (text) =>
+    text
+        .toLowerCase()
+        .replace(/[^0-9a-z ]/gi, "")
+        .trim()
+        .replace(/ +/g, "-");
+
 export const splitSectons = sections => {
     const leftSections = sections.filter((s) => s.loc == "left");
     const rightSections = sections.filter((s) => s.loc == "right");

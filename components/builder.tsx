@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { animateScroll } from "react-scroll";
-import { Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import * as ls from "local-storage";
-import { confirmAlert } from 'react-confirm-alert';
-// import * as hash from 'object-hash';
 import hash from 'object-hash';
 
 import * as api from "../pages/api"
@@ -11,22 +9,8 @@ import { Sections } from "./sections";
 import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
 
 import styles from "../styles/builder.module.scss";
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import DomainForm from "./form";
 
-const confirmOverwrite = action => confirmAlert({
-  title: 'Continue?',
-  message: 'All local changes will be lost.',
-  buttons: [
-    {
-      label: 'Yes',
-      onClick: () => action()
-    },
-    {
-      label: 'No',
-      onClick: null
-    }
-  ]
-})
 
 const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
 const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
@@ -36,6 +20,37 @@ const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : 
   {component}
 </OverlayTrigger >
 
+type ConfirmModalProps = {
+  show: boolean
+  onSuccess: () => void
+  onHide: () => void
+  title: string
+  body: any
+}
+
+const CONTINUE_TITLE = { title: "Continue?", body: "All local changes will be lost." }
+const ConfirmModal = (props: ConfirmModalProps) => (
+  <Modal
+    show={props.show}
+    onHide={props.onHide}
+    size="lg"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered
+  >
+    <Modal.Header closeButton>
+      <Modal.Title id="contained-modal-title-vcenter">
+        {props.title}
+      </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      {props.body}
+    </Modal.Body>
+    <Modal.Footer>
+      <Button onClick={props.onHide}>Cancel</Button>
+      <Button onClick={() => { props.onSuccess(); props.onHide(); }}>Ok</Button>
+    </Modal.Footer>
+  </Modal>
+)
 
 const MButton = (props) => <Button size="sm"
   className={styles.action_button}
@@ -68,6 +83,7 @@ export default function Builder(props) {
     title: props.data?.title,
     sections: props.data?.sections
   });
+  const [modalAction, setModalAction] = useState(null);
 
   const setData = x => {
     ls.set("sections", x);
@@ -184,6 +200,14 @@ export default function Builder(props) {
       setTimeout(() => notifyOnPublish(invalidationId), 5000);
     }
   }
+
+  const onPublish = () => {
+    const domain = props.data?.domain;
+    if (true || !domain) {
+      const form = <DomainForm title={title} domain={domain} />
+      setModalAction({ title: "Domain reservation", body: form, onSuccess: () => publish() });
+    }
+  }
   return (
     <section>
       <div className="sections container-fluid">
@@ -191,13 +215,13 @@ export default function Builder(props) {
           <div className="mr-auto">
             {/* <MButton text="Load example" onClick={() => confirmOverwrite(() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS }))} />
             <MButton text="Start from scratch" onClick={() => confirmOverwrite(() => setData({ title: "Click to add title...", sections: [] }))} /> */}
-            <MButton text="Start over" onClick={() => confirmOverwrite(() => setData(null))} />
+            <MButton text="Start over" onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => setData(null) })} />
           </div>
           {ProtectedTooltipWrapper(
             <div className="ml-auto">
-              <MButton text="Load" disabled={!loggedIn} onClick={() => confirmOverwrite(loadSections)} />
+              <MButton text="Load" disabled={!loggedIn} onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => loadSections() })} />
               <MButton text="Save" disabled={!loggedIn} onClick={saveSections} />
-              <MButton text="Publish" disabled={!loggedIn} onClick={publish} />
+              <MButton text="Publish" disabled={!loggedIn} onClick={onPublish} />
             </div>, loggedIn)}
         </div>
         <div className="row">
@@ -227,6 +251,13 @@ export default function Builder(props) {
           }}
         />
       </div>
+      <ConfirmModal
+        show={!!modalAction}
+        onHide={() => setModalAction(null)}
+        onSuccess={modalAction?.onSuccess}
+        title={modalAction?.title}
+        body={modalAction?.body}
+      />
 
     </section>
   );

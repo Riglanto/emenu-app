@@ -20,7 +20,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       ))
       console.log(search)
       if (search.data.length > 0) {
-        return res.status(200).json(search.data[0].data);
+        const result = search.data[0].data;
+        return res.status(200).json({
+          title: result.title,
+          sections: result.sections,
+          domain: result.domain
+        })
       }
     } catch (e) {
       console.log(e)
