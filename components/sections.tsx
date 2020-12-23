@@ -8,6 +8,7 @@ import {
     FaTrashAlt,
 } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
+import { Element } from "react-scroll";
 
 import { createItem, createSection, isCollapsed, isVisible, splitSectons } from "../utils"
 import styles from "../styles/builder.module.scss";
@@ -90,6 +91,7 @@ const Section = (props) => (
                 style={isHighlighted(props.highlightedId === section.id)}
             >
                 {props.editable && <div className={styles.button_wrapper}>
+                    {props.sections.length - 1 === index && <Element name={props.loc} />}
                     {index > 0 && (
                         <div
                             className={styles.clickable}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { animateScroll } from "react-scroll";
+import { scroller } from "react-scroll";
 import { Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import * as ls from "local-storage";
 import hash from 'object-hash';
@@ -11,6 +11,11 @@ import { DEFAULT_SECTIONS, DEFAULT_TITLE, httpsDomain, splitSectons, swapElement
 import styles from "../styles/builder.module.scss";
 import DomainForm from "./form";
 
+const scrollTo = (loc: string) => scroller.scrollTo(loc, {
+  duration: 1500,
+  delay: 100,
+  smooth: true
+})
 
 const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
 const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
@@ -151,9 +156,13 @@ export default function Builder(props) {
     };
     const newPosition = isRight ? leftSections.length : sections.length;
     setSections(insertSectionAt(x, newPosition));
-    animateScroll.scrollToBottom();
-    setHighlightedId(id);
-    setTimeout(() => setHighlightedId(null), 1500);
+    scrollTo(x.loc);
+    setTimeout(() => {
+      setHighlightedId(id);
+      setTimeout(() => {
+        setHighlightedId(null);
+      }, 1600);
+    }, 1200);
   };
   const insertSectionAt = (element, index) => [
     ...sections.slice(0, index),
