@@ -14,7 +14,7 @@ import DomainForm from "./form";
 
 const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
 const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
-  placement="right"
+  placement="left"
   overlay={signInTooltip}
 >
   {component}
@@ -80,6 +80,14 @@ export default function Builder(props) {
       notify("Local draft restored.")
     }
   }, []);
+
+
+  const publish = async () => {
+    notify("Your menu is being published...", 3000)
+    const invalidationId = await api.publishMenu(title, sections);
+    setTimeout(() => notifyOnPublish(invalidationId), 5000);
+  }
+
   const [data, setDataState] = useState({
     title: props.data?.title,
     sections: props.data?.sections,
@@ -87,6 +95,14 @@ export default function Builder(props) {
   });
   const [modalAction, setModalAction] = useState(null);
   const [domainUpdated, setDomainUpdated] = useState(false);
+  const [highlightedId, setHighlightedId] = useState(null);
+
+  useEffect(() => {
+    if (domainUpdated) {
+      publish();
+      setDomainUpdated(false);
+    }
+  }, [domainUpdated]);
 
   const setData = x => {
     ls.set("sections", x);
@@ -96,13 +112,12 @@ export default function Builder(props) {
   const setTitle = (x) => setData({ ...data, title: x })
   const setDomain = (x) => setData({ ...data, domain: x })
   const setSections = (x) => setData({ ...data, sections: x })
-  const [highlightedId, setHighlightedId] = useState(null);
 
   if (!data?.sections) {
     return (
       <div className={styles.starter}>
         <MCard
-          text={<span>Start with our example - Mexican Restaurant <b>3 amigos</b></span>}
+          text={<span>Start with our <b>example</b> - Mexican Restaurant 3 amigos</span>}
           img="images/example2.png"
           action={<MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />}
         />
@@ -186,12 +201,6 @@ export default function Builder(props) {
     notify("Your menu has been saved.")
   }
 
-  const publish = async () => {
-    notify("Your menu is being published...")
-    const invalidationId = await api.publishMenu(title, sections);
-    setTimeout(() => notifyOnPublish(invalidationId), 5000);
-  }
-
   const notifyOnPublish = async (invalidationId) => {
     const status = await api.checkStatus(invalidationId)
     console.log(status)
@@ -206,15 +215,9 @@ export default function Builder(props) {
     }
   }
 
-  useEffect(() => {
-    if (domainUpdated) {
-      publish();
-      setDomainUpdated(false);
-    }
-  }, [domainUpdated]);
 
   const onPublish = () => {
-    if (!domain) {
+    if (!props.data?.domain) {
       const form = <DomainForm
         title={title}
         domain={domain}
