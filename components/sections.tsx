@@ -128,7 +128,7 @@ const Section = (props) => (
                 {props.editable ? <input
                     className={`section_title ${styles.editable}`}
                     value={section.title}
-                    onChange={(e) => props.updateTitle(index, e.target.value)}
+                    onChange={(e) => props.updateTitle(index + props.modifier, e.target.value)}
                 /> : <div className="section_title">{section.title}</div>}
                 {section.items.map((item, subindex) => (
                     <div key={item.id} className="row xrow">
@@ -138,7 +138,7 @@ const Section = (props) => (
                                 style={isCollapsed(item.title)}
                                 value={item.title}
                                 onChange={(e) =>
-                                    props.updateItemProps(index, subindex, { title: e.target.value })
+                                    props.updateItemProps(index + props.modifier, subindex, { title: e.target.value })
                                 }
                             /> : <div className="title">{item.title}</div>}
 
@@ -146,7 +146,7 @@ const Section = (props) => (
                                 className={`desc ${styles.editable}`}
                                 value={item.desc}
                                 onChange={(e) =>
-                                    props.updateItemProps(index, subindex, { desc: e.target.value })
+                                    props.updateItemProps(index + props.modifier, subindex, { desc: e.target.value })
                                 }
                             /> : <div className="desc">{item.desc}</div>}
                         </div>
@@ -188,7 +188,7 @@ const Section = (props) => (
                                 style={isCollapsed(item.price)}
                                 value={item.price}
                                 onChange={(e) =>
-                                    props.updateItemProps(index, subindex, { price: e.target.value })
+                                    props.updateItemProps(index + props.modifier, subindex, { price: e.target.value })
                                 }
                                 type="number"
                                 min="0"
