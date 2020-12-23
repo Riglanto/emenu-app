@@ -86,6 +86,7 @@ export default function Builder(props) {
     domain: props.data?.domain,
   });
   const [modalAction, setModalAction] = useState(null);
+  const [domainUpdated, setDomainUpdated] = useState(false);
 
   const setData = x => {
     ls.set("sections", x);
@@ -115,6 +116,7 @@ export default function Builder(props) {
   }
 
   const { title, sections, domain } = data;
+
   const { leftSections, rightSections } = splitSectons(sections)
   const updateSection = (section, index) =>
     setSections(
@@ -204,6 +206,13 @@ export default function Builder(props) {
     }
   }
 
+  useEffect(() => {
+    if (domainUpdated) {
+      publish();
+      setDomainUpdated(false);
+    }
+  }, [domainUpdated]);
+
   const onPublish = () => {
     if (!domain) {
       const form = <DomainForm
@@ -211,7 +220,7 @@ export default function Builder(props) {
         domain={domain}
         notify={notify}
         onUpdate={setDomain}
-        onSucess={() => { setModalAction(null); }}
+        onSucess={() => { setModalAction(null); setDomainUpdated(true); }}
       />
       setModalAction({ title: "Domain reservation", body: form, onSuccess: () => publish() });
     } else {
@@ -243,7 +252,6 @@ export default function Builder(props) {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        DOmain: {domain}
         <Sections
           editable={true}
           leftSections={leftSections}
