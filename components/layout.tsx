@@ -4,6 +4,7 @@ import { signin, signout, useSession } from 'next-auth/client';
 import { useCallback } from 'react';
 
 import styles from "~/styles/layout.module.scss";
+import { httpsDomain, wwwDomain } from '~/utils';
 
 
 export const siteTitle = 'EMenu'
@@ -11,11 +12,13 @@ export const siteTitle = 'EMenu'
 export default function Layout({
   children,
   home,
-  loggedIn
+  loggedIn,
+  domain
 }: {
   children: React.ReactNode
   home?: boolean
   loggedIn?: boolean
+  domain?: string
 }) {
   const [session] = useSession()
   const onLogout = useCallback(() => {
@@ -45,10 +48,13 @@ export default function Layout({
             <Navbar.Brand href="#home">{siteTitle}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Nav className="mr-auto">
+              {domain && <Nav.Link href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</Nav.Link>}
             </Nav>
             <Nav>
               {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
-              {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
+              <div className="flex">
+                {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
+              </div>
               {session ?
                 <Nav.Link onClick={onLogout}>Logout</Nav.Link>
                 : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}

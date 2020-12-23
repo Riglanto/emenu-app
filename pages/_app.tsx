@@ -20,7 +20,8 @@ export default function App({ Component, pageProps }: AppProps) {
           position: 'absolute',
           bottom: 20,
           right: 20,
-          width: 400
+          width: 400,
+          zIndex: 10000
         }}
       >
         <Toast.Header>

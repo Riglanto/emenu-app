@@ -19,12 +19,13 @@ export async function fetchSections() {
 }
 
 export async function putSections(data) {
-    const { title, sections } = data
-    await fetch(`/api/hello`, {
+    const { title, sections, domain } = data
+    const result = await fetch(`/api/hello`, {
         method: "POST", headers: {
             'Content-Type': 'application/json'
-        }, body: JSON.stringify({ title, sections })
+        }, body: JSON.stringify({ title, sections, domain })
     })
+    return result.status === 201;
 }
 
 export async function publishMenu(title, sections) {

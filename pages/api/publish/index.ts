@@ -1,7 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client';
+import faunadb from "faunadb";
 
-import { generateMenuHtml, invalidate, upload } from '../aptils';
+import { generateMenuHtml, getDomainByEmail, invalidate, upload } from '../aptils';
+
+const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
@@ -12,8 +15,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     const { title, sections } = req.body;
-    const domain = "test";
+    const { email } = session.user;
+    const domain = await getDomainByEmail(client, email);
+
     const menu = await generateMenuHtml(domain, title, sections);
+
     await upload(domain, menu)
     const invalidationId = await invalidate(domain)
     res.status(201).json({ invalidationId });

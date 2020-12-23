@@ -2,8 +2,11 @@ import { readFileSync } from 'fs-extra';
 import * as sass from 'sass';
 import QRCode from 'qrcode'
 import * as AWS from "aws-sdk";
+import faunadb from "faunadb";
 
 import { getSections } from '../../components/sections';
+
+const q = faunadb.query;
 
 const BUCKET_NAME = 'emenu.today'
 const aws_config = {
@@ -12,6 +15,17 @@ const aws_config = {
 }
 const s3 = new AWS.S3(aws_config);
 const cf = new AWS.CloudFront(aws_config);
+
+export const getDomainByEmail = async (client, email) => {
+    const search: any = await client.query(q.Map(
+        q.Paginate(q.Match(q.Index("users_by_email"), email)),
+        q.Lambda(["ref"], q.Get(q.Var("ref")))
+    ))
+    if (search.data.length > 0) {
+        return search.data[0].data?.domain;
+    }
+    return null;
+}
 
 export const generateMenuHtml = async (domain: string, title: string, sections: string) => {
     const url = `https://${domain}.emenu.today`

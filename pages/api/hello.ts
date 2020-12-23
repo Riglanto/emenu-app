@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/client";
 import faunadb from "faunadb";
 
+import { getDomainByEmail } from './aptils';
+
 const q = faunadb.query;
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
 
@@ -18,7 +20,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         q.Paginate(q.Match(q.Index("users_by_email"), email)),
         q.Lambda(["ref"], q.Get(q.Var("ref")))
       ))
-      console.log(search)
       if (search.data.length > 0) {
         const result = search.data[0].data;
         return res.status(200).json({
@@ -32,10 +33,36 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     return res.status(404).end();
   } else if (req.method === "POST") {
-    const { title, sections } = req.body;
+    const { title, sections, domain } = req.body;
+
+    if (domain) {
+      const userDomain = await getDomainByEmail(client, email)
+      if (userDomain) {
+        console.warn(`Domain already set to ${userDomain}.`)
+        return res.status(403).end();
+      }
+      const searchDomain: any = await client.query(q.Map(
+        q.Paginate(q.Match(q.Index("users_by_domain"), domain)),
+        q.Lambda(["ref"], q.Get(q.Var("ref")))
+      ))
+      if (searchDomain.data.length > 0) {
+        console.warn("User with domain exists.")
+        return res.status(403).end();
+      }
+
+      const searchSignup: any = await client.query(q.Map(
+        q.Paginate(q.Match(q.Index("signups_by_domain"), domain)),
+        q.Lambda(["ref"], q.Get(q.Var("ref")))
+      ))
+      if (searchSignup.data.length > 0) {
+        console.warn("Signup with domain exists.")
+        return res.status(403).end();
+      }
+    }
+
     const result = await client.query(q.Let({
       match: q.Match(q.Index("users_by_email"), email),
-      data: { data: { title, sections, lastUpdated: Date.now(), email } }
+      data: { data: { title, sections, domain, lastUpdated: Date.now(), email } }
     },
       q.If(
         q.Exists(q.Var('match')),

@@ -32,7 +32,7 @@ type Props = {
 export default function Home({ notify, data }: Props) {
   const [session, loading] = useSession()
   return (
-    <Layout loggedIn={!!session}>
+    <Layout loggedIn={!!session} domain={data?.domain}>
       <Head>
         <title>{siteTitle}</title>
       </Head>

@@ -6,7 +6,7 @@ import hash from 'object-hash';
 
 import * as api from "../pages/api"
 import { Sections } from "./sections";
-import { DEFAULT_SECTIONS, DEFAULT_TITLE, splitSectons, swapElements } from "../utils";
+import { DEFAULT_SECTIONS, DEFAULT_TITLE, httpsDomain, splitSectons, swapElements, wwwDomain } from "../utils";
 
 import styles from "../styles/builder.module.scss";
 import DomainForm from "./form";
@@ -22,10 +22,11 @@ const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : 
 
 type ConfirmModalProps = {
   show: boolean
-  onSuccess: () => void
+  onSuccess: () => boolean
   onHide: () => void
   title: string
   body: any
+  skipFooter?: boolean
 }
 
 const CONTINUE_TITLE = { title: "Continue?", body: "All local changes will be lost." }
@@ -45,11 +46,12 @@ const ConfirmModal = (props: ConfirmModalProps) => (
     <Modal.Body>
       {props.body}
     </Modal.Body>
-    <Modal.Footer>
-      <Button onClick={props.onHide}>Cancel</Button>
-      <Button onClick={() => { props.onSuccess(); props.onHide(); }}>Ok</Button>
-    </Modal.Footer>
-  </Modal>
+    {!props.skipFooter &&
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Cancel</Button>
+        <Button onClick={async () => { (await props.onSuccess()) && props.onHide() }}>Ok</Button>
+      </Modal.Footer>}
+  </Modal >
 )
 
 const MButton = (props) => <Button size="sm"
@@ -73,15 +75,15 @@ export default function Builder(props) {
   const { notify, loggedIn } = props;
   useEffect(() => {
     const localData: any = ls.get("sections");
-    if (localData && hash(localData) !== hash(props.data)) {
-      console.log(localData, props.data)
+    if (localData && hash({ title: localData?.title, sections: localData?.sections }) !== hash({ title: props.data?.title, sections: props.data?.sections })) {
       setDataState(localData);
       notify("Local draft restored.")
     }
   }, []);
   const [data, setDataState] = useState({
     title: props.data?.title,
-    sections: props.data?.sections
+    sections: props.data?.sections,
+    domain: props.data?.domain,
   });
   const [modalAction, setModalAction] = useState(null);
 
@@ -91,6 +93,7 @@ export default function Builder(props) {
   }
 
   const setTitle = (x) => setData({ ...data, title: x })
+  const setDomain = (x) => setData({ ...data, domain: x })
   const setSections = (x) => setData({ ...data, sections: x })
   const [highlightedId, setHighlightedId] = useState(null);
 
@@ -111,7 +114,7 @@ export default function Builder(props) {
     )
   }
 
-  const { title, sections } = data;
+  const { title, sections, domain } = data;
   const { leftSections, rightSections } = splitSectons(sections)
   const updateSection = (section, index) =>
     setSections(
@@ -177,7 +180,7 @@ export default function Builder(props) {
   }
 
   const saveSections = async () => {
-    await api.putSections(data);
+    await api.putSections({ title: data.title, sections: data.sections });
     notify("Your menu has been saved.")
   }
 
@@ -193,7 +196,7 @@ export default function Builder(props) {
     if (status === 'Completed') {
       const component = <>
         <b>Your menu has been published!</b><br />Check it out:&nbsp;
-        <a href="https://test.emenu.today" target="_blank">www.test.emenu.today</a>
+        <a href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</a>
       </>
       notify(component, 10000)
     } else {
@@ -202,12 +205,20 @@ export default function Builder(props) {
   }
 
   const onPublish = () => {
-    const domain = props.data?.domain;
-    if (true || !domain) {
-      const form = <DomainForm title={title} domain={domain} />
+    if (!domain) {
+      const form = <DomainForm
+        title={title}
+        domain={domain}
+        notify={notify}
+        onUpdate={setDomain}
+        onSucess={() => { setModalAction(null); }}
+      />
       setModalAction({ title: "Domain reservation", body: form, onSuccess: () => publish() });
+    } else {
+      publish();
     }
   }
+
   return (
     <section>
       <div className="sections container-fluid">
@@ -232,6 +243,7 @@ export default function Builder(props) {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
+        DOmain: {domain}
         <Sections
           editable={true}
           leftSections={leftSections}
@@ -257,6 +269,7 @@ export default function Builder(props) {
         onSuccess={modalAction?.onSuccess}
         title={modalAction?.title}
         body={modalAction?.body}
+        skipFooter
       />
 
     </section>

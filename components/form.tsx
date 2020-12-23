@@ -1,8 +1,12 @@
 
 import { useState } from "react";
-import { FormControl, InputGroup } from "react-bootstrap";
+import { FormControl, InputGroup, Button } from "react-bootstrap";
 
-import { toDomain } from "~/utils";
+import * as api from "../pages/api"
+import { toDomain, wwwDomain } from "~/utils";
+
+
+
 
 export default function DomainForm(props) {
     const [data, setData] = useState({ domain: props?.domain || toDomain(props?.title), title: props?.title })
@@ -10,6 +14,20 @@ export default function DomainForm(props) {
         const domain = toDomain(title);
         setData({ title, domain })
     }
+
+    const saveDomain = async () => {
+        const { domain } = data;
+        const success = await api.putSections({ domain });
+        if (success) {
+            if (props.onUpdate) {
+                props.onUpdate(domain)
+            }
+            props.onSucess();
+        } else {
+            props.notify(<><b>{wwwDomain(domain)}</b> already exists.<br />Please select different domain.</>, 5000)
+        }
+    }
+
     return (
         <>
             <InputGroup className="mb-3">
@@ -45,9 +63,10 @@ export default function DomainForm(props) {
                     <InputGroup.Text id="basic-addon2">=></InputGroup.Text>
                 </InputGroup.Append>
                 <InputGroup.Append>
-                    <InputGroup.Text id="basic-addon2">{`www.${data.domain}.emenu.today`}</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon2">{wwwDomain(data.domain)}</InputGroup.Text>
                 </InputGroup.Append>
             </InputGroup>
+            <Button style={{ marginLeft: "auto" }} onClick={saveDomain}>Publish</Button>
         </>
     )
 }

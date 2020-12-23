@@ -27,6 +27,9 @@ export const toDomain = (text) =>
         .trim()
         .replace(/ +/g, "-");
 
+export const wwwDomain = domain => `www.${domain}.emenu.today`
+export const httpsDomain = domain => `https://${domain}.emenu.today`
+
 export const splitSectons = sections => {
     const leftSections = sections.filter((s) => s.loc == "left");
     const rightSections = sections.filter((s) => s.loc == "right");
