@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Toast } from "react-bootstrap";
 import { AppProps } from "next/app";
 import { Provider } from 'next-auth/client'
+import "reflect-metadata";
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
