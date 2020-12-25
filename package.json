@@ -23,7 +23,6 @@
     "next": "^10.0.0",
     "next-auth": "^3.1.0",
     "object-hash": "^2.0.3",
-    "pg": "^8.5.1",
     "qrcode": "^1.4.4",
     "react": "16.13.1",
     "react-bootstrap": "^1.4.0",
