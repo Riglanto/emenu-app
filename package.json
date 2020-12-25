@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-on-netlify",
     "setupSchema": "ts-node -r ./modules/dotenv -e 'require(\"./modules\").setupSchema(); export {}'",
     "setupSchema2": "ts-node -r ./modules/dotenv ./modules/setup.ts",
     "test": "jest"
