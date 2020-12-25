@@ -53,14 +53,13 @@ const ConfirmModal = (props: ConfirmModalProps) => (
     </Modal.Body>
     {!props.skipFooter &&
       <Modal.Footer>
-        <Button onClick={props.onHide}>Cancel</Button>
-        <Button onClick={async () => { (await props.onSuccess()) && props.onHide() }}>Ok</Button>
+        <MButton className={styles.action_button_nm} onClick={() => { props.onSuccess(); props.onHide() }} text="Ok" />
       </Modal.Footer>}
   </Modal >
 )
 
 const MButton = (props) => <Button size="sm"
-  className={styles.action_button}
+  className={props.className || styles.action_button}
   onClick={props.onClick}
   disabled={props.disabled}
 >
@@ -234,7 +233,7 @@ export default function Builder(props) {
         onUpdate={setDomain}
         onSucess={() => { setModalAction(null); setDomainUpdated(true); }}
       />
-      setModalAction({ title: "Domain reservation", body: form, onSuccess: () => publish() });
+      setModalAction({ title: "Domain reservation", body: form, onSuccess: () => publish(), skipFooter: true });
     } else {
       publish();
     }
@@ -289,7 +288,7 @@ export default function Builder(props) {
         onSuccess={modalAction?.onSuccess}
         title={modalAction?.title}
         body={modalAction?.body}
-        skipFooter
+        skipFooter={modalAction?.skipFooter}
       />
 
     </section>

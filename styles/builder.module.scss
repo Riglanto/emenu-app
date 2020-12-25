@@ -81,9 +81,14 @@ $editable-action: green;
   background-color: $editable !important;
   margin: 20px 10px !important;
 
-  // &:hover {
-  //   box-shadow: 2px 2px gray;
-  // }
+  &:hover {
+    box-shadow: 2px 2px gray;
+  }
+}
+
+.action_button_nm {
+  @extend .action_button;
+  margin: 0 !important;
 }
 
 .starter {

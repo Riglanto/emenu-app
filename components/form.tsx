@@ -9,7 +9,7 @@ import { toDomain, wwwDomain } from "~/utils";
 
 
 export default function DomainForm(props) {
-    const [data, setData] = useState({ domain: props?.domain || toDomain(props?.title), title: props?.title })
+    const [data, setData] = useState({ domain: toDomain(props?.title), title: props?.title })
     const update = (title: string) => {
         const domain = toDomain(title);
         setData({ title, domain })
@@ -29,7 +29,7 @@ export default function DomainForm(props) {
     }
 
     return (
-        <>
+        <div style={{ display: "flex", flexDirection: "column" }}>
             <InputGroup className="mb-3">
                 <InputGroup.Append>
                     <InputGroup.Text id="basic-addon2">Restaurant name:</InputGroup.Text>
@@ -44,29 +44,17 @@ export default function DomainForm(props) {
             </InputGroup>
             <InputGroup className="mb-3">
                 <InputGroup.Append>
-                    <InputGroup.Text id="basic-addon2">www.</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon2">Restaurant www:</InputGroup.Text>
                 </InputGroup.Append>
                 <FormControl
-                    placeholder="Recipient's username"
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    value={data.domain}
                     readOnly
+                    value={wwwDomain(data.domain)}
+                    placeholder="Restaurant's www"
+                    aria-label="Restaurant's www"
+                    aria-describedby="basic-addon2"
                 />
-                <InputGroup.Append>
-                    <InputGroup.Text id="basic-addon2">.emenu.today</InputGroup.Text>
-                </InputGroup.Append>
-            </InputGroup>
-
-            <InputGroup className="mb-3">
-                <InputGroup.Append>
-                    <InputGroup.Text id="basic-addon2">=></InputGroup.Text>
-                </InputGroup.Append>
-                <InputGroup.Append>
-                    <InputGroup.Text id="basic-addon2">{wwwDomain(data.domain)}</InputGroup.Text>
-                </InputGroup.Append>
             </InputGroup>
             <Button style={{ marginLeft: "auto" }} onClick={saveDomain}>Publish</Button>
-        </>
+        </div >
     )
 }

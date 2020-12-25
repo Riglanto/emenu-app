@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         })
       }
     } catch (e) {
-      console.log(e)
+      // console.log(e)
     }
     return res.status(404).end();
   } else if (req.method === "POST") {
