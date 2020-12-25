@@ -28,3 +28,5 @@ yarn-error.log*
 # htmls
 test.html
 *.html
+out_functions
+out_publish
