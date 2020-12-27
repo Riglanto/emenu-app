@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { FormControl, InputGroup, Button } from "react-bootstrap";
 
-import * as api from "../pages/api"
+import * as api from "~/api"
 import { toDomain, wwwDomain } from "~/utils";
 
 

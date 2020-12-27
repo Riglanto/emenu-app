@@ -4,7 +4,7 @@ import { Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import * as ls from "local-storage";
 import hash from 'object-hash';
 
-import * as api from "../pages/api"
+import * as api from "~/api"
 import { Sections } from "./sections";
 import { DEFAULT_SECTIONS, DEFAULT_TITLE, httpsDomain, splitSectons, swapElements, wwwDomain } from "../utils";
 

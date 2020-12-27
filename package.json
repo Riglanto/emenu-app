@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "start": "next start",
     "build": "next build",
     "export": "next export",
     "postbuild": "next-on-netlify",
@@ -62,6 +63,7 @@
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.1.0",
     "jest-dom": "^4.0.0",
+    "netlify-plugin-cache-nextjs": "^1.5.2",
     "next": "9.5.5",
     "next-on-netlify": "^2.6.3",
     "sass": "^1.30.0",
