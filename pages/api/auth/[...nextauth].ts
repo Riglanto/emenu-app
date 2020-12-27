@@ -62,12 +62,12 @@ const options: InitOptions = {
         },
     },
     // adapter: Adapter.Adapter({}),
-    database: process.env.DATABASE_URL,
-    // database: {
-    //     type: "mongodb",
-    //     useNewUrlParser: true,
-    //     url: process.env.DATABASE_URL,
-    // },
+    // database: process.env.DATABASE_URL,
+    database: {
+        type: "mongodb",
+        useNewUrlParser: true,
+        url: process.env.DATABASE_URL,
+    },
     secret: process.env.APP_SECRET || 'secret',
     debug: true
 }
