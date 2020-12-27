@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "postbuild": "next-on-netlify",
     "setupSchema": "ts-node -r ./modules/dotenv -e 'require(\"./modules\").setupSchema(); export {}'",
     "setupSchema2": "ts-node -r ./modules/dotenv ./modules/setup.ts",
@@ -20,7 +21,6 @@
     "fs-extra": "^9.0.1",
     "gray-matter": "^4.0.2",
     "local-storage": "^2.0.0",
-    "mongodb": "3.6.2",
     "next-auth": "^3.1.0",
     "object-hash": "^2.0.3",
     "qrcode": "^1.4.4",
@@ -57,6 +57,7 @@
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.1.0",
     "jest-dom": "^4.0.0",
+    "mongodb": "^3.6.3",
     "next": "9.5.5",
     "next-on-netlify": "^2.6.3",
     "sass": "^1.30.0",
