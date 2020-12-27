@@ -30,3 +30,6 @@ test.html
 *.html
 out_functions
 out_publish
+
+# Local Netlify folder
+.netlify
