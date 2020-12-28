@@ -9,7 +9,7 @@ import Layout, { siteTitle } from "~/components/layout";
 import Builder from "~/components/builder";
 import * as api from "~/api"
 
-const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
   const data = session ? await api.initialFetchSections({ headers: { cookie: context.req.headers.cookie } }) : null;
 
