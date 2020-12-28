@@ -53,8 +53,11 @@ $editable-action: green;
   margin-right: 15px;
   background-color: $editable;
   padding: 5px;
-  border: 1px black solid;
+  border: 2px black solid;
+  border-radius: 5px;
   position: relative;
+  margin: 20px 10px;
+  
   &:hover {
     box-shadow: 1px 1px gray;
   }
@@ -70,7 +73,7 @@ $editable-action: green;
     border-left: 8px solid black;
     right: -8px;
 
-    top: 7px;
+    top: 8px;
   }
 }
 
@@ -80,6 +83,7 @@ $editable-action: green;
   border-radius: 5px !important;
   background-color: $editable !important;
   margin: 20px 10px !important;
+  min-width: 90px;
 
   &:hover {
     box-shadow: 2px 2px gray;
