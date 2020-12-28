@@ -12,9 +12,6 @@
     "setupSchema2": "ts-node -r ./modules/dotenv ./modules/setup.ts",
     "test": "jest"
   },
-  "resolutions": {
-    "typeorm": "0.2.13"
-  },
   "dependencies": {
     "aws-sdk": "^2.809.0",
     "axios": "^0.21.0",
@@ -38,7 +35,6 @@
     "reflect-metadata": "^0.1.13",
     "remark": "^12.0.0",
     "remark-html": "^12.0.0",
-    "typeorm": "0.2.13",
     "uuid": "^8.3.2",
     "yup": "0.31.1"
   },
