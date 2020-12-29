@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { scroller } from "react-scroll";
-import { Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Dropdown, DropdownButton, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import TextareaAutosize from "react-textarea-autosize";
 import * as ls from "local-storage";
 import hash from 'object-hash';
 
@@ -87,7 +88,7 @@ export default function Builder(props) {
 
 
   const publish = async () => {
-    notify("Your menu is being published...", 3000)
+    notify("Your menu is being published...", 0)
     const invalidationId = await api.publishMenu(title, sections);
     setTimeout(() => notifyOnPublish(invalidationId), 5000);
   }
@@ -244,19 +245,39 @@ export default function Builder(props) {
       <div className="sections container-fluid">
         <div className="row">
           <div className="mr-auto">
-            {/* <MButton text="Load example" onClick={() => confirmOverwrite(() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS }))} />
-            <MButton text="Start from scratch" onClick={() => confirmOverwrite(() => setData({ title: "Click to add title...", sections: [] }))} /> */}
             <MButton text="Start over" onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => setData(null) })} />
           </div>
-          {ProtectedTooltipWrapper(
-            <div className="ml-auto">
+          {ProtectedTooltipWrapper(<>
+            <div className="ml-auto d-none d-sm-block">
               <MButton text="Load" disabled={!loggedIn} onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => loadSections() })} />
               <MButton text="Save" disabled={!loggedIn} onClick={saveSections} />
               <MButton text="Publish" disabled={!loggedIn} onClick={onPublish} />
-            </div>, loggedIn)}
+            </div>
+            <Dropdown className="dropdown d-block d-sm-none">
+              <Dropdown.Toggle className={styles.action_toggle} id="dropdown-basic" disabled={!loggedIn}>
+                Actions
+                {/* <div className={styles.action_button} text="Actions" disabled={!loggedIn} /> */}
+              </Dropdown.Toggle>
+              {/* <Button size="sm"
+                id="dropdown-basic" aria-haspopup={true} aria-expanded={false}
+                className={styles.action_button_nm}
+                disabled={!loggedIn}
+              >
+                Actions
+              </Button> */}
+              <Dropdown.Menu className={styles.action_menu}>
+                <MButton className={styles.action_button_nm} text="Load" disabled={!loggedIn} onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => loadSections() })} />
+                <MButton className={styles.action_button_nm} text="Save" disabled={!loggedIn} onClick={saveSections} />
+                <MButton className={styles.action_button_nm} text="Publish" disabled={!loggedIn} onClick={onPublish} />
+                {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+              </Dropdown.Menu>
+            </Dropdown>
+          </>, loggedIn)}
         </div>
         <div className="row">
-          <input
+          <TextareaAutosize
             autoFocus
             className={styles.restaurant_title}
             value={title}
@@ -291,7 +312,7 @@ export default function Builder(props) {
         skipFooter={modalAction?.skipFooter}
       />
 
-    </section>
+    </section >
   );
 }
 

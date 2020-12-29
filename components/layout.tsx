@@ -43,26 +43,28 @@ export default function Layout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header>
-        <Navbar bg="dark" variant="dark">
+        <Navbar expand="lg" bg="dark" variant="dark">
           <Container>
             <Navbar.Brand href="#home">{siteTitle}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Nav className="mr-auto">
-              {domain && <Nav.Link href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</Nav.Link>}
-            </Nav>
-            <Nav>
-              {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
-              <div className="flex">
-                {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
-              </div>
-              {session ?
-                <Nav.Link onClick={onLogout}>Logout</Nav.Link>
-                : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
-            </Nav>
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                {domain && <Nav.Link href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</Nav.Link>}
+              </Nav>
+              <Nav>
+                {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
+                <div className="flex">
+                  {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
+                </div>
+                {session ?
+                  <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+                  : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
+              </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       </header>
       <main>{children}</main>
-    </div>
+    </div >
   )
 }

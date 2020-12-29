@@ -5,6 +5,9 @@ $editable-action: green;
 .restaurant_title {
   @extend .editable;
   text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.75rem;
 }
 
 .editable {
@@ -93,6 +96,26 @@ $editable-action: green;
 .action_button_nm {
   @extend .action_button;
   margin: 0 !important;
+}
+
+.action_dropdown{
+  @extend .action_button;
+}
+
+.action_toggle {
+  @extend .action_button;
+  padding: .25rem .5rem;
+  font-size: 0.875rem;
+  // background-color: transparent !important;
+  // border: none !important;
+  // color: $editable !important;
+  // padding: 0;
+}
+
+.action_menu {
+  padding: 0;
+  min-width: 0;
+  width: 90px;
 }
 
 .starter {

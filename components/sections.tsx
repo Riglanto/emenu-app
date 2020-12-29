@@ -135,7 +135,7 @@ const Section = (props) => (
                 {section.items.map((item, subindex) => (
                     <div key={item.id} className="row xrow">
                         <div className="col">
-                            {props.editable ? <input
+                            {props.editable ? <TextareaAutosize
                                 className={`title ${styles.editable}`}
                                 style={isCollapsed(item.title)}
                                 value={item.title}
@@ -152,38 +152,6 @@ const Section = (props) => (
                                 }
                             /> : <div className="desc">{item.desc}</div>}
                         </div>
-                        {props.editable && <div className={styles.button_wrapper}>
-                            <div
-                                style={isVisible(subindex > 0)}
-                                className={styles.clickable}
-                                onClick={() =>
-                                    props.adjustItems(
-                                        index + props.modifier,
-                                        props.swapElements(section.items, subindex - 1, subindex)
-                                    )
-                                }
-                            >
-                                <FaRegArrowAltCircleUp />
-                            </div>
-                            <div
-                                style={isVisible(subindex < section.items.length - 1)}
-                                className={styles.clickable}
-                                onClick={() =>
-                                    props.adjustItems(
-                                        index + props.modifier,
-                                        props.swapElements(section.items, subindex, subindex + 1)
-                                    )
-                                }
-                            >
-                                <FaRegArrowAltCircleDown />
-                            </div>
-                            <div
-                                className={styles.clickable}
-                                onClick={() => props.deleteItem(index + props.modifier, subindex)}
-                            >
-                                <FaTrashAlt />
-                            </div>
-                        </div>}
                         <div className="col-auto">
                             {props.editable ? <input
                                 className={`price ${styles.editable}`}
@@ -196,6 +164,38 @@ const Section = (props) => (
                                 min="0"
                                 step="0.01"
                             /> : <div className="price">{item.price}</div>}
+                            {props.editable && <div className={styles.button_wrapper}>
+                                <div
+                                    style={isVisible(subindex > 0)}
+                                    className={styles.clickable}
+                                    onClick={() =>
+                                        props.adjustItems(
+                                            index + props.modifier,
+                                            props.swapElements(section.items, subindex - 1, subindex)
+                                        )
+                                    }
+                                >
+                                    <FaRegArrowAltCircleUp />
+                                </div>
+                                <div
+                                    style={isVisible(subindex < section.items.length - 1)}
+                                    className={styles.clickable}
+                                    onClick={() =>
+                                        props.adjustItems(
+                                            index + props.modifier,
+                                            props.swapElements(section.items, subindex, subindex + 1)
+                                        )
+                                    }
+                                >
+                                    <FaRegArrowAltCircleDown />
+                                </div>
+                                <div
+                                    className={styles.clickable}
+                                    onClick={() => props.deleteItem(index + props.modifier, subindex)}
+                                >
+                                    <FaTrashAlt />
+                                </div>
+                            </div>}
                         </div>
                     </div>
                 ))}

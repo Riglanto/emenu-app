@@ -32,7 +32,11 @@ $editable: palegreen;
       font-weight: 900;
       font-size: 1.1rem;
       text-transform: uppercase;
-      width: auto !important;
+      // width: auto !important;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 97%;
     }
 
     .item {
@@ -55,8 +59,8 @@ $editable: palegreen;
         @extend .item;
         font-size: 0.8em;
         text-align: right;
-        max-width: 25px;
-        margin-left: 5px;
+        max-width: 55px;
+        margin-left: auto;
       }
       
       .qr > svg {

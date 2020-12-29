@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider session={pageProps.session}>
       <Component {...pageProps} notify={notify} />
-      <Toast delay={notif?.delay || 3000} autohide
+      <Toast delay={notif?.delay || 3000} autohide={notif?.delay !== 0}
         show={!!notif}
         onClose={() => setNotif(null)}
         style={{
