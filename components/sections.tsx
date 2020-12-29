@@ -135,7 +135,7 @@ const Section = (props) => (
                 {section.items.map((item, subindex) => (
                     <div key={item.id} className="row xrow">
                         <div className="col">
-                            {props.editable ? <TextareaAutosize
+                            {props.editable ? <input
                                 className={`title ${styles.editable}`}
                                 style={isCollapsed(item.title)}
                                 value={item.title}

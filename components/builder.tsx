@@ -4,6 +4,7 @@ import { Button, ButtonGroup, Card, Dropdown, DropdownButton, Modal, OverlayTrig
 import TextareaAutosize from "react-textarea-autosize";
 import * as ls from "local-storage";
 import hash from 'object-hash';
+import { signin } from 'next-auth/client';
 
 import * as api from "~/api"
 import { Sections } from "./sections";
@@ -18,7 +19,7 @@ const scrollTo = (loc: string) => scroller.scrollTo(loc, {
   smooth: true
 })
 
-const signInTooltip = <Tooltip id="tooltip"> <strong>Sign in</strong> to continue.</Tooltip>
+const signInTooltip = <Tooltip id="tooltip" className={styles.clickable} onClick={() => signin}> <strong>Sign in</strong> to continue.</Tooltip>
 const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
   placement="left"
   overlay={signInTooltip}
@@ -247,34 +248,27 @@ export default function Builder(props) {
           <div className="mr-auto">
             <MButton text="Start over" onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => setData(null) })} />
           </div>
-          {ProtectedTooltipWrapper(<>
+          {ProtectedTooltipWrapper(
             <div className="ml-auto d-none d-sm-block">
               <MButton text="Load" disabled={!loggedIn} onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => loadSections() })} />
               <MButton text="Save" disabled={!loggedIn} onClick={saveSections} />
               <MButton text="Publish" disabled={!loggedIn} onClick={onPublish} />
-            </div>
-            <Dropdown className="dropdown d-block d-sm-none">
-              <Dropdown.Toggle className={styles.action_toggle} id="dropdown-basic" disabled={!loggedIn}>
+            </div>, loggedIn)}
+          <OverlayTrigger
+            placement="top"
+            overlay={signInTooltip}
+          >
+            <Dropdown className="d-block d-sm-none">
+              <Dropdown.Toggle className={styles.action_toggle} id="dropdown-basic" >
                 Actions
-                {/* <div className={styles.action_button} text="Actions" disabled={!loggedIn} /> */}
               </Dropdown.Toggle>
-              {/* <Button size="sm"
-                id="dropdown-basic" aria-haspopup={true} aria-expanded={false}
-                className={styles.action_button_nm}
-                disabled={!loggedIn}
-              >
-                Actions
-              </Button> */}
               <Dropdown.Menu className={styles.action_menu}>
                 <MButton className={styles.action_button_nm} text="Load" disabled={!loggedIn} onClick={() => setModalAction({ ...CONTINUE_TITLE, onSuccess: () => loadSections() })} />
                 <MButton className={styles.action_button_nm} text="Save" disabled={!loggedIn} onClick={saveSections} />
                 <MButton className={styles.action_button_nm} text="Publish" disabled={!loggedIn} onClick={onPublish} />
-                {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
               </Dropdown.Menu>
             </Dropdown>
-          </>, loggedIn)}
+          </OverlayTrigger >
         </div>
         <div className="row">
           <TextareaAutosize

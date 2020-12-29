@@ -93,6 +93,10 @@ $editable-action: green;
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .action_button_nm {
   @extend .action_button;
   margin: 0 !important;
