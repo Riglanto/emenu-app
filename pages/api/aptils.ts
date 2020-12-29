@@ -3,14 +3,16 @@ import * as sass from 'sass';
 import QRCode from 'qrcode'
 import * as AWS from "aws-sdk";
 import faunadb from "faunadb";
-
+import path from 'path';
 import { getSections } from '../../components/sections';
 
 const q = faunadb.query;
 
+
 const BUCKET_NAME = 'emenu.today'
 const aws_config = {
     accessKeyId: process.env.AWS_ID,
+
     secretAccessKey: process.env.AWS_SECRET
 }
 const s3 = new AWS.S3(aws_config);
@@ -30,8 +32,8 @@ export const getDomainByEmail = async (client, email) => {
 export const generateMenuHtml = async (domain: string, title: string, sections: string) => {
     const url = `https://${domain}.emenu.today`
     const content = getSections(sections);
-    const css = sass.renderSync({ file: "./styles/sections.scss" }).css.toString();
-    const template = readFileSync("./template.html", 'utf8')
+    const css = sass.renderSync({ file: path.join(process.cwd(), "styles", "sections.scss") }).css.toString();
+    const template = readFileSync(path.join(process.cwd(), "template.html"), 'utf8')
     const qr = await QRCode.toString(url, { type: "svg", width: 200, margin: 1 })
     const result = template
         .replace(/{TITLE}/g, title)
