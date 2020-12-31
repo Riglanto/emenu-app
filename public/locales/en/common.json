@@ -1,0 +1,14 @@
+{
+    "password": "Password",
+    "repeat-password": "Repeat password",
+    "passwords-dont-match": "Provided passwords don't match. Make sure you repeated the password correctly.",
+    "submit": "Submit",
+    "builder":{
+        "start-from-scratch": "Start from scratch",
+        "load-example": "Load example",
+        "sign-in-to-cont": "<1>Sign in</1> to continue.",
+        "start-with-example": "Start with our <1>example</1> - Mexican Restaurant 3 amigos",
+        "start-with-empty": "Start with our <1>example</1> - Mexican Restaurant 3 amigos"
+    },
+    "click-to-add-title": "Click to add title..."
+}

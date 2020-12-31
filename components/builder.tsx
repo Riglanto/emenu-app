@@ -12,6 +12,7 @@ import { DEFAULT_SECTIONS, DEFAULT_TITLE, httpsDomain, splitSectons, swapElement
 
 import styles from "../styles/builder.module.scss";
 import DomainForm from "./form";
+import { useTranslation, Trans } from "~/i18n";
 
 const scrollTo = (loc: string) => scroller.scrollTo(loc, {
   duration: 1500,
@@ -19,10 +20,19 @@ const scrollTo = (loc: string) => scroller.scrollTo(loc, {
   smooth: true
 })
 
-const signInTooltip = <Tooltip id="tooltip" className={styles.clickable} onClick={() => signin}> <strong>Sign in</strong> to continue.</Tooltip>
+const SignInTooltip = () => {
+  const t = useTranslation()
+  return (
+    <Tooltip className={styles.clickable} onClick={() => signin} id="tooltip">
+      <Trans i18nKey='builder.sign-in-to-cont'>
+        <strong>Sign in</strong> to continue.
+      </Trans>
+    </Tooltip>
+  )
+} 
 const ProtectedTooltipWrapper = (component, loggedIn) => loggedIn ? component : <OverlayTrigger
   placement="left"
-  overlay={signInTooltip}
+  overlay={<SignInTooltip />}
 >
   {component}
 </OverlayTrigger >
@@ -119,18 +129,20 @@ export default function Builder(props) {
   const setDomain = (x) => setData({ ...data, domain: x })
   const setSections = (x) => setData({ ...data, sections: x })
 
+  const {t} = useTranslation()
+
   if (!data?.sections) {
     return (
       <div className={styles.starter}>
         <MCard
-          text={<span>Start with our <b>example</b> - Mexican Restaurant 3 amigos</span>}
+          text={<Trans i18nKey='builder.start-with-example'>Start with our <b>example</b> - Mexican Restaurant 3 amigos</Trans>}
           img="images/example2.png"
-          action={<MButton text="Load example" onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />}
+          action={<MButton text={t('builder.load-example')} onClick={() => setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })} />}
         />
         <MCard
-          text={<span>Start with <b>empty canvas</b> - Build anything you want</span>}
+          text={<Trans i18nKey='builder.start-with-empty'>Start with <b>empty canvas</b> - Build anything you want</Trans>}
           img="images/example5.png"
-          action={<MButton text="Start from scratch" onClick={() => setData({ title: "Click to add title...", sections: [] })} />}
+          action={<MButton text={t('builder.start-from-scratch')} onClick={() => setData({ title: t('click-to-add-title'), sections: [] })} />}
         />
       </div>
     )
@@ -256,7 +268,7 @@ export default function Builder(props) {
             </div>, loggedIn)}
           <OverlayTrigger
             placement="top"
-            overlay={signInTooltip}
+            overlay={<SignInTooltip />}
           >
             <Dropdown className="d-block d-sm-none">
               <Dropdown.Toggle className={styles.action_toggle} id="dropdown-basic" >
