@@ -45,7 +45,7 @@ const SwapIcon = (props) => {
         : FaRegArrowAltCircleRight;
     return (
         <div
-            className={styles.clickable}
+            className={styles.icon_button}
             onClick={() => props.swapSectionLoc(props.index, props.id)}
         >
             <SwapIcon />
@@ -54,7 +54,6 @@ const SwapIcon = (props) => {
 };
 
 const isHighlighted = (cond) => ({
-    // borderColor: highlightedId === id ? "palegreen" : "initial",
     boxShadow: cond ? "8px 8px palegreen" : "none",
 });
 
@@ -84,6 +83,7 @@ export const Sections = ({ rightSections, leftSections, highlightedId, functions
 
 const Section = (props) => (
     <div className="col-md-6">
+        {props.editable && <div className={styles.column_info}>{props.loc} column items:</div>}
         {props.sections.map((section, index) => (
             <div
                 key={section.id}
@@ -94,7 +94,7 @@ const Section = (props) => (
                     {props.sections.length - 1 === index && <Element name={props.loc} />}
                     {index > 0 && (
                         <div
-                            className={styles.clickable}
+                            className={styles.icon_button}
                             onClick={() => props.swapSections(
                                 index - 1 + props.modifier,
                                 index + props.modifier)
@@ -105,7 +105,7 @@ const Section = (props) => (
                     )}
                     {index < props.sections.length - 1 && (
                         <div
-                            className={styles.clickable}
+                            className={styles.icon_button}
                             onClick={() => props.swapSections(
                                 index + props.modifier,
                                 index + 1 + props.modifier)
@@ -121,7 +121,7 @@ const Section = (props) => (
                         swapSectionLoc={props.swapSectionLoc}
                     />
                     <div
-                        className={styles.clickable}
+                        className={styles.icon_button}
                         onClick={() => props.deleteSection(index + props.modifier)}
                     >
                         <FaTrashAlt />
@@ -133,7 +133,7 @@ const Section = (props) => (
                     onChange={(e) => props.updateTitle(index + props.modifier, e.target.value)}
                 /> : <div className="section_title">{section.title}</div>}
                 {section.items.map((item, subindex) => (
-                    <div key={item.id} className="row xrow">
+                    <div key={item.id} className="row">
                         <div className="col">
                             {props.editable ? <input
                                 className={`title ${styles.editable}`}
@@ -167,7 +167,7 @@ const Section = (props) => (
                             {props.editable && <div className={styles.button_wrapper}>
                                 <div
                                     style={isVisible(subindex > 0)}
-                                    className={styles.clickable}
+                                    className={styles.icon_button}
                                     onClick={() =>
                                         props.adjustItems(
                                             index + props.modifier,
@@ -179,7 +179,7 @@ const Section = (props) => (
                                 </div>
                                 <div
                                     style={isVisible(subindex < section.items.length - 1)}
-                                    className={styles.clickable}
+                                    className={styles.icon_button}
                                     onClick={() =>
                                         props.adjustItems(
                                             index + props.modifier,
@@ -190,7 +190,7 @@ const Section = (props) => (
                                     <FaRegArrowAltCircleDown />
                                 </div>
                                 <div
-                                    className={styles.clickable}
+                                    className={styles.icon_button}
                                     onClick={() => props.deleteItem(index + props.modifier, subindex)}
                                 >
                                     <FaTrashAlt />
@@ -202,7 +202,7 @@ const Section = (props) => (
                 {props.editable && <div className={styles.button_wrapper}>
                     <div
                         title="Create new item"
-                        className={styles.clickable}
+                        className={styles.icon_button}
                         onClick={() =>
                             props.adjustItems(index + props.modifier, [
                                 ...props.sections[index].items,
@@ -223,7 +223,7 @@ const Section = (props) => (
         {props.editable && <div className={styles.button_wrapper}>
             <div
                 title="Create new section"
-                className={styles.clickable}
+                className={styles.icon_button}
                 onClick={() =>
                     props.setSections(
                         props.insertSectionAt(

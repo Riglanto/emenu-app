@@ -35,20 +35,12 @@ const scrollTo = (loc: string) =>
     smooth: true,
   });
 
-const SignInTooltip = () => {
-  return (
-    <Tooltip className={styles.clickable} onClick={() => signin} id="tooltip">
-      <Trans i18nKey="builder.sign-in-to-cont">
-        <strong>Sign in</strong> to continue.
-      </Trans>
-    </Tooltip>
-  );
-};
+const SignInTooltip = <Tooltip id="tooltip" className={styles.clickable} onClick={() => signin}> <strong>Sign in</strong> to continue.</Tooltip>
 const ProtectedTooltipWrapper = (component, loggedIn) =>
   loggedIn ? (
     component
   ) : (
-      <OverlayTrigger placement="left" overlay={<SignInTooltip />}>
+      <OverlayTrigger placement="left" overlay={SignInTooltip}>
         {component}
       </OverlayTrigger>
     );
@@ -125,7 +117,7 @@ export default function Builder(props) {
       hash({ title: localData?.title, sections: localData?.sections }) !==
       hash({ title: props.data?.title, sections: props.data?.sections })
     ) {
-      setDataState(localData);
+      setDataState({ ...props.data, ...localData });
       notify("Local draft restored.");
     }
   }, []);
@@ -268,7 +260,7 @@ export default function Builder(props) {
     const data = await api.fetchSections();
     if (data) {
       setData(data);
-      notify("Your menu has been loaded.", 0);
+      notify("Your menu has been loaded.");
     } else {
       notify("No data found.");
     }
@@ -300,7 +292,7 @@ export default function Builder(props) {
   };
 
   const onPublish = () => {
-    if (!props.data?.domain) {
+    if (!domain) {
       const form = (
         <DomainForm
           title={title}
@@ -364,7 +356,7 @@ export default function Builder(props) {
             </div>,
             loggedIn
           )}
-          <OverlayTrigger placement="top" overlay={<SignInTooltip />}>
+          <OverlayTrigger placement="top" overlay={SignInTooltip}>
             <Dropdown className="d-block d-sm-none">
               <Dropdown.Toggle
                 className={styles.action_toggle}

@@ -41,12 +41,9 @@ $editable-action: green;
 .button_wrapper {
   margin-top: 5px;
   display: flex;
-  // flex-direction: column;
   justify-content: flex-end;
   align-content: center;
 }
-
-
 
 .cooked {
   margin: 1rem 0;
@@ -80,17 +77,20 @@ $editable-action: green;
   }
 }
 
+.hover_shadow {
+  &:hover {
+    box-shadow: 2px 2px gray;
+  }
+}
+
 .action_button {
+  @extend .hover_shadow;
   color: black !important;
   border: 2px black solid !important;
   border-radius: 5px !important;
   background-color: $editable !important;
   margin: 20px 10px !important;
   min-width: 90px;
-
-  &:hover {
-    box-shadow: 2px 2px gray;
-  }
 }
 
 .clickable {
@@ -144,6 +144,7 @@ $editable-action: green;
 
 .mcard {
   @extend .clickable;
+  @extend .hover_shadow;
   margin: 0 20px;
   padding: 10px;
   width: 18rem;
@@ -164,8 +165,19 @@ $editable-action: green;
 
 .icon_button {
   @extend .clickable;
-  background-color: red;
-  svg {
-    width: 1.5rem;
+  @media (max-width: 575.98px) {
+    padding: 2px;
+    svg {
+      width: 1.3rem;
+      height:  1.3rem;
+    }
+  }
+}
+
+.column_info {
+  text-transform: capitalize;
+  display: none;
+  @media (max-width: 575.98px) {
+    display: block;
   }
 }

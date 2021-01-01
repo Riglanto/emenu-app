@@ -1,6 +1,10 @@
 $editable: palegreen;   
 
 .sections {
+    @media (max-width: 575.98px) {
+      padding: 0 !important;
+    }
+    
     .row {
       justify-content: center;
       max-width: 1000px;
