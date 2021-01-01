@@ -8,6 +8,7 @@ import Nexti18n from '../i18n';
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
+import styles from "../styles/app.module.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -19,13 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Toast delay={notif?.delay || 3000} autohide={notif?.delay !== 0}
         show={!!notif}
         onClose={() => setNotif(null)}
-        style={{
-          position: 'absolute',
-          bottom: 20,
-          right: 20,
-          width: 400,
-          zIndex: 10000
-        }}
+        className={styles.toast}
       >
         <Toast.Header>
           <strong className="mr-auto">Emenu</strong>

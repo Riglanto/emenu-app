@@ -1,0 +1,10 @@
+.toast {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  z-index: 10000;
+  @media (max-width: 575.98px) {
+    width: auto;
+  }
+}

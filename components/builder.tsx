@@ -268,7 +268,7 @@ export default function Builder(props) {
     const data = await api.fetchSections();
     if (data) {
       setData(data);
-      notify("Your menu has been loaded.");
+      notify("Your menu has been loaded.", 0);
     } else {
       notify("No data found.");
     }
