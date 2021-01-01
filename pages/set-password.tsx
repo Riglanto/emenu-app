@@ -1,7 +1,8 @@
 import { signOut } from 'next-auth/client';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import Layout from '~/components/layout';
+import { useTranslation } from '~/i18n';
 
 type Form = { [key: string]: string };
 
@@ -19,20 +20,20 @@ async function sendForm(form: Form) {
 }
 
 function useForm(initialValues: Form = {}): [Form, OnChange] {
-	const [ values, setValues ] = React.useState<Form>(initialValues);
+	const [values, setValues] = React.useState<Form>(initialValues);
 	const onChange = React.useCallback<OnChange>(
 		(e) => {
 			const { name, value } = e.currentTarget;
 			setValues({ ...values, [name]: value });
 		},
-		[ values ]
+		[values]
 	);
-	return [ values, onChange ];
+	return [values, onChange];
 }
 
 function SetPassword() {
-	const [ errors, setErrors ] = React.useState(null);
-	const [ form, onChange ] = useForm({ password: '', password1: '' });
+	const [errors, setErrors] = React.useState(null);
+	const [form, onChange] = useForm({ password: '', password1: '' });
 	const onSubmit = React.useCallback(
 		async (e) => {
 			e.preventDefault();
@@ -43,7 +44,7 @@ function SetPassword() {
 				await signOut({ callbackUrl: '/api/auth/signin' });
 			}
 		},
-		[ form ]
+		[form]
 	);
 
 	const { t } = useTranslation();

@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import App from "next/app";
 import { Provider } from 'next-auth/client'
 import "reflect-metadata";
-import Nexti18n from '../i18n';
+import { appWithTranslation } from '~/i18n';
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
@@ -32,9 +32,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  const appProps = await App.getInitialProps(appContext)
-  return { ...appProps }
-}
+MyApp.getInitialProps = async (appContext) => ({ ...await App.getInitialProps(appContext) })
 
-export default Nexti18n.appWithTranslation(MyApp)
+export default appWithTranslation(MyApp)
