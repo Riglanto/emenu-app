@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import {
   getSession,
   useSession

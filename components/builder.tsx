@@ -48,10 +48,10 @@ const ProtectedTooltipWrapper = (component, loggedIn) =>
   loggedIn ? (
     component
   ) : (
-    <OverlayTrigger placement="left" overlay={<SignInTooltip />}>
-      {component}
-    </OverlayTrigger>
-  );
+      <OverlayTrigger placement="left" overlay={<SignInTooltip />}>
+        {component}
+      </OverlayTrigger>
+    );
 
 type ConfirmModalProps = {
   show: boolean;
@@ -107,11 +107,11 @@ const MButton = (props) => (
 );
 
 const MCard = (props) => (
-  <Card style={{ width: "18rem" }}>
+  <Card className={styles.mcard} onClick={props.onClick}>
     <Card.Img variant="top" src={props.img} />
-    <Card.Body style={{ display: "flex", flexDirection: "column" }}>
-      <Card.Text>{props.text}</Card.Text>
-      {props.action}
+    <Card.Body>
+      <Card.Text className="d-none d-sm-block">{props.text}</Card.Text>
+      {props.button}
     </Card.Body>
   </Card>
 );
@@ -123,7 +123,7 @@ export default function Builder(props) {
     if (
       localData &&
       hash({ title: localData?.title, sections: localData?.sections }) !==
-        hash({ title: props.data?.title, sections: props.data?.sections })
+      hash({ title: props.data?.title, sections: props.data?.sections })
     ) {
       setDataState(localData);
       notify("Local draft restored.");
@@ -168,18 +168,19 @@ export default function Builder(props) {
       <div className={styles.starter}>
         <MCard
           text={
-            <Trans i18nKey="builder.start-with-example">
+            <Trans i18nKey="builder.start-with-example" >
               a<b>b</b>c
             </Trans>
           }
           img="images/example2.png"
-          action={
+          button={
             <MButton
+              className={styles.action_button_wide}
               text={t("builder.load-example")}
-              onClick={() =>
-                setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })
-              }
             />
+          }
+          onClick={() =>
+            setData({ title: DEFAULT_TITLE, sections: DEFAULT_SECTIONS })
           }
         />
         <MCard
@@ -189,13 +190,14 @@ export default function Builder(props) {
             </Trans>
           }
           img="images/example5.png"
-          action={
+          button={
             <MButton
+              className={styles.action_button_wide}
               text={t("builder.start-from-scratch")}
-              onClick={() =>
-                setData({ title: t("click-to-add-title"), sections: [] })
-              }
             />
+          }
+          onClick={() =>
+            setData({ title: t("click-to-add-title"), sections: [] })
           }
         />
       </div>

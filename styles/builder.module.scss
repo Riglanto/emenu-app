@@ -102,6 +102,14 @@ $editable-action: green;
   margin: 0 !important;
 }
 
+.action_button_wide {
+  @extend .action_button_nm;
+  width: 100%;
+  @media (max-width: 575.98px) {
+    font-size: .8rem;
+   }
+}
+
 .action_dropdown{
   @extend .action_button;
 }
@@ -127,8 +135,38 @@ $editable-action: green;
   justify-content: center;
   align-items: center;
   height: 90vh;
-  div {
-    margin: 0 20px;
-    padding: 10px;
+  @media (max-width: 575.98px) {
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 20px;
+   }
+}
+
+.mcard {
+  @extend .clickable;
+  margin: 0 20px;
+  padding: 10px;
+  width: 18rem;
+  @media (max-width: 575.98px) {
+    width: 200px;
+    padding: 0;
+    margin: 10px;
+    div {
+      padding: 10px;
+    }
+  }
+}
+
+.flexy {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.icon_button {
+  @extend .clickable;
+  background-color: red;
+  svg {
+    width: 1.5rem;
   }
 }

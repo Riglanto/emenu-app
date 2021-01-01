@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { signin, signout, useSession } from 'next-auth/client';
 import { useCallback } from 'react';
+import * as ls from "local-storage";
 
 import styles from "~/styles/layout.module.scss";
 import { httpsDomain, wwwDomain } from '~/utils';
@@ -22,6 +23,7 @@ export default function Layout({
 }) {
   const [session] = useSession()
   const onLogout = useCallback(() => {
+    ls.remove("sections")
     signout({ callbackUrl: '/' })
   }, [signout])
 
@@ -43,7 +45,7 @@ export default function Layout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header>
-        <Navbar expand="lg" bg="dark" variant="dark">
+        <Navbar expand={session ? "lg" : true} bg="dark" variant="dark">
           <Container>
             <Navbar.Brand href="#home">{siteTitle}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
