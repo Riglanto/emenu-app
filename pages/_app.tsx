@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Toast } from "react-bootstrap";
-import { AppProps } from "next/app";
+import type { AppProps } from "next/app";
+import App from "next/app";
 import { Provider } from 'next-auth/client'
 import "reflect-metadata";
+import Nexti18n from '../i18n';
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   const [notif, setNotif] = useState(null);
   const notify = (text, delay) => setNotif({ text, delay });
   return (
@@ -34,3 +36,10 @@ export default function App({ Component, pageProps }: AppProps) {
     </Provider>
   );
 }
+
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext)
+  return { ...appProps }
+}
+
+export default Nexti18n.appWithTranslation(MyApp)
