@@ -1,4 +1,5 @@
 {
+    "signin": "Sign in",
     "password": "Password",
     "repeat-password": "Repeat password",
     "passwords-dont-match": "Provided passwords don't match. Make sure you repeated the password correctly.",

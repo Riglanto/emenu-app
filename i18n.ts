@@ -4,7 +4,7 @@ import path from "path";
 
 const debug = process.env.NODE_ENV !== "production";
 
-const i18n = new NextI18Next({
+const nextI18Next = new NextI18Next({
   defaultLanguage: "en",
   otherLanguages: ["pl"],
   debug,
@@ -12,6 +12,6 @@ const i18n = new NextI18Next({
   localePath: path.resolve("./public/locales"),
 });
 
-export const { Trans, Link, useTranslation, appWithTranslation } = i18n;
+export const { Trans, Link, useTranslation, appWithTranslation, i18n } = nextI18Next;
 
 export default i18n;

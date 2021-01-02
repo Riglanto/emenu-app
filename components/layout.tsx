@@ -6,6 +6,7 @@ import * as ls from "local-storage";
 
 import styles from "~/styles/layout.module.scss";
 import { httpsDomain, wwwDomain } from '~/utils';
+import { useTranslation, i18n } from '~/i18n';
 
 
 export const siteTitle = 'EMenu'
@@ -26,6 +27,8 @@ export default function Layout({
     ls.remove("sections")
     signout({ callbackUrl: '/' })
   }, [signout])
+
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -54,13 +57,14 @@ export default function Layout({
                 {domain && <Nav.Link href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</Nav.Link>}
               </Nav>
               <Nav>
+                <Nav.Link onClick={() => i18n.changeLanguage(i18n.language === "en" ? "pl" : "en")}>change</Nav.Link>
                 {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
                 <div className="flex">
                   {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
                 </div>
                 {session ?
                   <Nav.Link onClick={onLogout}>Logout</Nav.Link>
-                  : <Nav.Link onClick={() => signin()}>Sign in</Nav.Link>}
+                  : <Nav.Link onClick={() => signin()}>{t('signin')}</Nav.Link>}
               </Nav>
             </Navbar.Collapse>
           </Container>
