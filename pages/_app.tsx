@@ -4,16 +4,19 @@ import type { AppProps } from "next/app";
 import App from "next/app";
 import { Provider } from 'next-auth/client'
 import "reflect-metadata";
-import { appWithTranslation } from '~/i18n';
+import { appWithTranslation, useTranslation } from '~/i18n';
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
+
 import styles from "../styles/app.module.scss";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [notif, setNotif] = useState(null);
   const notify = (text, delay) => setNotif({ text, delay });
+  const { t } = useTranslation();
   return (
     <Provider session={pageProps.session}>
       <Component {...pageProps} notify={notify} />
@@ -24,9 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <Toast.Header>
           <strong className="mr-auto">Emenu</strong>
-          <small>just now</small>
+          <small>{t("notify.now")}</small>
         </Toast.Header>
-        <Toast.Body>{notif?.text}</Toast.Body>
+        <Toast.Body>{notif?.text}.</Toast.Body>
       </Toast>
     </Provider>
   );

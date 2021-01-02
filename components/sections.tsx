@@ -12,6 +12,7 @@ import { Element } from "react-scroll";
 
 import { createItem, createSection, isCollapsed, isVisible, splitSectons } from "../utils"
 import styles from "../styles/builder.module.scss";
+import { useTranslation } from '~/i18n';
 
 export const Content = (props) => <div className="test">
     {props.x}
@@ -57,187 +58,194 @@ const isHighlighted = (cond) => ({
     boxShadow: cond ? "8px 8px palegreen" : "none",
 });
 
-export const Sections = ({ rightSections, leftSections, highlightedId, functions, editable }: SectionProps) => (
-    <div className="sections">
-        <div className="row">
-            <Section
-                info="Click to add section..."
-                loc="left"
-                modifier={0}
-                sections={leftSections}
-                highlightedId={highlightedId}
-                editable={editable}
-                {...functions}
-            />
-            <Section
-                loc="right"
-                modifier={leftSections.length}
-                sections={rightSections}
-                highlightedId={highlightedId}
-                editable={editable}
-                {...functions}
-            />
+export const Sections = ({ rightSections, leftSections, highlightedId, functions, editable }: SectionProps) => {
+    const { t } = useTranslation();
+    return (
+        <div className="sections">
+            <div className="row">
+                <Section
+                    info={t('click-to-add-section')}
+                    loc="left"
+                    modifier={0}
+                    sections={leftSections}
+                    highlightedId={highlightedId}
+                    editable={editable}
+                    {...functions}
+                />
+                <Section
+                    loc="right"
+                    modifier={leftSections.length}
+                    sections={rightSections}
+                    highlightedId={highlightedId}
+                    editable={editable}
+                    {...functions}
+                />
+            </div>
         </div>
-    </div>
-)
+    )
+}
 
-const Section = (props) => (
-    <div className="col-md-6">
-        {props.editable && <div className={styles.column_info}>{props.loc} column items:</div>}
-        {props.sections.map((section, index) => (
-            <div
-                key={section.id}
-                className="section"
-                style={isHighlighted(props.highlightedId === section.id)}
-            >
-                {props.editable && <div className={styles.button_wrapper}>
-                    {props.sections.length - 1 === index && <Element name={props.loc} />}
-                    {index > 0 && (
-                        <div
-                            className={styles.icon_button}
-                            onClick={() => props.swapSections(
-                                index - 1 + props.modifier,
-                                index + props.modifier)
-                            }
-                        >
-                            <FaRegArrowAltCircleUp />
-                        </div>
-                    )}
-                    {index < props.sections.length - 1 && (
-                        <div
-                            className={styles.icon_button}
-                            onClick={() => props.swapSections(
-                                index + props.modifier,
-                                index + 1 + props.modifier)
-                            }
-                        >
-                            <FaRegArrowAltCircleDown />
-                        </div>
-                    )}
-                    <SwapIcon
-                        id={section.id}
-                        index={index + props.modifier}
-                        loc={section.loc}
-                        swapSectionLoc={props.swapSectionLoc}
-                    />
-                    <div
-                        className={styles.icon_button}
-                        onClick={() => props.deleteSection(index + props.modifier)}
-                    >
-                        <FaTrashAlt />
-                    </div>
-                </div>}
-                {props.editable ? <input
-                    className={`section_title ${styles.editable}`}
-                    value={section.title}
-                    onChange={(e) => props.updateTitle(index + props.modifier, e.target.value)}
-                /> : <div className="section_title">{section.title}</div>}
-                {section.items.map((item, subindex) => (
-                    <div key={item.id} className="row">
-                        <div className="col">
-                            {props.editable ? <input
-                                className={`title ${styles.editable}`}
-                                style={isCollapsed(item.title)}
-                                value={item.title}
-                                onChange={(e) =>
-                                    props.updateItemProps(index + props.modifier, subindex, { title: e.target.value })
-                                }
-                            /> : <div className="title">{item.title}</div>}
+const Section = (props) => {
+    const { t } = useTranslation();
 
-                            {props.editable ? <TextareaAutosize
-                                className={`desc ${styles.editable}`}
-                                value={item.desc}
-                                onChange={(e) =>
-                                    props.updateItemProps(index + props.modifier, subindex, { desc: e.target.value })
+    return (
+        <div className="col-md-6">
+            {props.editable && <div className={styles.column_info}>{props.loc} column items:</div>}
+            {props.sections.map((section, index) => (
+                <div
+                    key={section.id}
+                    className="section"
+                    style={isHighlighted(props.highlightedId === section.id)}
+                >
+                    {props.editable && <div className={styles.button_wrapper}>
+                        {props.sections.length - 1 === index && <Element name={props.loc} />}
+                        {index > 0 && (
+                            <div
+                                className={styles.icon_button}
+                                onClick={() => props.swapSections(
+                                    index - 1 + props.modifier,
+                                    index + props.modifier)
                                 }
-                            /> : <div className="desc">{item.desc}</div>}
-                        </div>
-                        <div className="col-auto">
-                            {props.editable ? <input
-                                className={`price ${styles.editable}`}
-                                style={isCollapsed(item.price)}
-                                value={item.price}
-                                onChange={(e) =>
-                                    props.updateItemProps(index + props.modifier, subindex, { price: e.target.value })
-                                }
-                                type="number"
-                                min="0"
-                                step="0.01"
-                            /> : <div className="price">{item.price}</div>}
-                            {props.editable && <div className={styles.button_wrapper}>
-                                <div
-                                    style={isVisible(subindex > 0)}
-                                    className={styles.icon_button}
-                                    onClick={() =>
-                                        props.adjustItems(
-                                            index + props.modifier,
-                                            props.swapElements(section.items, subindex - 1, subindex)
-                                        )
-                                    }
-                                >
-                                    <FaRegArrowAltCircleUp />
-                                </div>
-                                <div
-                                    style={isVisible(subindex < section.items.length - 1)}
-                                    className={styles.icon_button}
-                                    onClick={() =>
-                                        props.adjustItems(
-                                            index + props.modifier,
-                                            props.swapElements(section.items, subindex, subindex + 1)
-                                        )
-                                    }
-                                >
-                                    <FaRegArrowAltCircleDown />
-                                </div>
-                                <div
-                                    className={styles.icon_button}
-                                    onClick={() => props.deleteItem(index + props.modifier, subindex)}
-                                >
-                                    <FaTrashAlt />
-                                </div>
-                            </div>}
-                        </div>
-                    </div>
-                ))}
-                {props.editable && <div className={styles.button_wrapper}>
-                    <div
-                        title="Create new item"
-                        className={styles.icon_button}
-                        onClick={() =>
-                            props.adjustItems(index + props.modifier, [
-                                ...props.sections[index].items,
-                                createItem(),
-                            ])
-                        }
-                    >
-                        {!props.sections[index].items.length && (
-                            <span className={styles.tooltip_info}>Click to add item</span>
+                            >
+                                <FaRegArrowAltCircleUp />
+                            </div>
                         )}
-                        <FaRegPlusSquare />
-                    </div>
-                </div>}
-            </div>
-        ))}
-        <br />
+                        {index < props.sections.length - 1 && (
+                            <div
+                                className={styles.icon_button}
+                                onClick={() => props.swapSections(
+                                    index + props.modifier,
+                                    index + 1 + props.modifier)
+                                }
+                            >
+                                <FaRegArrowAltCircleDown />
+                            </div>
+                        )}
+                        <SwapIcon
+                            id={section.id}
+                            index={index + props.modifier}
+                            loc={section.loc}
+                            swapSectionLoc={props.swapSectionLoc}
+                        />
+                        <div
+                            className={styles.icon_button}
+                            onClick={() => props.deleteSection(index + props.modifier)}
+                        >
+                            <FaTrashAlt />
+                        </div>
+                    </div>}
+                    {props.editable ? <input
+                        className={`section_title ${styles.editable}`}
+                        value={section.title}
+                        onChange={(e) => props.updateTitle(index + props.modifier, e.target.value)}
+                    /> : <div className="section_title">{section.title}</div>}
+                    {section.items.map((item, subindex) => (
+                        <div key={item.id} className="row">
+                            <div className="col">
+                                {props.editable ? <input
+                                    className={`title ${styles.editable}`}
+                                    style={isCollapsed(item.title)}
+                                    value={item.title}
+                                    onChange={(e) =>
+                                        props.updateItemProps(index + props.modifier, subindex, { title: e.target.value })
+                                    }
+                                /> : <div className="title">{item.title}</div>}
 
-        {props.editable && <div className={styles.button_wrapper}>
-            <div
-                title="Create new section"
-                className={styles.icon_button}
-                onClick={() =>
-                    props.setSections(
-                        props.insertSectionAt(
-                            createSection(props.loc),
-                            props.sections.length + props.modifier
+                                {props.editable ? <TextareaAutosize
+                                    className={`desc ${styles.editable}`}
+                                    value={item.desc}
+                                    onChange={(e) =>
+                                        props.updateItemProps(index + props.modifier, subindex, { desc: e.target.value })
+                                    }
+                                /> : <div className="desc">{item.desc}</div>}
+                            </div>
+                            <div className="col-auto">
+                                {props.editable ? <input
+                                    className={`price ${styles.editable}`}
+                                    style={isCollapsed(item.price)}
+                                    value={item.price}
+                                    onChange={(e) =>
+                                        props.updateItemProps(index + props.modifier, subindex, { price: e.target.value })
+                                    }
+                                    type="number"
+                                    min="0"
+                                    step="0.01"
+                                /> : <div className="price">{item.price}</div>}
+                                {props.editable && <div className={styles.button_wrapper}>
+                                    <div
+                                        style={isVisible(subindex > 0)}
+                                        className={styles.icon_button}
+                                        onClick={() =>
+                                            props.adjustItems(
+                                                index + props.modifier,
+                                                props.swapElements(section.items, subindex - 1, subindex)
+                                            )
+                                        }
+                                    >
+                                        <FaRegArrowAltCircleUp />
+                                    </div>
+                                    <div
+                                        style={isVisible(subindex < section.items.length - 1)}
+                                        className={styles.icon_button}
+                                        onClick={() =>
+                                            props.adjustItems(
+                                                index + props.modifier,
+                                                props.swapElements(section.items, subindex, subindex + 1)
+                                            )
+                                        }
+                                    >
+                                        <FaRegArrowAltCircleDown />
+                                    </div>
+                                    <div
+                                        className={styles.icon_button}
+                                        onClick={() => props.deleteItem(index + props.modifier, subindex)}
+                                    >
+                                        <FaTrashAlt />
+                                    </div>
+                                </div>}
+                            </div>
+                        </div>
+                    ))}
+                    {props.editable && <div className={styles.button_wrapper}>
+                        <div
+                            title="Create new item"
+                            className={styles.icon_button}
+                            onClick={() =>
+                                props.adjustItems(index + props.modifier, [
+                                    ...props.sections[index].items,
+                                    createItem(),
+                                ])
+                            }
+                        >
+                            {!props.sections[index].items.length && (
+                                <span className={styles.tooltip_info}>{t("click-to-add-item")}</span>
+                            )}
+                            <FaRegPlusSquare />
+                        </div>
+                    </div>}
+                </div>
+            ))}
+            <br />
+
+            {props.editable && <div className={styles.button_wrapper}>
+                <div
+                    title="Create new section"
+                    className={styles.icon_button}
+                    onClick={() =>
+                        props.setSections(
+                            props.insertSectionAt(
+                                createSection(props.loc),
+                                props.sections.length + props.modifier
+                            )
                         )
-                    )
-                }
-            >
-                {props.info && !props.sections.length && (
-                    <span className={styles.tooltip_info}>{props.info}</span>
-                )}
-                <FaRegPlusSquare />
-            </div>
-        </div>}
-    </div>
-);
+                    }
+                >
+                    {props.info && !props.sections.length && (
+                        <span className={styles.tooltip_info}>{props.info}</span>
+                    )}
+                    <FaRegPlusSquare />
+                </div>
+            </div>}
+        </div>
+    )
+};

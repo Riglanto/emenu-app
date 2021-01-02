@@ -1,15 +1,39 @@
 {
     "signin": "Zaloguj",
-    "password": "Password",
-    "repeat-password": "Repeat password",
-    "passwords-dont-match": "Provided passwords don't match. Make sure you repeated the password correctly.",
-    "submit": "Submit",
+    "logout": "Wyloguj",
+    "logged_as": "Zalogowany jako",
+    "password": "Hasło",
+    "repeat-password": "Powtórz hasło",
+    "passwords-dont-match": "Hasła nie pasują do siebie.",
+    "submit": "Dalej",
+    "load": "Załaduj",
+    "save": "Zapisz",
+    "publish": "Publikuj",
     "builder": {
-        "start-from-scratch": "Dupa",
-        "load-example": "Dupa example",
-        "sign-in-to-cont": "<1>Sign in</1> to continue.",
-        "start-with-example": "Start with our <1>example</1> - Mexican Restaurant 3 amigos",
-        "start-with-empty": "Start with <1>empty canvas</1> - Build anything you want"
+        "start-from-scratch": "Zacznij od pustego menu",
+        "load-example": "Załaduj przykład",
+        "sign-in-to-cont": "<0>Zaloguj się</0> by kontynuować.",
+        "start-with-example": "Zacznij od <1>przykładowego menu</1> - Meksykańska kanjpka",
+        "start-with-empty": "Zacznij od <1>pustego menu</1> - Zbuduj co tylko chcesz"
     },
-    "click-to-add-title": "Click to add title..."
+    "start_over": "Zacznij od początku",
+    "click-to-add-title": "Dodaj tytuł menu...",
+    "click-to-add-section": "Dodaj kolumnę...",
+    "click-to-add-item": "Dodaj pozycję",
+    "notify": {
+        "local-draft": "Wersja robocza załadowana",
+        "publishing": "Twoje menu jest publikowane..",
+        "published": "Twoje menu jest gotowe!",
+        "published2": "Sprawdź:",
+        "saved": "Zapisano",
+        "loaded": "Załadowano",
+        "no-data": "Brak danych",
+        "now": "przed chwilą"
+    },
+    "domain-res": "Rezerwacja domeny",
+    "modal": {
+        "continue": "Kontynuować?",
+        "lost": "Wszystkie lokalne zmiany zostaną utracone"
+    },
+    "actions": "Edycja"
 }

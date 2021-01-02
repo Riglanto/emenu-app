@@ -1,12 +1,14 @@
-import Head from 'next/head'
-import { Container, Nav, Navbar } from "react-bootstrap";
+import Head from 'next/head';
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { signin, signout, useSession } from 'next-auth/client';
 import { useCallback } from 'react';
 import * as ls from "local-storage";
+import ReactCountryFlag from "react-country-flag";
 
 import styles from "~/styles/layout.module.scss";
 import { httpsDomain, wwwDomain } from '~/utils';
-import { useTranslation, i18n } from '~/i18n';
+import { useTranslation, i18n, allLanguages } from '~/i18n';
+import { FaGlobeAmericas, FaCheckCircle } from 'react-icons/fa';
 
 
 export const siteTitle = 'EMenu'
@@ -57,14 +59,20 @@ export default function Layout({
                 {domain && <Nav.Link href={httpsDomain(domain)} target="_blank">{wwwDomain(domain)}</Nav.Link>}
               </Nav>
               <Nav>
-                <Nav.Link onClick={() => i18n.changeLanguage(i18n.language === "en" ? "pl" : "en")}>change</Nav.Link>
                 {session?.user?.image && <span style={{ backgroundImage: `url(${session.user.image})` }} className={styles.avatar} />}
                 <div className="flex">
-                  {session && <Nav.Link>Signed in as {session.user.email}</Nav.Link>}
+                  {session && <Nav.Link>{t('logged_as')} {session.user.email}</Nav.Link>}
                 </div>
                 {session ?
-                  <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+                  <Nav.Link onClick={onLogout}>{t('logout')}</Nav.Link>
                   : <Nav.Link onClick={() => signin()}>{t('signin')}</Nav.Link>}
+                <NavDropdown title={<FaGlobeAmericas color="white" />} id="basic-nav-dropdown" className={styles.flag_dropdown}>
+                  {allLanguages.map(lang =>
+                    <NavDropdown.Item key={lang} onClick={() => i18n.changeLanguage(lang)}>
+                      {lang === "en" ? <FaGlobeAmericas color="black" /> : <ReactCountryFlag countryCode={lang} />}
+                      {i18n.language === lang && <FaCheckCircle className={styles.flag_selected} color="green" size={10} />}
+                    </NavDropdown.Item>)}
+                </NavDropdown>
               </Nav>
             </Navbar.Collapse>
           </Container>

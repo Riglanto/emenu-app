@@ -4,9 +4,13 @@ import path from "path";
 
 const debug = process.env.NODE_ENV !== "production";
 
+const defaultLanguage = "en";
+const otherLanguages = ["pl"];
+export const allLanguages = [defaultLanguage, ...otherLanguages];
+
 const nextI18Next = new NextI18Next({
-  defaultLanguage: "en",
-  otherLanguages: ["pl"],
+  defaultLanguage,
+  otherLanguages,
   debug,
   localeSubpaths: localeSubpaths as Record<string, string>,
   localePath: path.resolve("./public/locales"),

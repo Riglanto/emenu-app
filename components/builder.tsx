@@ -35,7 +35,12 @@ const scrollTo = (loc: string) =>
     smooth: true,
   });
 
-const SignInTooltip = <Tooltip id="tooltip" className={styles.clickable} onClick={() => signin}> <strong>Sign in</strong> to continue.</Tooltip>
+const SignInTooltip = <Tooltip id="tooltip" className={styles.clickable} onClick={() => signin}>
+  <Trans i18nKey="builder.sign-in-to-cont">
+    <b>a</b>b
+   </Trans>
+</Tooltip>
+
 const ProtectedTooltipWrapper = (component, loggedIn) =>
   loggedIn ? (
     component
@@ -54,10 +59,6 @@ type ConfirmModalProps = {
   skipFooter?: boolean;
 };
 
-const CONTINUE_TITLE = {
-  title: "Continue?",
-  body: "All local changes will be lost.",
-};
 const ConfirmModal = (props: ConfirmModalProps) => (
   <Modal
     show={props.show}
@@ -109,6 +110,8 @@ const MCard = (props) => (
 );
 
 export default function Builder(props) {
+  const { t } = useTranslation();
+
   const { notify, loggedIn } = props;
   useEffect(() => {
     const localData: any = ls.get("sections");
@@ -118,12 +121,12 @@ export default function Builder(props) {
       hash({ title: props.data?.title, sections: props.data?.sections })
     ) {
       setDataState({ ...props.data, ...localData });
-      notify("Local draft restored.");
+      notify(t("notify.local-draft"));
     }
   }, []);
 
   const publish = async () => {
-    notify("Your menu is being published...", 0);
+    notify(t("notify.publishing"), 10000);
     const invalidationId = await api.publishMenu(title, sections);
     setTimeout(() => notifyOnPublish(invalidationId), 5000);
   };
@@ -153,7 +156,6 @@ export default function Builder(props) {
   const setDomain = (x) => setData({ ...data, domain: x });
   const setSections = (x) => setData({ ...data, sections: x });
 
-  const { t } = useTranslation();
 
   if (!data?.sections) {
     return (
@@ -260,15 +262,15 @@ export default function Builder(props) {
     const data = await api.fetchSections();
     if (data) {
       setData(data);
-      notify("Your menu has been loaded.");
+      notify(t("notify.local-draft"));
     } else {
-      notify("No data found.");
+      notify(t("notify.no-data"));
     }
   };
 
   const saveSections = async () => {
     await api.putSections({ title: data.title, sections: data.sections });
-    notify("Your menu has been saved.");
+    notify(t("notify.saved"));
   };
 
   const notifyOnPublish = async (invalidationId) => {
@@ -277,9 +279,9 @@ export default function Builder(props) {
     if (status === "Completed") {
       const component = (
         <>
-          <b>Your menu has been published!</b>
+          <b>{t("notify.published")}</b>
           <br />
-          Check it out:&nbsp;
+          {t("notify.published2")}&nbsp;
           <a href={httpsDomain(domain)} target="_blank">
             {wwwDomain(domain)}
           </a>
@@ -306,7 +308,7 @@ export default function Builder(props) {
         />
       );
       setModalAction({
-        title: "Domain reservation",
+        title: t("domain-reservation"),
         body: form,
         onSuccess: () => publish(),
         skipFooter: true,
@@ -316,13 +318,19 @@ export default function Builder(props) {
     }
   };
 
+
+  const CONTINUE_TITLE = {
+    title: t("modal.continue"),
+    body: t("modal.lost"),
+  };
+
   return (
     <section>
       <div className="sections container-fluid">
         <div className="row">
           <div className="mr-auto">
             <MButton
-              text="Start over"
+              text={t("start_over")}
               onClick={() =>
                 setModalAction({
                   ...CONTINUE_TITLE,
@@ -334,7 +342,7 @@ export default function Builder(props) {
           {ProtectedTooltipWrapper(
             <div className="ml-auto d-none d-sm-block">
               <MButton
-                text="Load"
+                text={t('load')}
                 disabled={!loggedIn}
                 onClick={() =>
                   setModalAction({
@@ -344,12 +352,12 @@ export default function Builder(props) {
                 }
               />
               <MButton
-                text="Save"
+                text={t('save')}
                 disabled={!loggedIn}
                 onClick={saveSections}
               />
               <MButton
-                text="Publish"
+                text={t('publish')}
                 disabled={!loggedIn}
                 onClick={onPublish}
               />
@@ -362,12 +370,12 @@ export default function Builder(props) {
                 className={styles.action_toggle}
                 id="dropdown-basic"
               >
-                Actions
+                {t("actions")}
               </Dropdown.Toggle>
               <Dropdown.Menu className={styles.action_menu}>
                 <MButton
                   className={styles.action_button_nm}
-                  text="Load"
+                  text={t('load')}
                   disabled={!loggedIn}
                   onClick={() =>
                     setModalAction({
@@ -378,13 +386,13 @@ export default function Builder(props) {
                 />
                 <MButton
                   className={styles.action_button_nm}
-                  text="Save"
+                  text={t('save')}
                   disabled={!loggedIn}
                   onClick={saveSections}
                 />
                 <MButton
                   className={styles.action_button_nm}
-                  text="Publish"
+                  text={t('publish')}
                   disabled={!loggedIn}
                   onClick={onPublish}
                 />
