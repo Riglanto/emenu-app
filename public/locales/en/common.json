@@ -23,6 +23,7 @@
     "notify": {
         "local-draft": "Local draft restored",
         "publishing": "Your menu is being published..",
+        "publishing_error": "Cannot publish the menu",
         "published": "Your menu has been published!",
         "published2": "Check it out:",
         "saved": "Your menu has been saved",
@@ -30,6 +31,7 @@
         "no-data": "No data found",
         "now": "just now"
     },
+    "publish-info": "<0>You can publish new menu once per hour.</0><1>Next update in {{diffMinutes}} minutes.</1>",
     "domain-res": "Domain reservation",
     "modal": {
         "continue": "Continue?",

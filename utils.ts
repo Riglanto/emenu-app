@@ -1,5 +1,7 @@
 import { v4 as uuid4 } from 'uuid';
 
+export const PUBLISH_LOCK = 60;
+
 export const createItem = () => ({
     id: uuid4(),
     title: "Name",

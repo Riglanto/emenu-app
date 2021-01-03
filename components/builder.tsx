@@ -19,6 +19,7 @@ import {
   DEFAULT_SECTIONS,
   DEFAULT_TITLE,
   httpsDomain,
+  PUBLISH_LOCK,
   splitSectons,
   swapElements,
   wwwDomain,
@@ -27,6 +28,7 @@ import {
 import styles from "../styles/builder.module.scss";
 import DomainForm from "./form";
 import { useTranslation, Trans } from "~/i18n";
+import { differenceInMinutes } from "date-fns";
 
 const scrollTo = (loc: string) =>
   scroller.scrollTo(loc, {
@@ -128,9 +130,16 @@ export default function Builder(props) {
   const publish = async () => {
     notify(t("notify.publishing"), 10000);
     const invalidationId = await api.publishMenu(title, sections);
-    setTimeout(() => notifyOnPublish(invalidationId), 5000);
+    if (invalidationId) {
+      setLastPublished(Date.now())
+      setTimeout(() => notifyOnPublish(invalidationId), 5000);
+    } else {
+      notify(t("notify.publishing_error"));
+    }
   };
 
+  const isPremium = props.data?.isPremium;
+  const [lastPublished, setLastPublished] = useState(props.data?.lastPublished);
   const [data, setDataState] = useState({
     title: props.data?.title,
     sections: props.data?.sections,
@@ -324,6 +333,9 @@ export default function Builder(props) {
     body: t("modal.lost"),
   };
 
+  const diffMinutes = PUBLISH_LOCK - differenceInMinutes(Date.now(), lastPublished) || 0;
+  const canPublish = isPremium || diffMinutes <= 0;
+
   return (
     <section>
       <div className="sections container-fluid">
@@ -358,7 +370,7 @@ export default function Builder(props) {
               />
               <MButton
                 text={t('publish')}
-                disabled={!loggedIn}
+                disabled={!loggedIn || !canPublish}
                 onClick={onPublish}
               />
             </div>,
@@ -393,13 +405,19 @@ export default function Builder(props) {
                 <MButton
                   className={styles.action_button_nm}
                   text={t('publish')}
-                  disabled={!loggedIn}
+                  disabled={!loggedIn || !canPublish}
                   onClick={onPublish}
                 />
               </Dropdown.Menu>
             </Dropdown>
           </OverlayTrigger>
         </div>
+        {!canPublish && <div className={`row ${styles.publish_info}`}>
+          <Trans i18nKey="publish-info">
+            <span>a</span>
+            <span>b{{ diffMinutes }}c</span>
+          </Trans>
+        </div>}
         <div className="row">
           <TextareaAutosize
             autoFocus
@@ -435,6 +453,6 @@ export default function Builder(props) {
         body={modalAction?.body}
         skipFooter={modalAction?.skipFooter}
       />
-    </section>
+    </section >
   );
 }

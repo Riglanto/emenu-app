@@ -23,6 +23,7 @@
     "notify": {
         "local-draft": "Wersja robocza załadowana",
         "publishing": "Twoje menu jest publikowane..",
+        "publishing_error": "Nie można opublikować menu",
         "published": "Twoje menu jest gotowe!",
         "published2": "Sprawdź:",
         "saved": "Zapisano",
@@ -30,6 +31,7 @@
         "no-data": "Brak danych",
         "now": "przed chwilą"
     },
+    "publish-info": "<0>Możesz opublikować menu raz na godzine.</0><1>Następna aktualizacja za {{diffMinutes}} minut.</1>",
     "domain-res": "Rezerwacja domeny",
     "modal": {
         "continue": "Kontynuować?",

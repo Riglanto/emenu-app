@@ -29,8 +29,12 @@ export async function putSections(data) {
 }
 
 export async function publishMenu(title, sections) {
-    const res = await Axios.post(`/api/publish`, { title, sections })
-    return res.data.invalidationId;
+    try {
+        const res = await Axios.post(`/api/publish`, { title, sections })
+        return res.data.invalidationId;
+    } catch (e) {
+        return null;
+    }
 }
 
 export async function checkStatus(id) {

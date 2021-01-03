@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from "next-auth/client";
 import faunadb from "faunadb";
 
-import { getDomainByEmail } from './aptils';
+import { getUserData } from './aptils';
 
 const q = faunadb.query;
 const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET_KEY });
@@ -25,7 +25,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(200).json({
           title: result.title,
           sections: result.sections,
-          domain: result.domain
+          domain: result.domain,
+          lastPublished: result.lastPublished,
+          lastUpdated: result.lastUpdated,
+          isPremium: result.isPremium
         })
       }
     } catch (e) {
@@ -36,9 +39,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { title, sections, domain } = req.body;
 
     if (domain) {
-      const userDomain = await getDomainByEmail(client, email)
-      if (userDomain) {
-        console.warn(`Domain already set to ${userDomain}.`)
+      const userData = await getUserData(client, email)
+      if (userData?.domain) {
+        console.warn(`Domain already set to ${userData.domain}.`)
         return res.status(403).end();
       }
       const searchDomain: any = await client.query(q.Map(
