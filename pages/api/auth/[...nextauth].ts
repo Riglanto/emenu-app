@@ -1,5 +1,4 @@
 import NextAuth, { InitOptions } from 'next-auth'
-import Adapter from '~/modules/auth/adapter'
 import Providers from 'next-auth/providers'
 import authorize from '../../../modules/auth/authorize'
 import { getUserByEmail } from '~/modules/auth/user'
@@ -14,6 +13,10 @@ const options: InitOptions = {
             clientId: process.env.GOOGLE_ID,
             clientSecret: process.env.GOOGLE_SECRET
         }),
+        Providers.Facebook({
+            clientId: process.env.FACEBOOK_CLIENT_ID,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+        }),
         // Sign in with passwordless email link
         Providers.Email({
             server: {
@@ -26,41 +29,41 @@ const options: InitOptions = {
             },
             from: process.env.EMAIL_FROM,
         }),
-        Providers.Credentials({
-            name: 'credentials',
-            credentials: {
-                email: { label: "Email", type: "text", placeholder: "user@example.com" },
-                password: { label: "Password", type: "password" },
-            },
-            authorize
-        })
+        // Providers.Credentials({
+        //     name: 'credentials',
+        //     credentials: {
+        //         email: { label: "Email", type: "text", placeholder: "email@example.com" },
+        //         password: { label: "Password", type: "password", placeholder: "password" },
+        //     },
+        //     authorize
+        // })
 
     ],
     session: {
         jwt: true
     },
-    callbacks: {
-        /**
-         * @param  {object}  token     Decrypted JSON Web Token
-         * @param  {object}  user      User object      (only available on sign in)
-         * @param  {object}  account   Provider account (only available on sign in)
-         * @param  {object}  profile   Provider profile (only available on sign in)
-         * @param  {boolean} isNewUser True if new user (only available on sign in)
-         * @return {object}            JSON Web Token that will be saved
-         */
-        jwt: async (token, user, account, profile, isNewUser) => {
-            if (account?.type === 'email') { // email provider was used to a session.
-                const realUser = await getUserByEmail(user.email)
-                console.table([realUser, user])
-                token.setPassword = !realUser.password
-            }
-            return Promise.resolve(token)
-        },
-        session: async (session, token) => {
-            session['setPassword'] = token['setPassword']
-            return session
-        },
-    },
+    // callbacks: {
+    //     /**
+    //      * @param  {object}  token     Decrypted JSON Web Token
+    //      * @param  {object}  user      User object      (only available on sign in)
+    //      * @param  {object}  account   Provider account (only available on sign in)
+    //      * @param  {object}  profile   Provider profile (only available on sign in)
+    //      * @param  {boolean} isNewUser True if new user (only available on sign in)
+    //      * @return {object}            JSON Web Token that will be saved
+    //      */
+    //     jwt: async (token, user, account, profile, isNewUser) => {
+    //         if (account?.type === 'email') { // email provider was used to a session.
+    //             const realUser = await getUserByEmail(user.email)
+    //             console.table([realUser, user])
+    //             token.setPassword = !realUser.password
+    //         }
+    //         return Promise.resolve(token)
+    //     },
+    //     session: async (session, token) => {
+    //         session['setPassword'] = token['setPassword']
+    //         return session
+    //     },
+    // },
     // adapter: Adapter.Adapter({}),
     // database: process.env.DATABASE_URL,
     database: {
