@@ -32,6 +32,7 @@
         "now": "just now"
     },
     "publish-info": "<0>You can publish new menu once per hour.</0><1>Next update in {{diffMinutes}} minutes.</1>",
+    "publish-info2": "Last published at: ",
     "domain-res": "Domain reservation",
     "modal": {
         "continue": "Continue?",

@@ -131,7 +131,6 @@ export default function Builder(props) {
     notify(t("notify.publishing"), 10000);
     const invalidationId = await api.publishMenu(title, sections);
     if (invalidationId) {
-      setLastPublished(Date.now())
       setTimeout(() => notifyOnPublish(invalidationId), 5000);
     } else {
       notify(t("notify.publishing_error"));
@@ -296,6 +295,7 @@ export default function Builder(props) {
           </a>
         </>
       );
+      setLastPublished(Date.now())
       notify(component, 10000);
     } else {
       setTimeout(() => notifyOnPublish(invalidationId), 5000);
@@ -333,6 +333,7 @@ export default function Builder(props) {
     body: t("modal.lost"),
   };
 
+  const lastPublishDate = new Date(lastPublished).toString().substring(4, 33);
   const diffMinutes = PUBLISH_LOCK - differenceInMinutes(Date.now(), lastPublished) || 0;
   const canPublish = isPremium || diffMinutes <= 0;
 
@@ -412,6 +413,14 @@ export default function Builder(props) {
             </Dropdown>,
             loggedIn
           )}
+        </div>
+        <div className={`row ${styles.publish_info}`}>
+          <span>
+            <Trans i18nKey="publish-info2">
+              Last published at
+            </Trans>
+            <b>{lastPublishDate}</b>
+          </span>
         </div>
         {!canPublish && <div className={`row ${styles.publish_info}`}>
           <Trans i18nKey="publish-info">

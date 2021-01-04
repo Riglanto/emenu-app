@@ -32,6 +32,7 @@
         "now": "przed chwilą"
     },
     "publish-info": "<0>Możesz opublikować menu raz na godzine.</0><1>Następna aktualizacja za {{diffMinutes}} minut.</1>",
+    "publish-info2": "Ostania publikacja: ",
     "domain-res": "Rezerwacja domeny",
     "modal": {
         "continue": "Kontynuować?",
