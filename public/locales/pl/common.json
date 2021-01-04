@@ -37,5 +37,7 @@
         "continue": "Kontynuować?",
         "lost": "Wszystkie lokalne zmiany zostaną utracone"
     },
-    "actions": "Edycja"
+    "actions": "Edycja",
+    "left-column-items": "Pozycje lewej kolumny",
+    "right-column-items": "Pozycje prawej kolumny"
 }

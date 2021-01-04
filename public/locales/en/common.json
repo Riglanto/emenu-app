@@ -37,5 +37,7 @@
         "continue": "Continue?",
         "lost": "All local changes will be lost"
     },
-    "actions": "Actions"
+    "actions": "Actions",
+    "left-column-items": "Left column items",
+    "right-column-items": "Right column items"
 }

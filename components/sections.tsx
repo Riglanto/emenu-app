@@ -90,7 +90,7 @@ const Section = (props) => {
 
     return (
         <div className="col-md-6">
-            {props.editable && <div className={styles.column_info}>{props.loc} column items:</div>}
+            {props.editable && <div className={styles.column_info}>{t(`${props.loc}-column-items`)}:</div>}
             {props.sections.map((section, index) => (
                 <div
                     key={section.id}
