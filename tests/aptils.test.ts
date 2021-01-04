@@ -1,7 +1,15 @@
 import { writeFileSync } from 'fs-extra';
 
-import { generateMenuHtml } from "../pages/api/aptils";
-import { DEFAULT_SECTIONS } from "../utils";
+import { generateMenuHtml } from "~/pages/api/aptils";
+import { DEFAULT_SECTIONS } from "~/utils";
+
+jest.mock('next/config', () => ({
+    default: () => ({ publicRuntimeConfig: { localeSubpaths: {} } })
+}))
+
+jest.mock('~/i18n', () => ({
+    useTranslation: () => ({ t: (key: string) => key })
+}))
 
 describe("Aptils", () => {
     it("works", async () => {

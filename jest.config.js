@@ -4,5 +4,8 @@ module.exports = {
     transform: {
         "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
         "\\.(css|less|scss|sass)$": "jest-css-modules-transform"
+    },
+    moduleNameMapper: {
+        "~/(.*)": "<rootDir>/$1"
     }
 };

@@ -29,7 +29,7 @@ export const getUserData = async (client, email) => {
     return null;
 }
 
-export const generateMenuHtml = async (domain: string, title: string, sections: string) => {
+export const generateMenuHtml = async (domain: string, title: string, sections: any) => {
     const url = `https://${domain}.emenu.today`
     const content = getSections(sections);
     const css = sass.renderSync({ file: path.join(process.cwd(), "styles", "sections.scss") }).css.toString();
