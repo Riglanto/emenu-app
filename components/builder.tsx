@@ -376,7 +376,7 @@ export default function Builder(props) {
             </div>,
             loggedIn
           )}
-          <OverlayTrigger placement="top" overlay={SignInTooltip}>
+          {ProtectedTooltipWrapper(
             <Dropdown className="d-block d-sm-none">
               <Dropdown.Toggle
                 className={styles.action_toggle}
@@ -409,8 +409,9 @@ export default function Builder(props) {
                   onClick={onPublish}
                 />
               </Dropdown.Menu>
-            </Dropdown>
-          </OverlayTrigger>
+            </Dropdown>,
+            loggedIn
+          )}
         </div>
         {!canPublish && <div className={`row ${styles.publish_info}`}>
           <Trans i18nKey="publish-info">
