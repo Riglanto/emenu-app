@@ -10,7 +10,7 @@ import { httpsDomain, wwwDomain } from '~/utils';
 import { useTranslation, i18n, allLanguages } from '~/i18n';
 import { FaGlobeAmericas, FaCheckCircle } from 'react-icons/fa';
 
-
+const { GA_TRACKING_ID } = process.env;
 export const siteTitle = 'EMenu'
 
 export default function Layout({
@@ -38,16 +38,28 @@ export default function Layout({
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content="Build your online menu for your restaurant in a matter of seconds."
         />
         <meta
           property="og:image"
-          content={`https://og-image.now.sh/${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+          content={"images/example2.png"}
         />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}');
+            `,
+          }}
+        />
       </Head>
       <header>
         <Navbar expand={session ? "lg" : true} bg="dark" variant="dark">
