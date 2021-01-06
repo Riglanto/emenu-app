@@ -29,43 +29,38 @@ const options: InitOptions = {
             },
             from: process.env.EMAIL_FROM,
         }),
-        // Providers.Credentials({
-        //     name: 'credentials',
-        //     credentials: {
-        //         email: { label: "Email", type: "text", placeholder: "email@example.com" },
-        //         password: { label: "Password", type: "password", placeholder: "password" },
-        //     },
-        //     authorize
-        // })
+        Providers.Credentials({
+            name: 'credentials',
+            credentials: {
+                email: { label: "Email", type: "text", placeholder: "email@example.com" },
+                password: { label: "Password", type: "password", placeholder: "password" },
+            },
+            authorize
+        })
 
     ],
     session: {
         jwt: true
     },
-    // callbacks: {
-    //     /**
-    //      * @param  {object}  token     Decrypted JSON Web Token
-    //      * @param  {object}  user      User object      (only available on sign in)
-    //      * @param  {object}  account   Provider account (only available on sign in)
-    //      * @param  {object}  profile   Provider profile (only available on sign in)
-    //      * @param  {boolean} isNewUser True if new user (only available on sign in)
-    //      * @return {object}            JSON Web Token that will be saved
-    //      */
-    //     jwt: async (token, user, account, profile, isNewUser) => {
-    //         if (account?.type === 'email') { // email provider was used to a session.
-    //             const realUser = await getUserByEmail(user.email)
-    //             console.table([realUser, user])
-    //             token.setPassword = !realUser.password
-    //         }
-    //         return Promise.resolve(token)
-    //     },
-    //     session: async (session, token) => {
-    //         session['setPassword'] = token['setPassword']
-    //         return session
-    //     },
-    // },
-    // adapter: Adapter.Adapter({}),
-    // database: process.env.DATABASE_URL,
+    callbacks: {
+        /**
+         * @param  {object}  token     Decrypted JSON Web Token
+         * @param  {object}  user      User object      (only available on sign in)
+         * @param  {object}  account   Provider account (only available on sign in)
+         * @param  {object}  profile   Provider profile (only available on sign in)
+         * @param  {boolean} isNewUser True if new user (only available on sign in)
+         * @return {object}            JSON Web Token that will be saved
+         */
+        jwt: async (token, user, account, profile, isNewUser) => {
+            const realUser = await getUserByEmail(token.email)
+            token.setPassword = !realUser.password && account?.type === 'email'
+            return Promise.resolve(token)
+        },
+        session: async (session, token) => {
+            session['setPassword'] = token['setPassword']
+            return session
+        },
+    },
     database: {
         type: "mongodb",
         useNewUrlParser: true,
