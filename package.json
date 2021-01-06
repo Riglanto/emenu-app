@@ -16,8 +16,10 @@
     "typeorm": "0.2.24"
   },
   "dependencies": {
-    "@sentry/react": "^5.29.2",
-    "@sentry/tracing": "^5.29.2",
+    "@sentry/browser": "^5.29.2",
+    "@sentry/integrations": "^5.29.2",
+    "@sentry/node": "^5.29.2",
+    "@sentry/webpack-plugin": "^1.14.0",
     "aws-sdk": "^2.809.0",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
