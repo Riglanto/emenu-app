@@ -1,4 +1,5 @@
 const { nextI18NextRewrites } = require('next-i18next/rewrites');
+const withSourceMaps = require('@zeit/next-source-maps')();
 const SentryWebpackPlugin = require('@sentry/webpack-plugin')
 const {
     NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -21,9 +22,8 @@ const localeSubpaths = {
 }
 
 process.env.SENTRY_DSN = SENTRY_DSN
-const basePath = ''
 
-module.exports = {
+module.exports = withSourceMaps({
     target: "experimental-serverless-trace",
     rewrites: async () => nextI18NextRewrites(localeSubpaths),
     publicRuntimeConfig: {
@@ -81,14 +81,12 @@ module.exports = {
             config.plugins.push(
                 new SentryWebpackPlugin({
                     include: '.next',
-                    ignore: ['node_modules', 'webpack.config.js'],
-                    stripPrefix: ['webpack://_N_E/'],
-                    urlPrefix: `~${basePath}/_next`,
+                    ignore: ['node_modules'],
+                    urlPrefix: `~/_next`,
                     release: COMMIT_SHA,
                 })
             )
         }
         return config
-    },
-    basePath,
-};
+    }
+});

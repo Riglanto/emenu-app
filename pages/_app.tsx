@@ -16,7 +16,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 Sentry.init({
   enabled: process.env.NODE_ENV === "production",
-  dsn: "https://42b5560fe8084565909adb97f1cb438c@o494210.ingest.sentry.io/5580731",
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   integrations: [
     new Integrations.BrowserTracing(),
   ],
