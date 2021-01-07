@@ -128,6 +128,7 @@ export default function Builder(props) {
   }, []);
 
   const publish = async () => {
+    throw "publisher is dead"
     notify(t("notify.publishing"), 10000);
     const invalidationId = await api.publishMenu(title, sections);
     if (invalidationId) {
