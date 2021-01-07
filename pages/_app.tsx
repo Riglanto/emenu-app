@@ -5,7 +5,6 @@ import { Provider } from 'next-auth/client'
 import "reflect-metadata";
 import { appWithTranslation, useTranslation } from '~/i18n';
 import * as Sentry from "@sentry/node";
-import { Integrations } from "@sentry/tracing";
 
 import "../styles/global.scss";
 import "../styles/sections.scss";
@@ -14,16 +13,12 @@ import styles from "../styles/app.module.scss";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-Sentry.init({
-  enabled: process.env.NODE_ENV === "production",
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  integrations: [
-    new Integrations.BrowserTracing(),
-  ],
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-})
+if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    enabled: process.env.NODE_ENV === "production",
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN
+  })
+}
 
 function MyApp({ Component, pageProps, err }) {
   const [notif, setNotif] = useState(null);
