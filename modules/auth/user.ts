@@ -1,25 +1,22 @@
 import { User } from '~/modules/models/User.entity'
-import { getFaunaClient, q, Idx } from '..';
+import { client } from '../index';
 
-function getBy(index: Idx, value: string) {
-	return q.Let(
-		{
-			ref: q.Match(q.Index(index), value),
-		},
-		q.If(q.Exists(q.Var('ref')), q.Select('data', q.Get(q.Var('ref'))), null),
-	)
+async function getBy(field: '_id' | 'email', value: string) {
+	const db = (await client)
+	return db.collection('users').findOne<User>({[field]: value})
 }
 
 export async function getUserFromSession(session: any): Promise<User> {
-	return getFaunaClient().query(getBy(Idx.USERS_ID, session.user.id))
+	return getBy('_id', session.user.id)
 }
 
 export async function getUserByEmail(email: string): Promise<User> {
-	return getFaunaClient().query(getBy(Idx.USERS_EMAIL, email))
+	return getBy('email', email)
 }
 
 export async function putUser(u: User): Promise<User> {
-	const ref = q.Select(['ref'], q.Get(q.Match(q.Index(Idx.USERS_ID), u.id)))
-	const query = q.Replace(ref, {data: u})
-	return getFaunaClient().query<User>(query)
+	const db = await client
+	const filter = {_id: u._id}
+	await db.collection('users').replaceOne(filter, u)
+	return u
 }
