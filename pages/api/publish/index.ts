@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/client';
 import faunadb from "faunadb";
+import * as Sentry from "@sentry/node";
 
 import { generateMenuHtml, getUserData, invalidate, upload } from '../aptils';
 import { differenceInMinutes } from 'date-fns';
@@ -19,6 +20,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
     const { title, sections } = req.body;
     const { email } = session.user;
+    if (!email) {
+      throw "No email for user";
+    }
     const data = await getUserData(client, email);
     const { domain, lastPublished, isPremium } = data;
 

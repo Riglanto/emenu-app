@@ -17,6 +17,10 @@ const options: InitOptions = {
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET
         }),
+        Providers.Twitter({
+            clientId: process.env.TWITTER_CLIENT_ID,
+            clientSecret: process.env.TWITTER_CLIENT_SECRET
+        }),
         // Sign in with passwordless email link
         Providers.Email({
             server: {

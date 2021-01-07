@@ -14,6 +14,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(403).end();
   }
   const { email } = session.user;
+
+  if (!email) {
+    throw "No email for user";
+  }
+
   if (req.method === "GET") {
     try {
       const search: any = await client.query(q.Map(
