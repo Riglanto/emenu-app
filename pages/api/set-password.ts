@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/client';
 
 
 import { setPassword } from '~/modules/auth/password';
-import { getUserByEmail, getUserFromSession } from '~/modules/auth/user';
+import { getUserByEmail } from '~/modules/auth/user';
 import { getToken } from 'next-auth/jwt';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,10 +18,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	const token = await getToken({ req, secret: process.env.APP_SECRET || 'secret' })
 	try {
+		const u = await getUserByEmail(token['email'])
 		const user = await setPassword(await getUserByEmail(token['email']), req.body);
 		delete token['setPassword']
 		res.status(200);
-
 		return res.json(user);
 	} catch (e) {
 		res.status(422);

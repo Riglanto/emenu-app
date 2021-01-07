@@ -13,11 +13,12 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
   const session = await getSession(context)
   const data = session ? await api.initialFetchSections({ headers: { cookie: context.req.headers.cookie } }) : null;
 
-  if (session?.['setPassword'])
-    return {
-      props: {},
-      redirect: { destination: '/set-password' }
-    }
+  if (session?.['setPassword']) {
+    const { res } = context
+    res.writeHead(302, {Location: '/set-password'})
+    res.end()
+    return {props: {}}
+  }
   else
     return {
       props: { session, data }

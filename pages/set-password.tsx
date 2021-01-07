@@ -1,6 +1,5 @@
-import { signOut } from 'next-auth/client';
 import React from 'react';
-
+import { useRouter } from 'next/router'
 import Layout from '~/components/layout';
 import { useTranslation } from '~/i18n';
 
@@ -18,7 +17,6 @@ async function sendForm(form: Form) {
 		body: JSON.stringify(form)
 	});
 }
-
 function useForm(initialValues: Form = {}): [Form, OnChange] {
 	const [values, setValues] = React.useState<Form>(initialValues);
 	const onChange = React.useCallback<OnChange>(
@@ -34,6 +32,8 @@ function useForm(initialValues: Form = {}): [Form, OnChange] {
 function SetPassword() {
 	const [errors, setErrors] = React.useState(null);
 	const [form, onChange] = useForm({ password: '', password1: '' });
+	
+	const router = useRouter()
 	const onSubmit = React.useCallback(
 		async (e) => {
 			e.preventDefault();
@@ -41,7 +41,7 @@ function SetPassword() {
 			if (res.status == 422) {
 				setErrors(await res.json());
 			} else {
-				await signOut({ callbackUrl: '/api/auth/signin' });
+				await router.replace('/')
 			}
 		},
 		[form]
@@ -51,7 +51,7 @@ function SetPassword() {
 
 	return (
 		<Layout>
-			<div className="mx-auto mx-auto" style={{ width: 'min(600px, 100%)' }}>
+			<div className="mx-auto" style={{ width: 'min(600px, 100%)' }}>
 				<h2>Set your password</h2>
 				<form onSubmit={onSubmit}>
 					<div className="form-group pt-2">
