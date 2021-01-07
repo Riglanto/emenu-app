@@ -9,7 +9,7 @@
     "export": "next export",
     "postbuild": "next-on-netlify",
     "setupSchema": "ts-node -r ./modules/dotenv -e 'require(\"./modules\").setupSchema(); export {}'",
-    "setupSchema2": "ts-node -r ./modules/dotenv ./modules/setup.ts",
+    "setupSchema2": "ts-node -r ./modules/dotenv ./modules/_auth/setup.ts",
     "test": "jest"
   },
   "resolutions": {

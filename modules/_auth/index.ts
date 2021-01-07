@@ -1,8 +1,8 @@
 import faunadb, { query } from 'faunadb';
-import { Account } from './models/Account.entity';
-import { Session } from './models/Session.entity';
-import { User } from './models/User.entity';
-import { VerificationRequest } from './models/VerificationRequest.entity';
+import { Account } from '~/modules/models/Account.entity';
+import { Session } from '~/modules/models/Session.entity';
+import { User } from '~/modules/models/User.entity';
+import { VerificationRequest } from '~/modules/models/VerificationRequest.entity';
 
 export function getFaunaClient() {
 	const secret = process.env.FAUNADB_SECRET_KEY
@@ -46,7 +46,7 @@ export async function setupSchema() {
 		createCollection('verificationRequests')
 	]);
 
-	await createIndex<User>(Idx.USERS_ID, 'users', ['id'])
+	await createIndex<User>(Idx.USERS_ID, 'users', ['_id'])
 	await createIndex<User>(Idx.USERS_EMAIL, 'users', ['email'])
 	await createIndex<Account>(Idx.USERS_ACCOUNT_ID_PROVIDER_ID, 'accounts', ['id', 'providerId'])
 	await createIndex<VerificationRequest>(Idx.VERIFICATION_REQUESTS_TOKEN, 'verificationRequests', ['token'])
