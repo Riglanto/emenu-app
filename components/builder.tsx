@@ -414,14 +414,14 @@ export default function Builder(props) {
             loggedIn
           )}
         </div>
-        <div className={`row ${styles.publish_info}`}>
+        {lastPublished && <div className={`row ${styles.publish_info}`}>
           <span>
             <Trans i18nKey="publish-info2">
               Last published at
             </Trans>
             <b>{lastPublishDate}</b>
           </span>
-        </div>
+        </div>}
         {!canPublish && <div className={`row ${styles.publish_info}`}>
           <Trans i18nKey="publish-info">
             <span>a</span>
