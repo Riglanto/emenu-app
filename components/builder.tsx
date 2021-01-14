@@ -317,7 +317,7 @@ export default function Builder(props) {
         />
       );
       setModalAction({
-        title: t("domain-reservation"),
+        title: t("domain-res"),
         body: form,
         onSuccess: () => publish(),
         skipFooter: true,
