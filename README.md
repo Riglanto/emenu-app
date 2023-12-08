@@ -1,3 +1,16 @@
+![image](https://github.com/Riglanto/emenu-app/assets/6277878/d1298d4b-e028-4565-b7b8-1035cb45fd7e)
+
+![image](https://github.com/Riglanto/emenu-app/assets/6277878/c320678b-2a71-4ff5-8a94-4ffe69b5d4ce)
+
+![image](https://github.com/Riglanto/emenu-app/assets/6277878/964c7139-6495-46cd-9a9f-3ceb09f3ed5f)
+
+![image](https://github.com/Riglanto/emenu-app/assets/6277878/752f1cb4-6d0a-4cec-a0a9-72c2fb0996a3)
+
+![image](https://github.com/Riglanto/emenu-app/assets/6277878/49e44a6d-6388-4225-97ab-439b01daa1c5)
+
+
+
+
 # Setting up the project
 1. Create a [FaunaDB](https://dashboard.fauna.com/accounts/register) database for local development.
 
